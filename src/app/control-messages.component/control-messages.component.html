@@ -1,1 +1,7 @@
-<div *ngIf="errorMessage !== null">{{errorMessage}}</div>
+<div>
+  <strong class="error" *ngIf="errorMessage !== null">
+        <span class="label label-danger">
+              <span>{{errorMessage}}</span>
+        </span>
+  </strong>
+</div>
