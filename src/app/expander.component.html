@@ -1,0 +1,43 @@
+<div>
+    <table class="table dataTable table-bordered table-hover table-condensed table-striped">
+        <thead>
+        <tr>
+            <th aria-label="Expanded State" scope="col" style="color:transparent">e</th>
+            <th scope="col" *ngFor="let heading of columnDefinitions">{{heading.label}}</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let record of listItems; index as i;">
+
+        <tr id="tr-expand-row-{{i}}" class="clickableRow" role="button"
+            [ngClass]="{'selected':i == tableRowIndexCurrExpanded}"
+            [attr.aria-expanded]="getExpandedState(i)" title="TOGGLE_EXPAND {{i+1}}"
+            (click)="selectTableRow(i)">
+            <td width="2%"><span class="fa fa-lg fa-fw"
+                                 [ngClass]="{'fa-caret-right':isCollapsed(i), 'fa-caret-down':isExpanded(i) }"
+            ></span>{{i}}
+            </td>
+            <td *ngFor="let def of columnDefinitions" width="{{def.width}}%">
+                <span>{{record[def.binding]}}</span>
+                <!-- <span ng-if="!def.isHtml"> {{  record[def.binding]|translate}}</span>-->
+                <!--  <span ng-if="def.isHtml" ng-bind-html="record[def.binding]"></span>-->
+            </td>
+        </tr>
+        <tr [hidden]="!isExpanded(i)">
+            <td [attr.colspan]="numberColumns">
+               <form novalidate #rowForm="ngForm">
+                    <div *ngIf="rowValid||isExpanded(i)">
+                        <p>Foo</p>
+                       <!-- <form novalidate #contentForm="ngForm">-->
+                      <div>
+                                <input type="text" name="foo" [(ngModel)]="foo" required/>
+                                <ng-content></ng-content>
+                            </div>
+                     <!--</form>-->
+                    </div>
+               </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

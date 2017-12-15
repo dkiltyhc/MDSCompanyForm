@@ -1,0 +1,17 @@
+<div class="address-details-form">
+    <form novalidate [formGroup]="userForm">
+        <div>
+            <label for="address">Address</label>
+            <input id="address" formControlName="address"/>
+            <control-messages [control]="userForm.controls.address"></control-messages>
+        </div>
+
+        <div>
+            <label for="city">City</label>
+            <input id="city" formControlName="city"/>
+          <control-messages [control]="userForm.controls.city"></control-messages>
+        </div>
+    </form>
+</div>
+<!--
+<input type="text" name="foo" [(ngModel)]="foo" required/>-->
