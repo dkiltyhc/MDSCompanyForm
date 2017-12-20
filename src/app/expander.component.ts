@@ -1,125 +1,132 @@
-import {Component, Input, ViewChild, AfterViewInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component, Input, ViewChild} from '@angular/core';
+import {FormGroup, NgForm} from '@angular/forms';
 
 
 @Component({
-    selector: 'expander-component',
-    // template: `<h1>Sample Expander component</h1>`
-    templateUrl: 'expander.component.html'
+  selector: 'expander-component',
+  // template: `<h1>Sample Expander component</h1>`
+  templateUrl: 'expander.component.html'
 })
 
 /**
  * Sample component is used for nothing
  */
-export class ExpanderComponent implements AfterViewInit {
-    @ViewChild('rowForm') public detailsFrm: NgForm;
-    @Input() disableExpand = true;
+export class ExpanderComponent {
+  @ViewChild('rowForm') public detailsFrm: NgForm;
+  @Input() disableExpand = true;
+  @Input() listItems2 = {};
+  @Input('group') test2;
 
-
-    name: string;
-    rowIndex: number;
-    rowValid: boolean;
-    foo: '';
-    tableRowIndexCurrExpanded = -1;
-    private _expanderTable = [false, false];
-    @Input() columnDefinitions = [
-        {
-            label: 'FIRSTNAME',
-            binding: 'givenName',
-            width: '25'
-        },
-        {
-            label: 'LASTNAME',
-            binding: 'lastName',
-            width: '25'
-        }
-    ];
-    numberColumns = this.columnDefinitions.length + 1;
-    listItems = [
-        {
-            'givenName': 'Dan',
-            'lastName': 'Kilty'
-        },
-        {
-            'givenName': 'Jane',
-            'lastName': 'Smith'
-        }
-    ];
-
-    constructor() {
-
+  name: string;
+  rowIndex: number;
+  tableRowIndexCurrExpanded = -1;
+  public formSelected;
+  public _expanderTable = [false, false];
+  @Input() columnDefinitions = [
+    {
+      label: 'FIRSTNAME',
+      binding: 'givenName',
+      width: '25'
+    },
+    {
+      label: 'LASTNAME',
+      binding: 'lastName',
+      width: '25'
     }
+  ];
+  numberColumns = this.columnDefinitions.length + 1;
+  listItems = [
+  ];
 
-    ngAfterViewInit() {
+  constructor() {
 
-        this.detailsFrm.valueChanges.subscribe(data => {
-            // console.log('Form changes', data)
-            this.rowValid = this.rowIsValid();
-        });
+  }
+
+  ngOnInit() {
+    if (this.test2) {
+      this.formSelected = this.test2[this.test2.length];
     }
+  }
 
-    /**
-     *  A function that returns a test string
-     * @param name -not used for anything
-     * @returns {string}
-     */
-    test(name ?: String) {
-        return 'This is a test';
+  public addDataRow() {
+    if (!this.test2) return;
+    if (this.test2.length !== this._expanderTable.length) {
+      this._expanderTable = new Array<boolean>(this.test2.length);
+      if (this.tableRowIndexCurrExpanded > -1) {
+        this.formSelected = this.test2[this.tableRowIndexCurrExpanded];
+      }
     }
+  }
 
-    getExpandedState(index: number) {
-        return (this._expanderTable)[index];
+  public getExpandedState(index: number) {
+    return (this._expanderTable)[index];
+  }
+
+  public isExpanded(index: number) {
+
+    return this.tableRowIndexCurrExpanded === index;
+  };
+
+  public isCollapsed(index: number) {
+    return  !this.isExpanded(index);
+  }
+
+  public isDetailsVisible(index) {
+    if (this.tableRowIndexCurrExpanded < 0) return false;
+    return (index === this.tableRowIndexCurrExpanded);
+
+  }
+
+  public selectTableRow(index: number) {
+    if ((this.detailsFrm && !this.detailsFrm.valid) && this.disableExpand) {
+      console.warn('select table row did not meet conditions');
+      return;
     }
-
-    isExpanded(index: number) {
-
-        return this.getExpandedState(index);
-    };
-
-    isCollapsed(index: number) {
-
-        return !this.getExpandedState(index);
+    if (this._expanderTable.length > index) {
+      let temp = this._expanderTable[index];
+      this.collapseTableRows();
+      this._expanderTable[index] = !temp;
+      if (this._expanderTable[index]) {
+        this.tableRowIndexCurrExpanded = index;
+      } else {
+        this.tableRowIndexCurrExpanded = -1;
+      }
+      console.log('Expander row ' + this.tableRowIndexCurrExpanded);
+    } else {
+      console.warn('The index is greater than the table length');
     }
+  }
 
-    selectTableRow(index: number) {
-        if ((this.detailsFrm && !this.detailsFrm.valid) && this.disableExpand) {
-            return;
-        }
+  public getExpandedRow() {
 
-        if (this._expanderTable.length > index) {
-            let temp = this._expanderTable[index];
-            this.collapseTableRows();
-            this._expanderTable[index] = !temp;
-            this.tableRowIndexCurrExpanded = index;
-        }
+    return this.tableRowIndexCurrExpanded;
+  }
 
+  public collapseTableRows() {
+    for (let row of this._expanderTable) {
+      row = false;
     }
-
-    collapseTableRows() {
-
-        for (let row of this._expanderTable) {
-            row = false;
-        }
-        for (let i = 0; i < this._expanderTable.length; i++) {
-            this._expanderTable[i] = false;
-        }
-        this.tableRowIndexCurrExpanded=-1;
+    for (let i = 0; i < this._expanderTable.length; i++) {
+      this._expanderTable[i] = false;
     }
+    this.tableRowIndexCurrExpanded = -1;
+  }
 
-    rowInError() {
-        if (this.detailsFrm) {
-            return (!this.detailsFrm.valid);
-        } else {
-            return false;
-        }
+  public rowInError() {
+    if (this.detailsFrm) {
+      return (!this.detailsFrm.valid);
+    } else {
+      return false;
     }
+  }
 
-    rowIsValid() {
-        console.log(this.detailsFrm);
-        if (this.detailsFrm) {
-            return (this.detailsFrm.valid);
-        } else {
-            return true;
-        }
+  public rowIsValid() {
+    console.log(this.detailsFrm);
+    if (this.detailsFrm) {
+      return (this.detailsFrm.valid);
+    } else {
+      return true;
     }
+  }
+
 }
