@@ -1,10 +1,7 @@
-import {Component, Input, ViewChild, OnInit, AfterViewInit, Inject, forwardRef, AfterContentInit, DoCheck, SimpleChanges,OnChanges,KeyValueDiffers} from '@angular/core';
-import {NgForm, FormArray, FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {AddressData} from '../company.interfaces'; // TODO do we need this as an approach
+import {Component, Input, OnInit, DoCheck, SimpleChanges,OnChanges} from '@angular/core';
+import { FormGroup, Validators, FormBuilder} from '@angular/forms';
+import * as _ from "lodash";
 
-import {ValidationService} from '../validation.service';
-import {ExpanderComponent} from '../expander.component';
-import {init} from 'protractor/built/launcher';
 
 
 @Component({
@@ -18,41 +15,44 @@ import {init} from 'protractor/built/launcher';
 export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
 
   @Input('group')
+  public adressForm2: FormGroup;
   public adressForm: FormGroup;
+  @Input ()  detailsChanged:number;
+
   public index=-1;
   @Input('index') public ind;
   differ: any;
 
   constructor(private _fb: FormBuilder) {
-   // @Inject(forwardRef(() => ExpanderComponent)) private _parent: ExpanderComponent,private differs: KeyValueDiffers
-    //this.parent = _parent;
-    //addressForm=_parent
-    //console.log(_parent.tableRowIndexCurrExpanded);
-
 
   }
 
   ngOnInit() {
-    if(!this.adressForm) {
+    console.log(this.adressForm2);
+    if(!this.adressForm2) {
       this.adressForm = this.initAddress();
     }
-  }
-
-  ngAfterViewChecked() {
+    this.detailsChanged=0;
   }
 
   ngDoCheck() {
-    //console.log('######################Start AddressDetals: DoCheck ' + this.parent.tableRowIndexCurrExpanded);
-
-   // if (this.parent.tableRowIndexCurrExpanded > -1 &&this.index!==this.parent.tableRowIndexCurrExpanded ) {
-     //console.log("changing the form");
-     //this.adressForm = this.parent.test2[this.parent.tableRowIndexCurrExpanded];
-
-  // }
+    //console.log(this.adressForm2)
+    //console.log("Thisis "+this.detailsChanged)
   }
 
   ngOnChanges(changes: SimpleChanges){
-    //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Changes have been made to address Details!!");
+
+    console.log("There have been changes");
+
+    if(changes['detailsChanged']){
+      console.log(changes['detailsChanged']);
+      console.log("copying the adressForm ");
+
+      //TODO this deep copy works! needs a save
+     // this.adressForm=_.cloneDeep(this.adressForm2);
+      this.adressForm=(this.adressForm2);
+    }
+
   }
 
   initAddress() {
@@ -64,12 +64,6 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
       city: ['']
     });
   }
-
-/*
-  ngAfterViewInit() {
-    console.log('After View Init' + this.parent.tableRowIndexCurrExpanded);
-  }
-*/
 
 }
 

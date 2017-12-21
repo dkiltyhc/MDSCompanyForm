@@ -8,6 +8,7 @@ import { TestComponentComponent } from './test-component/test-component.componen
 import { ControlMessagesComponent } from './control-messages.component/control-messages.component';
 import {AddressDetailsComponent} from './address/address.details.component';
 import {ValidationService} from './validation.service';
+import { AddressListComponent } from './address.list/address.list.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {ValidationService} from './validation.service';
     ExpanderComponent,
     TestComponentComponent,
     AddressDetailsComponent,
-    ControlMessagesComponent
+    ControlMessagesComponent,
+    AddressListComponent
   ],
   imports: [
     BrowserModule,

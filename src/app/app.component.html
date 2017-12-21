@@ -32,44 +32,24 @@
       </small>
     </div>
 
-    <!--
-        <div formArrayName="addresses">
 
-          <div *ngFor="let address of myForm.controls.addresses.controls; let i=index" class="panel panel-default">
-            <div class="panel-heading">
-              <span>Address {{i + 1}}</span>
-              <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.addresses.controls.length > 1" (click)="removeAddress(i)"></span>
-            </div>
-            <div class="panel-body" [formGroupName]="i">
-              <expander-component  [group]="myForm.controls.addresses.controls">
-                <address-details [group]="myForm.controls.addresses.controls[i]"></address-details>
-              </expander-component>
-            </div>
-          </div>
-        </div>
-    -->
-
-
-    <div formArrayName="addresses">
-
-      <!--  <div *ngFor="let address of myForm.controls.addresses.controls; let i=index">-->
+    <div >
+      <address-list [group]="myForm.controls.addresses"></address-list>
+      <!--&lt;!&ndash;  <div *ngFor="let address of myForm.controls.addresses.controls; let i=index">&ndash;&gt;
       <expander-component [group]="myForm.controls.addresses.controls">
        <address-details></address-details>
-      </expander-component>
+      </expander-component>-->
     </div>
     <!--      </div>-->
 
 
-    <div>
+   <!-- <div>
       <div class="margin-20">
         <a (click)="addAddress()" style="cursor: default">
           Add another address +
         </a>
       </div>
-      <!--<expander-component  [group]="myForm.controls.addresses">
-
-        </expander-component>-->
-    </div>
+    </div>-->
 
 
     <button type="submit" [disabled]="!myForm?.valid">Submit</button>

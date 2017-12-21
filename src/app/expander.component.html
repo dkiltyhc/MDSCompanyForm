@@ -7,7 +7,7 @@
         <th scope="col" *ngFor="let heading of columnDefinitions">{{heading.label}}</th>
       </tr>
       </thead>
-      <tbody *ngFor="let record of test2; index as i;">
+      <tbody *ngFor="let record of itemsList; index as i;">
       <tr [formGroup]="record" id="tr-expand-row-{{i}}" class="clickableRow" role="button"
           [ngClass]="{'selected':isExpanded(i)}"
           [attr.aria-expanded]="getExpandedState(i)" title="TOGGLE_EXPAND {{i+1}}"
@@ -17,13 +17,13 @@
         ></span>{{i}}
         </td>
         <td *ngFor="let def of columnDefinitions" width="{{def.width}}%">
-          <span>{{record[def.binding]}}</span>
+          <span>{{record.value[def.binding]}}</span>
           <!-- <span ng-if="!def.isHtml"> {{  record[def.binding]|translate}}</span>-->
           <!--  <span ng-if="def.isHtml" ng-bind-html="record[def.binding]"></span>-->
         </td>
       </tr>
-      <tr *ngIf="isDetailsVisible(i)">
-        <td [attr.colspan]="columnDefinitions.length+1">
+      <tr *ngIf="isExpanded(i)">
+        <td [attr.colspan]="numberColSpan">
           <ng-content></ng-content>
         </td>
       </tr>
