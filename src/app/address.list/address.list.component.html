@@ -1,9 +1,10 @@
 <div [formGroup]="addressListForm">
   <h3>This is the address List Component</h3>
   <div formArrayName="addresses">
-    <expander-component [group]="addressListForm.controls.addresses.controls" [isValid]="addressListForm.valid" [columnDefinitions]="columnDefinitions">
-      <address-details [detailsChanged]="updateAddressDetails"></address-details>
+    <expander-component [group]="addressListForm.controls.addresses.controls"  [isValid]="addressListForm.valid" [columnDefinitions]="columnDefinitions">
+      <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE" (saveRecord) = "saveAddressRecord($event)" ></address-details>
     </expander-component>
+    <address-details *ngIf="newRecordInd" formType="NEW" [detailsChanged]="updateAddressDetails" (saveRecord) = "saveAddressRecord($event)" ></address-details>
   </div>
   <div>
     <div class="margin-20">

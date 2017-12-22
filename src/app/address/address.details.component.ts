@@ -1,7 +1,7 @@
-import {Component, Input, OnInit, DoCheck, SimpleChanges,OnChanges} from '@angular/core';
+import {Component, Input,Output, OnInit, DoCheck, SimpleChanges,OnChanges,EventEmitter} from '@angular/core';
 import { FormGroup, Validators, FormBuilder} from '@angular/forms';
 import * as _ from "lodash";
-
+import {IAddressData}  from '../data-models/address-data';
 
 
 @Component({
@@ -15,28 +15,33 @@ import * as _ from "lodash";
 export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
 
   @Input('group')
-  public adressForm2: FormGroup;
-  public adressForm: FormGroup;
+  public adressFormRecord: FormGroup;
+  public adressFormLocalModel: FormGroup;
   @Input ()  detailsChanged:number;
+  @Output () saveRecord =new EventEmitter() ;
+/*  @Output('addStudentEvent')
+  addStdEvent = new EventEmitter<Student>();*/
 
+  @Output() createRecord; //TODO don't know if needed
   public index=-1;
   @Input('index') public ind;
-  differ: any;
+  @Input() formType:string;
+
 
   constructor(private _fb: FormBuilder) {
 
   }
 
   ngOnInit() {
-    console.log(this.adressForm2);
-    if(!this.adressForm2) {
-      this.adressForm = this.initAddress();
+    console.log(this.adressFormRecord);
+    if(!this.adressFormRecord) {
+      this.adressFormLocalModel = this.initAddress();
     }
     this.detailsChanged=0;
   }
 
   ngDoCheck() {
-    //console.log(this.adressForm2)
+    //console.log(this.adressFormRecord)
     //console.log("Thisis "+this.detailsChanged)
   }
 
@@ -46,23 +51,40 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
 
     if(changes['detailsChanged']){
       console.log(changes['detailsChanged']);
-      console.log("copying the adressForm ");
+      console.log("copying the adressFormLocalModel ");
 
       //TODO this deep copy works! needs a save
-     // this.adressForm=_.cloneDeep(this.adressForm2);
-      this.adressForm=(this.adressForm2);
+     // this.adressFormLocalModel=_.cloneDeep(this.adressFormRecord);
+      this.adressFormLocalModel=(this.adressFormRecord);
     }
 
   }
 
+  /**
+   * Changes the local model back to the last saved version of the address
+   */
+  revertAddress(){
+    this.adressFormLocalModel=this.adressFormRecord;
+  }
+
+  /**
+   * Intializes a local model for address. This is needed otherwise the component will fail since we are implementing reactive forms
+   * @returns {FormGroup}
+   */
   initAddress() {
-    // initialize our address
 
     return this._fb.group({
       id: -1,
       address: ['', Validators.required],
       city: ['']
     });
+  }
+
+    saveAddressRecord(){
+    // this.saveRecord=_.cloneDeep(this.adressFormLocalModel);
+
+      this.saveRecord.emit(_.cloneDeep(this.adressFormLocalModel));
+     console.log(this.saveRecord);
   }
 
 }
