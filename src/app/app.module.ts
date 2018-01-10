@@ -9,6 +9,7 @@ import { ControlMessagesComponent } from './control-messages.component/control-m
 import {AddressDetailsComponent} from './address/address.details.component';
 import {ValidationService} from './validation.service';
 import { AddressListComponent } from './address.list/address.list.component';
+import {CompanyModelService} from './company.model.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AddressListComponent } from './address.list/address.list.component';
     TestComponentComponent,
     AddressDetailsComponent,
     ControlMessagesComponent,
-    AddressListComponent
+    AddressListComponent,
+
   ],
   imports: [
     BrowserModule,

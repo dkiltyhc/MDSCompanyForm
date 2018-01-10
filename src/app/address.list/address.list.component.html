@@ -1,18 +1,24 @@
 <div [formGroup]="addressListForm">
   <h3>This is the address List Component</h3>
   <div formArrayName="addresses">
-    <expander-component [group]="addressListForm.controls.addresses.controls"  [isValid]="addressListForm.valid" [columnDefinitions]="columnDefinitions">
-      <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE" (saveRecord) = "saveAddressRecord($event)" ></address-details>
+    <expander-component [group]="addressListForm.controls.addresses.controls"  [isValid]="addressListForm.valid" [addRecord]="addRecordMsg" [columnDefinitions]="columnDefinitions" (expandedRow2)="getRow($event)">
+      <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE" (saveRecord) = "saveAddressRecord($event)" (revertRecord)="revertAddress($event)" ></address-details>
     </expander-component>
-    <address-details *ngIf="newRecordInd" formType="NEW" [detailsChanged]="updateAddressDetails" (saveRecord) = "saveAddressRecord($event)" ></address-details>
   </div>
+ <!-- <div>
+    <address-details *ngIf="newRecordInd" formType="NEW" [detailsChanged]="updateAddressDetails" (saveRecord) = "saveAddressRecord($event)" ></address-details>
+  </div>-->
   <div>
     <div class="margin-20">
-      <button (click)="addAddress()"  [disabled]="!addressListForm.valid">
+      <button (click)="addAddress()"  [disabled]="!addressListForm.valid || addressDetailsChild.adressFormRecord.dirty">
         Add another address +
       </button>
     </div>
   </div>
   <pre> Address List Value{{addressListForm.value |json}}</pre>
   <pre>Address List Valid {{addressListForm.valid }}</pre>
+  <pre>Address List Valid {{service.getAddresses()|json }}</pre>
+  <pre>Address List form {{addressListForm.controls.addresses.controls }}</pre>
+
 </div>
+
