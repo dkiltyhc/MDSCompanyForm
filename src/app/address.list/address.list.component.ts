@@ -127,8 +127,8 @@ export class AddressListComponent implements OnInit, OnChanges {
 
     return this._fb.group({
       id: [indexValue, Validators.min(0)],
-      address: ['fff ', Validators.required],
-      city: ['']
+      address: [null, Validators.required],
+      city: [null]
     });
   }
 
@@ -185,31 +185,56 @@ export class AddressListComponent implements OnInit, OnChanges {
 
     return null;
   }
-  _getFormAddress(id){
+
+  _getFormAddress(id): FormGroup {
     const addressList = <FormArray>this.addressListForm.controls['addresses'];
-    console.log(addressList)
-    for(var i=0;i<addressList.length;i++){
-      if(addressList[i].controls.id.value===id){
-        return addressList[i];
+    for (var i = 0; i < addressList.controls.length; i++) {
+      var temp = <FormGroup> addressList.controls[i];
+      if (temp.controls.id.value === id) {
+        return temp;
       }
     }
+    return null;
   }
 
-
-  revertAddress(record){
-    console.log("starting the revert process"+record.controls.id.value);
-    var modelRecord=this._getModelAddress(record.controls.id.value);
+  /***
+   * Loads the last saved version of the record data
+   * @param record
+   */
+  revertAddress(record) {
+    console.log('starting the revert process');
+    console.log(record);
+    var recordId = record.controls.id.value;
+    var modelRecord = this._getModelAddress(recordId);
     console.log(modelRecord);
     //assume if it is not on the list it is null
-    if(!modelRecord){
-        modelRecord=this.service.getAddressModel();
+    if (!modelRecord) {
+      modelRecord = this.service.getAddressModel();
     }
-    //record.controls.id.value=modelRecord.id;
-    var rec=this._getFormAddress(record.controls.id.value);
-    rec.controls.address.value=modelRecord.address;
-    rec.controls.city.value=modelRecord.city;
-   //  record.controls.address.value=modelRecord.address;
-   // record.controls.city.value=modelRecord.city;
+    var rec = this._getFormAddress(recordId);
+    console.log(rec);
+    rec.controls.address.setValue(modelRecord.address);
+    rec.controls.city.setValue(modelRecord.city);
+    this.addressDetailsChild.adressFormRecord.markAsPristine();
+  }
+
+  deleteAddress(id) {
+    console.log("Starting deletion of " + id);
+    //var modelRecord = this._getModelAddress(id);
+    const serviceResult = this.service.deleteModelAddress(id);
+    let addressList = <FormArray>this.addressListForm.controls['addresses'];
+    console.log(addressList);
+    for (var i = 0; i < addressList.controls.length; i++) {
+      var temp = <FormGroup> addressList.controls[i];
+      if (temp.controls.id.value === id) {
+        console.log("Deleting record " + id);
+        console.log(addressList);
+        addressList.removeAt(i);
+      }
+      this.deleteRecordMsg++;
+      this.expander.collapseTableRows();
+      this.prevRow = -1;
+    }
   }
 
 

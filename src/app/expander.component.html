@@ -22,7 +22,7 @@
           <!--  <span ng-if="def.isHtml" ng-bind-html="record[def.binding]"></span>-->
         </td>
       </tr>
-      <pre>{{isExpanded(i)}}</pre>
+
       <tr [hidden]="!isExpanded(i)">
         <td [attr.colspan]="numberColSpan">
           <ng-content></ng-content>
