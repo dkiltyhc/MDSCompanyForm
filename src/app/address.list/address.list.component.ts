@@ -1,7 +1,8 @@
-import {Component, OnInit, Input, ViewChild, SimpleChanges,OnChanges} from '@angular/core';
-import {Form, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, Input, ViewChild, SimpleChanges, OnChanges} from '@angular/core';
+import {Form, FormArray, FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ExpanderComponent} from '../expander.component';
 import {AddressDetailsComponent} from '../address/address.details.component';
+import {CompanyModelService} from '../company.model.service';
 
 @Component({
   selector: 'address-list',
@@ -13,15 +14,15 @@ export class AddressListComponent implements OnInit, OnChanges {
   @Input() public saveRecord2;
   @ViewChild(ExpanderComponent) expander: ExpanderComponent;
   @ViewChild(AddressDetailsComponent) addressDetailsChild: AddressDetailsComponent;
-  //@ViewChildren(AddressDetailsComponent) addressDetailsChild: AddressDetailsComponent;
- // public addressListForm: FormGroup; // our form model
-  private indexId: number = 0;
-  private prevRow=-1;
-  private updateAddressDetails:number=0;
-  public newRecordInd=false;
-  public addressListForm: FormGroup;
 
-  public columnDefinitions=[
+  private prevRow = -1;
+  private updateAddressDetails: number = 0;
+  public newRecordInd = false;
+  public addressListForm: FormGroup;
+  private service: CompanyModelService;
+  private addRecordMsg = 0;
+  private deleteRecordMsg=0;
+  public columnDefinitions = [
     {
       label: 'ADDRESS',
       binding: 'address',
@@ -35,63 +36,98 @@ export class AddressListComponent implements OnInit, OnChanges {
   ];
 
 
-
   constructor(private _fb: FormBuilder) {
+    this.service = new CompanyModelService();
 
   }
 
   ngOnInit() {
+    this.addressListForm = this._fb.group({
+      addresses: this.addresses
+    });
+    var addressDataList = this.service.getAddresses();
+    const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
 
-    //if(!this.addressListForm) {
-      this.addressListForm = this._fb.group({
-        addresses: this.addresses
-      });
-    //}
-    //this.addressListForm = this._fb.group({
-    //  addresses: this._fb.array([])
-
-    //});
-    //this.addAddress();
+    for (var i = 0; i < addressDataList.length; i++) {
+      var formAddress = this.initAddress(true);
+      formAddress.controls.city.setValue(addressDataList[i].city);
+      formAddress.controls.address.setValue(addressDataList[i].address);
+      formAddress.controls.id.setValue(addressDataList[i].id);
+      mycontrol.push(formAddress);
+      console.log(formAddress);
+    }
   }
 
-  ngDoCheck(){
-    const rowNum =this.expander.getExpandedRow();
+  ngDoCheck() {
+
+    this._syncCurrentExpandedRow();
+  }
+
+  /**
+   *
+   * @private syncs the address details record with the reactive model. Uses view child functionality
+   */
+  _syncCurrentExpandedRow() {
+    const rowNum = this.expander.getExpandedRow();
     //used to sync the expander with the details
-    //TODO will prevrow work with the delete scenario
-    if(rowNum>-1 && this.prevRow!==rowNum) {
+    //TODO will prevrow work with the delete scenario && this.prevRow !== rowNum
+    if (rowNum > -1 ) {
       const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
       this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[rowNum];
       this.updateAddressDetails++;
-      this.prevRow=rowNum
-    }
-  }
-  ngOnChanges(changes:SimpleChanges){
+      this.prevRow = rowNum;
+    }else{
 
-    if(changes['saveRecord2']){
+    }
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    if (changes['saveRecord2']) {
       this.saveAddressRecord(changes['saveRecord'].currentValue);
     }
+  }
+
+  isValid(override: boolean) {
+    if (override) {
+      return true;
+    }
+    return this.addressListForm.valid;
   }
 
   addAddress() {
     // add address to the list
     const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
-    mycontrol.push(this.initAddress());
-    this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.controls.length - 1];
-    this.expander.addDataRow();
-    this.expander.selectTableRow(mycontrol.length - 1);
-    this.addressDetailsChild.detailsChanged++;
-    this.newRecordInd=true;
 
-    //console.log(mycontrol.length);
-    // console.log(mycontrol);
+   // for (var i = 0; i < addressDataList.length; i++) {
+      var formAddress=this.initAddress(true);
+     /* formAddress.controls.city.setValue('');
+      formAddress.controls.address.setValue('');*/
+      mycontrol.push(formAddress);
+      this.addRecordMsg++;
+    this.updateAddressDetails++;
+    //sync the address details child
+    this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length-1];
+    //}
+
+
+    this.newRecordInd = true;
   }
 
-  initAddress() {
+
+
+  initAddress(skipIndex:boolean=false) {
+
     // initialize our address
-    this.indexId++;
+    var indexValue=-1;
+    if(!skipIndex) {
+      indexValue= this.service.getNextIndex();
+    }
+
     return this._fb.group({
-      id: [this.indexId],
-      address: ['', Validators.required],
+      id: [indexValue, Validators.min(0)],
+      address: ['fff ', Validators.required],
       city: ['']
     });
   }
@@ -106,16 +142,74 @@ export class AddressListComponent implements OnInit, OnChanges {
    * Saves the record to the list. If new adds to the end of the list
    * @param record
    */
-  saveAddressRecord(record){
-    const addressList = <FormArray>this.addressListForm.controls['addresses'];
+  saveAddressRecord(record) {
+    //const addressList = <FormArray>this.addressListForm.controls['addresses'];
+    var modelAddresses=this.service.getAddresses();
+    console.log("SAVING ADDRESS");
+    console.log(record);
+    console.log(modelAddresses);
+    var addressModel=this.service.getAddressModel();
+    addressModel.id=record.controls.id.value;
+    addressModel.address=record.controls.address.value;
+    addressModel.city=record.controls.address.value;
+    var resultId=this.service.saveAddress(addressModel);
+    record.controls.id.setValue(resultId);
+    this.addressDetailsChild.adressFormRecord.markAsPristine();
+    this.expander.collapseTableRows();
 
-    for (var i=0;i<addressList.length;i++){
-        if((addressList.at(i)).value.id===record.value.id){
-          console.log("found a match "+record.value.id);
-        }
+  }
 
+  /**
+   * Gets a
+   * @param row
+   */
+  getRow(row){
+    if(row>-1){
+      const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
+      this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[row];
+      this.updateAddressDetails++;
+    }else{
+      console.info("Address List row number is "+row);
+    }
+  }
+
+  _getModelAddress(id){
+    var modelList=this.service.getAddresses();
+
+    for (var i = 0; i < modelList.length; i++) {
+      if(modelList[i].id===id){
+        console.log("found a model");
+        return modelList[i];
+      }
     }
 
+    return null;
+  }
+  _getFormAddress(id){
+    const addressList = <FormArray>this.addressListForm.controls['addresses'];
+    console.log(addressList)
+    for(var i=0;i<addressList.length;i++){
+      if(addressList[i].controls.id.value===id){
+        return addressList[i];
+      }
+    }
+  }
+
+
+  revertAddress(record){
+    console.log("starting the revert process"+record.controls.id.value);
+    var modelRecord=this._getModelAddress(record.controls.id.value);
+    console.log(modelRecord);
+    //assume if it is not on the list it is null
+    if(!modelRecord){
+        modelRecord=this.service.getAddressModel();
+    }
+    //record.controls.id.value=modelRecord.id;
+    var rec=this._getFormAddress(record.controls.id.value);
+    rec.controls.address.value=modelRecord.address;
+    rec.controls.city.value=modelRecord.city;
+   //  record.controls.address.value=modelRecord.address;
+   // record.controls.city.value=modelRecord.city;
   }
 
 

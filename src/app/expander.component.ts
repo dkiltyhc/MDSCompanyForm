@@ -1,4 +1,5 @@
-import {Component, Input,OnChanges,SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'expander-component',
@@ -8,7 +9,7 @@ import {Component, Input,OnChanges,SimpleChanges} from '@angular/core';
 /**
  * Sample component is used for nothing
  */
-export class ExpanderComponent implements OnChanges{
+export class ExpanderComponent implements OnChanges {
 
   /**
    * When set to true, disables collapse of a details section that is in error
@@ -30,14 +31,20 @@ export class ExpanderComponent implements OnChanges{
    * Tracks the currently expanded row. -1 if all the rows are collapsed or no rows
    * @type {number}
    */
-  private tableRowIndexCurrExpanded:number = -1;
+  @Input() addRecord: Number;
+  @Input() deleteRecord: Number;
+
+
+  @Output() expandedRow = new EventEmitter();
+
+  private tableRowIndexCurrExpanded: number = -1;
 
   /**
    * for each table row, stores the state i.e. collapsed or expanded
    * @type {boolean[]}
    * @private
    */
-  private _expanderTable:boolean[] = [];
+  private _expanderTable: boolean[] = [];
 
   /**
    * an array of JSON objects to define the column labels, widths and bindings
@@ -49,7 +56,7 @@ export class ExpanderComponent implements OnChanges{
    * The number of columns for this expander. Used to determine columnSpan
    * @type {number}
    */
-  private numberColSpan:number=1;
+  private numberColSpan: number = 1;
 
   constructor() {
   }
@@ -61,20 +68,34 @@ export class ExpanderComponent implements OnChanges{
    * Looks for and reacts to changes in the expander component
    * @param {SimpleChanges} changes
    */
-  ngOnChanges(changes: SimpleChanges){
-
-    if(changes['columnDefinitions']) {
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    if (changes['columnDefinitions']) {
       this.numberColSpan = (changes['columnDefinitions'].currentValue).length + 1;
     }
+    if (changes['addRecord']) {
+      this.updateDataRows(this.itemsList);
+      this.selectTableRowNoCheck(this._expanderTable.length - 1);
+      console.log('EXPANDER: RECORD ADDED ' + this.itemsList.length);
+    }
+    if (changes['itemsList']) {
+      console.log('*******changes to groups');
+      this.updateDataRows(changes['itemsList'].currentValue);
+    }
+    if (changes['deleteRecord']) {
+      this.updateDataRows(this.itemsList);
+      console.log('EXPANDER: RECORD deleted ' + this.itemsList.length);
+    }
+
   }
 
   /**
    * Adds an additional row to the expander UI state tracking array
    */
-  public addDataRow() {
-    if (!this.itemsList) return;
-    if (this.itemsList.length !== this._expanderTable.length) {
-      this._expanderTable = new Array<boolean>(this.itemsList.length);
+  public updateDataRows(srcList) {
+    if (!srcList) return;
+    if (srcList.length !== this._expanderTable.length) {
+      this._expanderTable = new Array<boolean>(srcList.length);
     }
   }
 
@@ -109,8 +130,22 @@ export class ExpanderComponent implements OnChanges{
    * Returns the row that is expanded. (-1) if no row is expanded
    * @returns {number}
    */
+
+  /*saveAddressRecord(){
+    // this.saveRecord=_.cloneDeep(this.adressFormLocalModel);
+
+    this.saveRecord.emit((this.adressFormLocalModel));
+    console.log(this.saveRecord);
+  }*/
+
+  public getExpandedRow2() {
+    // return this.tableRowIndexCurrExpanded;
+    this.expandedRow.emit(this.tableRowIndexCurrExpanded);
+  }
+
   public getExpandedRow() {
     return this.tableRowIndexCurrExpanded;
+
   }
 
   /**
@@ -118,10 +153,30 @@ export class ExpanderComponent implements OnChanges{
    * @param {number} index
    */
   public selectTableRow(index: number) {
-    if (!this.isValid && this.disableCollapse) {
-      console.warn('select table row did not meet conditions');
-      return;
+    /* if (!this.isValid && this.disableCollapse) {
+       console.warn('select table row did not meet conditions');
+       return;
+     }*/
+    if (this._expanderTable.length > index) {
+      let temp = this._expanderTable[index];
+      if (temp && !this.isValid && this.disableCollapse) {
+        console.warn('select table row did not meet conditions');
+        return;
+      }
+      this.collapseTableRows();
+      this._expanderTable[index] = !temp;
+      if (this._expanderTable[index]) {
+        this.tableRowIndexCurrExpanded = index;
+      } else {
+        this.tableRowIndexCurrExpanded = -1;
+      }
+    } else {
+      console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
     }
+  }
+
+
+  public selectTableRowNoCheck(index: number) {
     if (this._expanderTable.length > index) {
       let temp = this._expanderTable[index];
       this.collapseTableRows();
@@ -132,7 +187,7 @@ export class ExpanderComponent implements OnChanges{
         this.tableRowIndexCurrExpanded = -1;
       }
     } else {
-      console.warn('The index is greater than the table length');
+      console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
     }
   }
 

@@ -16,12 +16,10 @@ export class AppComponent  implements OnInit {
   constructor(private _fb: FormBuilder) { }
 
   ngOnInit() {
+    //create the blank form
     this.myForm = this._fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
-      addresses: this._fb.array([
-
-      ])
-
+      addresses: this._fb.array([])
     });
   }
 

@@ -5,13 +5,14 @@
             <input id="address" formControlName="address"/>
             <control-messages [control]="adressFormLocalModel.controls.address"></control-messages>
         </div>
-        <div>
+    <div>
             <label for="city">City</label>
             <input id="city" formControlName="city"/>
           <control-messages [control]="adressFormLocalModel.controls.city"></control-messages>
         </div>
-    <pre>{{adressFormLocalModel.value |json}}</pre>
     </div>
-  <button (click)="saveAddressRecord()">Save Address Record</button>
+  <button (click)="saveAddressRecord()">Save Address</button>
+  <button (click)="revertAddressRecord()">Revert Address</button>
+  <button (click)="deleteAddressRecord()">Delete Address</button>
 </div>
 

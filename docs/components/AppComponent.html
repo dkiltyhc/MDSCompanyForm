@@ -540,7 +540,7 @@ export class AppComponent  implements OnInit {
     const mycontrol &#x3D; &lt;FormArray&gt;this.myForm.controls[&#x27;addresses&#x27;];
     mycontrol.push(this.initAddress());
    this.addressDetailsChild.adressFormLocalModel&#x3D;&lt;FormGroup&gt; mycontrol.controls[mycontrol.controls.length-1];
-    this.expander.addDataRow();
+    this.expander.updateDataRows();
     this.expander.selectTableRow(mycontrol.length-1);
    //console.log(mycontrol.length);
   // console.log(mycontrol);
