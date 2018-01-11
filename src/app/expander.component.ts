@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {Component, Input,OnChanges,SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'expander-component',
@@ -31,10 +30,6 @@ export class ExpanderComponent implements OnChanges{
    * Tracks the currently expanded row. -1 if all the rows are collapsed or no rows
    * @type {number}
    */
-  @Input () addRecord:Number;
-
-  @Output () expandedRow =new EventEmitter() ;
-
   private tableRowIndexCurrExpanded:number = -1;
 
   /**
@@ -67,29 +62,19 @@ export class ExpanderComponent implements OnChanges{
    * @param {SimpleChanges} changes
    */
   ngOnChanges(changes: SimpleChanges){
-    console.log(changes);
+
     if(changes['columnDefinitions']) {
       this.numberColSpan = (changes['columnDefinitions'].currentValue).length + 1;
     }
-    if(changes['addRecord']){
-      this.addDataRow(this.itemsList)
-      this.selectTableRowNoCheck(this._expanderTable.length-1);
-      console.log("EXPANDER: RECORD ADDED "+this.itemsList.length)
-    }
-    if(changes['itemsList']){
-      console.log('*******changes to groups');
-      this.addDataRow(changes['itemsList'].currentValue);
-    }
-
   }
 
   /**
    * Adds an additional row to the expander UI state tracking array
    */
-  public addDataRow(srcList) {
-    if (!srcList) return;
-    if (srcList.length !== this._expanderTable.length) {
-      this._expanderTable = new Array<boolean>(srcList.length);
+  public addDataRow() {
+    if (!this.itemsList) return;
+    if (this.itemsList.length !== this._expanderTable.length) {
+      this._expanderTable = new Array<boolean>(this.itemsList.length);
     }
   }
 
@@ -124,20 +109,8 @@ export class ExpanderComponent implements OnChanges{
    * Returns the row that is expanded. (-1) if no row is expanded
    * @returns {number}
    */
-  /*saveAddressRecord(){
-    // this.saveRecord=_.cloneDeep(this.adressFormLocalModel);
-
-    this.saveRecord.emit((this.adressFormLocalModel));
-    console.log(this.saveRecord);
-  }*/
-
-  public getExpandedRow2() {
-   // return this.tableRowIndexCurrExpanded;
-    this.expandedRow.emit(this.tableRowIndexCurrExpanded);
-  }
   public getExpandedRow() {
     return this.tableRowIndexCurrExpanded;
-
   }
 
   /**
@@ -145,30 +118,10 @@ export class ExpanderComponent implements OnChanges{
    * @param {number} index
    */
   public selectTableRow(index: number) {
-   /* if (!this.isValid && this.disableCollapse) {
+    if (!this.isValid && this.disableCollapse) {
       console.warn('select table row did not meet conditions');
       return;
-    }*/
-    if (this._expanderTable.length > index) {
-      let temp = this._expanderTable[index];
-      if (temp&& !this.isValid && this.disableCollapse) {
-        console.warn('select table row did not meet conditions');
-        return;
-      }
-      this.collapseTableRows();
-      this._expanderTable[index] = !temp;
-      if (this._expanderTable[index]) {
-        this.tableRowIndexCurrExpanded = index;
-      } else {
-        this.tableRowIndexCurrExpanded = -1;
-      }
-    } else {
-      console.warn('The index is greater than the table length ' +index+' '+this._expanderTable.length);
     }
-  }
-
-
-  public selectTableRowNoCheck(index: number) {
     if (this._expanderTable.length > index) {
       let temp = this._expanderTable[index];
       this.collapseTableRows();
@@ -179,7 +132,7 @@ export class ExpanderComponent implements OnChanges{
         this.tableRowIndexCurrExpanded = -1;
       }
     } else {
-      console.warn('The index is greater than the table length ' +index+' '+this._expanderTable.length);
+      console.warn('The index is greater than the table length');
     }
   }
 
