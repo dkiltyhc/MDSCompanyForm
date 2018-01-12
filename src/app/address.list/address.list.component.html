@@ -7,12 +7,12 @@
       <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE" (saveRecord) = "saveAddressRecord($event)" (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)" ></address-details>
     </expander-component>
   </div>
- <!-- <div>
+<!-- <div>
     <address-details *ngIf="newRecordInd" formType="NEW" [detailsChanged]="updateAddressDetails" (saveRecord) = "saveAddressRecord($event)" ></address-details>
   </div>-->
   <div>
     <div class="margin-20">
-      <button (click)="addAddress()"  [disabled]="!addressListForm.valid || addressDetailsChild.adressFormRecord?.dirty">
+      <button (click)="addAddress()"  [disabled]="!addressListForm.valid || addressDetailsChild?.adressFormRecord?.dirty">
         Add another address +
       </button>
     </div>

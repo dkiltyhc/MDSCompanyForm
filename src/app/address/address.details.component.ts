@@ -39,27 +39,38 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
     console.log(this.adressFormRecord);
     if(!this.adressFormRecord) {
       this.adressFormLocalModel = this.initAddress();
+    }else{
+     // this.setToLocalModel();
     }
     this.detailsChanged=0;
+
   }
 
   ngDoCheck() {
-    console.log("Address Detials docheck")
-    console.log(this.adressFormRecord)
-    //console.log("Thisis "+this.detailsChanged)
+    this.setToLocalModel();
+   // console.log("Address Detials docheck")
+   // console.log(this.adressFormRecord)
+
+
   }
+  ng
 
   ngOnChanges(changes: SimpleChanges){
 
-    console.log("There have been changes");
+    console.log("There have been changes to details");
 
     if(changes['detailsChanged']){ //used as a change indicator for the model
       console.log("copying the adressFormLocalModel ");
       console.log(this.adressFormRecord);
-      this.adressFormLocalModel=(this.adressFormRecord);
+      this.setToLocalModel();
     }
 
   }
+   setToLocalModel(){
+
+     this.adressFormLocalModel=this.adressFormRecord;
+   }
+
 
   /**
    * Changes the local model back to the last saved version of the address

@@ -98,20 +98,14 @@ export class AddressListComponent implements OnInit, OnChanges {
 
   addAddress() {
     // add address to the list
-    const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
+    this.expander.collapseTableRows(); //if you don't do this view will not work properly
+    let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
 
-   // for (var i = 0; i < addressDataList.length; i++) {
       var formAddress=this.initAddress(true);
-     /* formAddress.controls.city.setValue('');
-      formAddress.controls.address.setValue('');*/
       mycontrol.push(formAddress);
       this.addRecordMsg++;
-    this.updateAddressDetails++;
-    //sync the address details child
     this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length-1];
-    //}
-
-
+    this.updateAddressDetails++;
     this.newRecordInd = true;
   }
 
