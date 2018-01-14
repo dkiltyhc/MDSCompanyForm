@@ -1,7 +1,7 @@
-import {Component, Input,Output, OnInit, DoCheck, SimpleChanges,OnChanges,EventEmitter} from '@angular/core';
-import { FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {Component, Input, Output, OnInit, DoCheck, SimpleChanges, OnChanges, EventEmitter} from '@angular/core';
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import * as _ from "lodash";
-import {IAddressData}  from '../data-models/address-data';
+import {IAddressData} from '../data-models/address-data';
 
 
 @Component({
@@ -17,18 +17,18 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
   @Input('group')
   public adressFormRecord: FormGroup;
   public adressFormLocalModel: FormGroup;
-  @Input ()  detailsChanged:number;
-  @Output () saveRecord =new EventEmitter() ;
-  @Output () revertRecord =new EventEmitter() ;
-  @Output () deleteRecord =new EventEmitter() ;
+  @Input() detailsChanged: number;
+  @Output() saveRecord = new EventEmitter();
+  @Output() revertRecord = new EventEmitter();
+  @Output() deleteRecord = new EventEmitter();
   /*  @Output('addStudentEvent')
   addStdEvent = new EventEmitter<Student>();*/
 
   @Output() createRecord; //TODO don't know if needed
 
-  public index=-1;
+  public index = -1;
   @Input('index') public ind;
-  @Input() formType:string;
+  @Input() formType: string;
 
 
   constructor(private _fb: FormBuilder) {
@@ -37,46 +37,52 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
 
   ngOnInit() {
     console.log(this.adressFormRecord);
-    if(!this.adressFormRecord) {
+    if (!this.adressFormRecord) {
       this.adressFormLocalModel = this.initAddress();
-    }else{
-     // this.setToLocalModel();
+    } else {
+      // this.setToLocalModel();
     }
-    this.detailsChanged=0;
+    this.detailsChanged = 0;
 
   }
 
   ngDoCheck() {
     this.setToLocalModel();
-   // console.log("Address Detials docheck")
-   // console.log(this.adressFormRecord)
+    // console.log("Address Detials docheck")
+    // console.log(this.adressFormRecord)
 
 
   }
+
   ng
 
-  ngOnChanges(changes: SimpleChanges){
+  ngOnChanges(changes: SimpleChanges) {
 
     console.log("There have been changes to details");
 
-    if(changes['detailsChanged']){ //used as a change indicator for the model
+    if (changes['detailsChanged']) { //used as a change indicator for the model
       console.log("copying the adressFormLocalModel ");
       console.log(this.adressFormRecord);
       this.setToLocalModel();
     }
 
   }
-   setToLocalModel(){
 
-     this.adressFormLocalModel=this.adressFormRecord;
-   }
+  setToLocalModel() {
+    if (this.adressFormRecord) {
+      this.adressFormLocalModel = this.adressFormRecord;
+    } else {
+      this.adressFormLocalModel = this.initAddress();
+    }
+
+  }
 
 
   /**
    * Changes the local model back to the last saved version of the address
    */
-  revertAddress(){
-    this.adressFormLocalModel=this.adressFormRecord;
+  revertAddress() {
+    this.adressFormLocalModel = this.adressFormRecord;
   }
 
   /**
@@ -92,29 +98,30 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
     });
   }
 
-    saveAddressRecord(){
+  saveAddressRecord() {
     // this.saveRecord=_.cloneDeep(this.adressFormLocalModel);
-     if( this.adressFormLocalModel.valid) {
-       this.saveRecord.emit((this.adressFormLocalModel));
-     }else{
-       var temp=this.adressFormLocalModel.value.id;
-       this.adressFormLocalModel.controls.id.setValue(1);
-       if( this.adressFormLocalModel.valid){
-         this.adressFormLocalModel.controls.id.setValue(temp);
-         this.saveRecord.emit((this.adressFormLocalModel));
-       }else{
-         this.adressFormLocalModel.controls.id.setValue(temp);
-       }
+    if (this.adressFormLocalModel.valid) {
+      this.saveRecord.emit((this.adressFormLocalModel));
+    } else {
+      var temp = this.adressFormLocalModel.value.id;
+      this.adressFormLocalModel.controls.id.setValue(1);
+      if (this.adressFormLocalModel.valid) {
+        this.adressFormLocalModel.controls.id.setValue(temp);
+        this.saveRecord.emit((this.adressFormLocalModel));
+      } else {
+        this.adressFormLocalModel.controls.id.setValue(temp);
+      }
 
-     }
-     console.log(this.saveRecord);
+    }
+    console.log(this.saveRecord);
   }
 
-  revertAddressRecord(){
+  revertAddressRecord() {
     this.revertRecord.emit(this.adressFormLocalModel);
     this.adressFormLocalModel.markAsPristine();
   }
-  deleteAddressRecord(){
+
+  deleteAddressRecord() {
     this.deleteRecord.emit(this.adressFormLocalModel.value.id);
   }
 

@@ -35,21 +35,10 @@
 
     <div >
       <address-list [group]="myForm.controls.addresses"></address-list>
-      <!--&lt;!&ndash;  <div *ngFor="let address of myForm.controls.addresses.controls; let i=index">&ndash;&gt;
-      <expander-component [group]="myForm.controls.addresses.controls">
-       <address-details></address-details>
-      </expander-component>-->
+
     </div>
-    <!--      </div>-->
+  <pre>Error Components number {{getErrorComponents()}}</pre>
 
-
-   <!-- <div>
-      <div class="margin-20">
-        <a (click)="addAddress()" style="cursor: default">
-          Add another address +
-        </a>
-      </div>
-    </div>-->
 
 
     <button type="submit" [disabled]="!myForm?.valid">Submit</button>
