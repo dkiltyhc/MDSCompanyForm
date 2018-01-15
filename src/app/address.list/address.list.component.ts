@@ -1,8 +1,9 @@
-import {Component, OnInit, Input, ViewChild, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, SimpleChanges, OnChanges, ViewChildren, QueryList, EventEmitter, Output} from '@angular/core';
 import {Form, FormArray, FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ExpanderComponent} from '../expander.component';
 import {AddressDetailsComponent} from '../address/address.details.component';
 import {CompanyModelService} from '../company.model.service';
+import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
 
 @Component({
   selector: 'address-list',
@@ -12,16 +13,20 @@ import {CompanyModelService} from '../company.model.service';
 export class AddressListComponent implements OnInit, OnChanges {
   @Input('group') public addresses: FormArray;
   @Input() public saveRecord2;
+  @Output() public errors=new EventEmitter();
+
   @ViewChild(ExpanderComponent) expander: ExpanderComponent;
   @ViewChild(AddressDetailsComponent) addressDetailsChild: AddressDetailsComponent;
+  @ViewChildren(AddressDetailsComponent) addressDetailsList: QueryList<AddressDetailsComponent>
 
   private prevRow = -1;
-  private updateAddressDetails: number = 0;
+  public updateAddressDetails: number = 0;
   public newRecordInd = false;
   public addressListForm: FormGroup;
-  private service: CompanyModelService;
-  private addRecordMsg = 0;
-  private deleteRecordMsg=0;
+  public service: CompanyModelService;
+  public addRecordMsg = 0;
+  public deleteRecordMsg=0;
+  private errorList=[];
   public columnDefinitions = [
     {
       label: 'ADDRESS',
@@ -56,6 +61,20 @@ export class AddressListComponent implements OnInit, OnChanges {
       mycontrol.push(formAddress);
       console.log(formAddress);
     }
+
+
+  }
+  ngOnViewInit(){
+
+
+
+
+    this.addressDetailsList.changes.subscribe(list => {
+      console.log("########Address List detected error changes");
+      list.forEach(writer => console.log(writer));
+    })
+
+
   }
 
   ngDoCheck() {
@@ -79,7 +98,6 @@ export class AddressListComponent implements OnInit, OnChanges {
     }else{
 
     }
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -122,7 +140,7 @@ export class AddressListComponent implements OnInit, OnChanges {
     return this._fb.group({
       id: [indexValue, Validators.min(0)],
       address: [null, Validators.required],
-      city: [null]
+      city: [null,Validators.required]
     });
   }
 
@@ -178,6 +196,12 @@ export class AddressListComponent implements OnInit, OnChanges {
     }
 
     return null;
+  }
+  updateErrorList(errs){
+
+    this.errorList=errs;
+    this.errors.emit(errs);
+    console.log(this.errorList);
   }
 
   _getFormAddress(id): FormGroup {

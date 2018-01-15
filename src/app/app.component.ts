@@ -1,6 +1,8 @@
-import {Component, OnInit,ViewChild} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {CompanyData} from './company.interfaces';
 import {Validators, FormGroup, FormArray, FormBuilder} from '@angular/forms';
+import {AddressListComponent} from './address.list/address.list.component';
+import {forEach} from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -11,6 +13,8 @@ import {Validators, FormGroup, FormArray, FormBuilder} from '@angular/forms';
 export class AppComponent  implements OnInit {
   title = 'App component';
   public myForm: FormGroup; // our form model
+  @ViewChildren(AddressListComponent) addressLists: QueryList<AddressListComponent>
+  public errorList={};
 
 // we will use form builder to simplify our syntax
   constructor(private _fb: FormBuilder) { }
@@ -22,6 +26,14 @@ export class AppComponent  implements OnInit {
       addresses: this._fb.array([])
     });
   }
+  ngAfterViewInit() {
+    this.addressLists.forEach(addressList => console.log(addressList));
+
+    this.addressLists.changes.subscribe(list => {
+      list.forEach(writer => console.log(writer));
+    })
+  }
+
 
  initAddress() {
     // initialize our address
@@ -31,6 +43,16 @@ export class AppComponent  implements OnInit {
       address: ['test1', Validators.required],
       city: ['test1']
     });
+  }
+
+  processErrors(errorList){
+    let errors={};
+    if(!errorList) return;
+    errorList.forEach(err => {
+        console.log(err)
+   /*   if(errors.hasOwnProperty(err.))*/
+      })
+
   }
 
 

@@ -1,7 +1,7 @@
-import {Component, Input,Output, OnInit, DoCheck, SimpleChanges,OnChanges,EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList} from '@angular/core';
 import { FormGroup, Validators, FormBuilder} from '@angular/forms';
-import * as _ from "lodash";
-import {IAddressData}  from '../data-models/address-data';
+import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
+
 
 
 @Component({
@@ -12,7 +12,7 @@ import {IAddressData}  from '../data-models/address-data';
 /**
  * Sample component is used for nothing
  */
-export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
+export class AddressDetailsComponent implements OnInit, OnChanges {
 
   @Input('group')
   public adressFormRecord: FormGroup;
@@ -21,13 +21,11 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
   @Output () saveRecord =new EventEmitter() ;
   @Output () revertRecord =new EventEmitter() ;
   @Output () deleteRecord =new EventEmitter() ;
-  /*  @Output('addStudentEvent')
-  addStdEvent = new EventEmitter<Student>();*/
+  @Output () errorList =new EventEmitter() ;
 
   @Output() createRecord; //TODO don't know if needed
+  @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>
 
-  public index=-1;
-  @Input('index') public ind;
   @Input() formType:string;
 
 
@@ -37,7 +35,8 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
 
   ngOnInit() {
     console.log(this.adressFormRecord);
-    if(!this.adressFormRecord) {
+    console.log(this.adressFormLocalModel);
+    if(!this.adressFormLocalModel) {
       this.adressFormLocalModel = this.initAddress();
     }else{
      // this.setToLocalModel();
@@ -45,15 +44,20 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
     this.detailsChanged=0;
 
   }
+  ngAfterViewInit() {
 
-  ngDoCheck() {
-    this.setToLocalModel();
-   // console.log("Address Detials docheck")
-   // console.log(this.adressFormRecord)
+    this.msgList.changes.subscribe(errorObjs => {
+      console.log("There are details changed")
 
+      let temp=[];
+      errorObjs.forEach(
+        error =>temp.push(error)
+      )
+      this.errorList.emit(temp);
+    })
 
   }
-  ng
+
 
   ngOnChanges(changes: SimpleChanges){
 
@@ -62,7 +66,13 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
     if(changes['detailsChanged']){ //used as a change indicator for the model
       console.log("copying the adressFormLocalModel ");
       console.log(this.adressFormRecord);
-      this.setToLocalModel();
+      if(this.adressFormRecord) {
+        this.setToLocalModel();
+      }else{
+        this.adressFormLocalModel = this.initAddress();
+        console.warn("There was no model, not updating")
+
+      }
     }
 
   }
@@ -88,7 +98,7 @@ export class AddressDetailsComponent implements DoCheck, OnInit, OnChanges {
     return this._fb.group({
       id: -1,
       address: [null, Validators.required],
-      city: [null]
+      city: [null, Validators.required]
     });
   }
 

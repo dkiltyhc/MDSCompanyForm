@@ -1,10 +1,12 @@
 <div [formGroup]="addressListForm">
   <h3>This is the address List Component</h3>
   <div formArrayName="addresses">
-    <expander-component [group]="addressListForm.controls.addresses.controls"
+    <expander-component [group]="addressListForm.controls.addresses['controls']"
                         [isValid]="addressListForm.valid && !addressListForm.dirty" [addRecord]="addRecordMsg"
                         [columnDefinitions]="columnDefinitions" (expandedRow2)="getRow($event)" [deleteRecord]="deleteRecordMsg">
-      <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE" (saveRecord) = "saveAddressRecord($event)" (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)" ></address-details>
+      <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE" (saveRecord) = "saveAddressRecord($event)"
+                       (errorList)="updateErrorList($event)"
+                       (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)" ></address-details>
     </expander-component>
   </div>
 <!-- <div>
