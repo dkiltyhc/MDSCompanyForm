@@ -25,7 +25,6 @@ export class CompanyModelService {
     for(var i=0;i<this.addressList.length;i++){
       if(this.addressList[i].id>this._indexValue){
           this._indexValue=this.addressList[i].id;
-        console.log("This is the index id"+this.addressList[i].id);
       }
     }
   }

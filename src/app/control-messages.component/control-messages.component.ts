@@ -10,6 +10,11 @@ import { ValidationService } from '../validation.service';
 
 export class ControlMessagesComponent {
   @Input() control: FormControl;
+  @Input() label:String;
+  @Input() controlId:String;
+  @Input() parentId:String;
+  @Input() parentLabel:String;
+  @Input() index:Number;
   constructor() { }
 
   get errorMessage() {

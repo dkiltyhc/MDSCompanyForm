@@ -1,9 +1,8 @@
-import {AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {CompanyData} from './company.interfaces';
 import {Validators, FormGroup, FormArray, FormBuilder} from '@angular/forms';
-import {ControlMessagesComponent} from "./control-messages.component/control-messages.component";
-import {AddressListComponent} from "./address.list/address.list.component";
-import {AddressDetailsComponent} from "./address/address.details.component";
+import {AddressListComponent} from './address.list/address.list.component';
+import {forEach} from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -11,18 +10,14 @@ import {AddressDetailsComponent} from "./address/address.details.component";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
-
-export class AppComponent  implements OnInit, AfterViewInit {
+export class AppComponent  implements OnInit {
   title = 'App component';
   public myForm: FormGroup; // our form model
-
-
+  @ViewChildren(AddressListComponent) addressLists: QueryList<AddressListComponent>
+  public errorList={};
 
 // we will use form builder to simplify our syntax
   constructor(private _fb: FormBuilder) { }
-  @ViewChildren(AddressListComponent)
-  allWriters: QueryList<AddressListComponent>;
 
   ngOnInit() {
     //create the blank form
@@ -30,28 +25,15 @@ export class AppComponent  implements OnInit, AfterViewInit {
       name: ['', [Validators.required, Validators.minLength(5)]],
       addresses: this._fb.array([])
     });
-
-
-
   }
   ngAfterViewInit() {
-/*
-    this.allWriters.changes.subscribe(list => {
-      console.log("@@@@@@@@@@@@@@@@@This is  @@@@@@@@@@@@@@")
-      list.forEach(writer => console.log("This is hth errror"+writer));
-    });
-*/
-    //this.innerComponents.changes
-    //  .subscribe(e => this.lastVal = (e.last || {}).val);\\
+    this.addressLists.forEach(addressList => console.log(addressList));
 
-    this.allWriters.changes.subscribe(() => {
-      console.log("subscribe");
-      this.allWriters.toArray().forEach(el => {
-        console.log("found stuff")
-        console.log(el);
-      });
-    });
+    this.addressLists.changes.subscribe(list => {
+      list.forEach(writer => console.log(writer));
+    })
   }
+
 
  initAddress() {
     // initialize our address
@@ -63,22 +45,30 @@ export class AppComponent  implements OnInit, AfterViewInit {
     });
   }
 
-  getErrorComponents(){
+  processErrors(errorList){
+    let errors={};
+    if(!errorList) return;
+    errorList.forEach(err => {
+        console.log(err)
+   /*   if(errors.hasOwnProperty(err.))*/
+      })
 
-    if(this.allWriters)
-    console.log(this.allWriters.length);
-    console.log(this.allWriters);
   }
 
 
+/*
+  removeAddress(i: number) {
+    // remove address from the list
+    const control = <FormArray>this.myForm.controls['addresses'];
+    control.removeAt(i);
+  }
+*/
 
 
   save(model: CompanyData) {
     // call API to save customer
     //console.log(model);
   }
-
-
 
 
 }

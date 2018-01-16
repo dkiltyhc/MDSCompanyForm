@@ -1,18 +1,26 @@
 <div class="address-details-form">
   <div [formGroup]="adressFormLocalModel">
     <div>
-            <label for="address">Address</label>
+            <label for="address" i18n>Address</label>
             <input id="address" formControlName="address"/>
-            <control-messages [control]="adressFormLocalModel.controls.address"></control-messages>
+            <control-messages *ngIf="adressFormLocalModel.controls.address.invalid"
+                              [control]="adressFormLocalModel.controls.address"
+                              controlId="address" label="Street Address" parentId="addressDetails"
+                              parentLabel="REP Address" [index]="adressFormLocalModel.controls.id.value"
+            ></control-messages>
         </div>
     <div>
-            <label for="city">City</label>
+            <label for="city" i18n>City</label>
             <input id="city" formControlName="city"/>
-          <control-messages [control]="adressFormLocalModel.controls.city"></control-messages>
+          <control-messages *ngIf="adressFormLocalModel.controls.city.invalid"
+                            [control]="adressFormLocalModel.controls.city"
+                            controlId="city" label="City" parentId="addressDetails"
+                            parentLabel="REP Address" [index]="adressFormLocalModel.controls.id.value"
+          ></control-messages>
         </div>
     </div>
-  <button (click)="saveAddressRecord()">Save Address</button>
-  <button (click)="revertAddressRecord()">Revert Address</button>
-  <button (click)="deleteAddressRecord()">Delete Address</button>
+  <button (click)="saveAddressRecord()" i18n>Save Address</button>
+  <button (click)="revertAddressRecord()" i18n>Revert Address</button>
+  <button (click)="deleteAddressRecord()" i18n>Delete Address</button>
 </div>
 

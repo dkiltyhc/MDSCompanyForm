@@ -9,6 +9,8 @@ import { ControlMessagesComponent } from './control-messages.component/control-m
 import {AddressDetailsComponent} from './address/address.details.component';
 import {ValidationService} from './validation.service';
 import { AddressListComponent } from './address.list/address.list.component';
+import {ErrorSummaryModule} from './error-msg/error-msg.module';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { AddressListComponent } from './address.list/address.list.component';
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ErrorSummaryModule
   ],
   providers: [ ValidationService ],
   bootstrap: [AppComponent]
