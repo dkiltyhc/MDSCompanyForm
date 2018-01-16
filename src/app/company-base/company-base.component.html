@@ -1,0 +1,13 @@
+<div>
+  <form [formGroup]="myForm" novalidate>
+    <!-- we will place our fields here -->
+    <div >
+      <error-summary  [errorList]="errorList"></error-summary>
+      <address-list [group]="myForm.controls.addresses" (errors)="processErrors($event)"></address-list>
+    </div>
+    <button type="submit" [disabled]="!myForm?.valid">Submit</button>
+    <pre> myForm valid{{myForm.valid}}</pre>
+    <pre> myForm{{myForm.value |json}}</pre>
+  </form>
+
+</div>

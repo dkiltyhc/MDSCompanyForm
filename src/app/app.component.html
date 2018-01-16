@@ -1,24 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div>
-  <form [formGroup]="myForm" novalidate>
-    <!-- we will place our fields here -->
-    <div class="form-group">
-      <label>Name</label>
-      <input type="text" class="form-control" formControlName="name">
-      <small *ngIf="!myForm.controls.name.valid" class="text-danger">
-        Name is required (minimum 5 characters).
-      </small>
-    </div>
-
-    <div >
-      <error-summary></error-summary>
-      <address-list [group]="myForm.controls.addresses" (errors)="processErrors($event)"></address-list>
-    </div>
-    <button type="submit" [disabled]="!myForm?.valid">Submit</button>
-    <pre> myForm valid{{myForm.valid}}</pre>
-    <pre> myForm{{myForm.value |json}}</pre>
-  </form>
-
-
+  <company-base></company-base>
 </div>
 

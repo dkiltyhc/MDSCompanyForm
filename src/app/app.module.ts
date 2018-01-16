@@ -10,6 +10,7 @@ import {AddressDetailsComponent} from './address/address.details.component';
 import {ValidationService} from './validation.service';
 import { AddressListComponent } from './address.list/address.list.component';
 import {ErrorSummaryModule} from './error-msg/error-msg.module';
+import { CompanyBaseComponent } from './company-base/company-base.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {ErrorSummaryModule} from './error-msg/error-msg.module';
     TestComponentComponent,
     AddressDetailsComponent,
     ControlMessagesComponent,
-    AddressListComponent
+    AddressListComponent,
+    CompanyBaseComponent
   ],
   imports: [
     BrowserModule,
