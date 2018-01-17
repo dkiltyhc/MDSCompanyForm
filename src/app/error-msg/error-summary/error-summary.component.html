@@ -2,16 +2,18 @@
 <div  id="errors-summary">
   <section  class="alert alert-danger" tabindex="-1">
     <h1>
-      <span i18n> For The </span>
+      <span i18n>For the </span><span>{{headingPreamble}}</span>
       <span i18n>Errors Found</span>
       <span i18n>Error Found</span>
     </h1>
-    <!--<ul *ngFor="let parentError of errors">
-      <div  *ngFor="let controlError of parentError.controls" >
+    <ul *ngFor="let parentError of errors | keys">
+      <span>{{parentError.key}}</span>
+      <div  *ngFor="let controlError of parentError.value.controls" >
         <li><a  href="#{{controlError.controlId}}" target="_self">{{controlError.label}}
           &nbsp;&#8208;&nbsp;{{controlError.error}}</a></li>
       </div>
-    </ul>-->
+    </ul>
   </section>
-
+  <pre>{{errors|json}}</pre>
+  <pre *ngFor="let parentError of errors | keys"></pre>
 </div>

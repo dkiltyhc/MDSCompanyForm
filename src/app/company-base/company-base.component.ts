@@ -1,7 +1,7 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {AddressListComponent} from '../address.list/address.list.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.component';
+//import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.component';
 
 @Component({
   selector: 'company-base',
@@ -11,12 +11,12 @@ import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.co
 export class CompanyBaseComponent implements OnInit {
   public errors;
   @ViewChildren(AddressListComponent) addressLists: QueryList<AddressListComponent>;
-  @ViewChild(ErrorSummaryComponent) errorSummary: ErrorSummaryComponent;
+  //@ViewChild(ErrorSummaryComponent) errorSummary: ErrorSummaryComponent;
 
   public myForm: FormGroup; // our form model
   public errorList = {};
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder,private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -45,8 +45,9 @@ export class CompanyBaseComponent implements OnInit {
 
   processErrors(errorList) {
     console.log('Processing errors');
-    //this.errorList=errorList;
-    this.errorSummary.processErrors(errorList);
+    this.errorList=errorList;
+    this.cdr.detectChanges();
+    //this.errorSummary.processErrors(errorList);
 
     /*
     let errors = {};

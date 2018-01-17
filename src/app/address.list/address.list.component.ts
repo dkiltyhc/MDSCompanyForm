@@ -50,11 +50,11 @@ export class AddressListComponent implements OnInit, OnChanges {
     this.addressListForm = this._fb.group({
       addresses: this.addresses
     });
-    var addressDataList = this.service.getAddresses();
+    let addressDataList = this.service.getAddresses();
     const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
 
-    for (var i = 0; i < addressDataList.length; i++) {
-      var formAddress = this.initAddress(true);
+    for (let i = 0; i < addressDataList.length; i++) {
+      let formAddress = this.initAddress(true);
       formAddress.controls.city.setValue(addressDataList[i].city);
       formAddress.controls.address.setValue(addressDataList[i].address);
       formAddress.controls.id.setValue(addressDataList[i].id);
@@ -70,7 +70,6 @@ export class AddressListComponent implements OnInit, OnChanges {
 
 
     this.addressDetailsList.changes.subscribe(list => {
-      console.log("########Address List detected error changes");
       list.forEach(writer => console.log(writer));
     })
 
@@ -119,7 +118,7 @@ export class AddressListComponent implements OnInit, OnChanges {
     this.expander.collapseTableRows(); //if you don't do this view will not work properly
     let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
 
-      var formAddress=this.initAddress(true);
+      let formAddress=this.initAddress(true);
       mycontrol.push(formAddress);
       this.addRecordMsg++;
     this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length-1];
@@ -132,7 +131,7 @@ export class AddressListComponent implements OnInit, OnChanges {
   initAddress(skipIndex:boolean=false) {
 
     // initialize our address
-    var indexValue=-1;
+    let indexValue=-1;
     if(!skipIndex) {
       indexValue= this.service.getNextIndex();
     }
@@ -156,15 +155,12 @@ export class AddressListComponent implements OnInit, OnChanges {
    */
   saveAddressRecord(record) {
     //const addressList = <FormArray>this.addressListForm.controls['addresses'];
-    var modelAddresses=this.service.getAddresses();
-    console.log("SAVING ADDRESS");
-    console.log(record);
-    console.log(modelAddresses);
-    var addressModel=this.service.getAddressModel();
+    let modelAddresses=this.service.getAddresses();
+    let addressModel=this.service.getAddressModel();
     addressModel.id=record.controls.id.value;
     addressModel.address=record.controls.address.value;
     addressModel.city=record.controls.address.value;
-    var resultId=this.service.saveAddress(addressModel);
+    let resultId=this.service.saveAddress(addressModel);
     record.controls.id.setValue(resultId);
     this.addressDetailsChild.adressFormRecord.markAsPristine();
     this.expander.collapseTableRows();
@@ -177,7 +173,7 @@ export class AddressListComponent implements OnInit, OnChanges {
    */
   getRow(row){
     if(row>-1){
-      const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
+      let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
       this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[row];
       this.updateAddressDetails++;
     }else{
@@ -186,11 +182,10 @@ export class AddressListComponent implements OnInit, OnChanges {
   }
 
   _getModelAddress(id){
-    var modelList=this.service.getAddresses();
+    const modelList=this.service.getAddresses();
 
-    for (var i = 0; i < modelList.length; i++) {
+    for (let i = 0; i < modelList.length; i++) {
       if(modelList[i].id===id){
-        console.log("found a model");
         return modelList[i];
       }
     }
@@ -206,8 +201,8 @@ export class AddressListComponent implements OnInit, OnChanges {
 
   _getFormAddress(id): FormGroup {
     const addressList = <FormArray>this.addressListForm.controls['addresses'];
-    for (var i = 0; i < addressList.controls.length; i++) {
-      var temp = <FormGroup> addressList.controls[i];
+    for (let i = 0; i < addressList.controls.length; i++) {
+      let temp = <FormGroup> addressList.controls[i];
       if (temp.controls.id.value === id) {
         return temp;
       }
@@ -220,33 +215,26 @@ export class AddressListComponent implements OnInit, OnChanges {
    * @param record
    */
   revertAddress(record) {
-    console.log('starting the revert process');
-    console.log(record);
-    var recordId = record.controls.id.value;
-    var modelRecord = this._getModelAddress(recordId);
+    let recordId = record.controls.id.value;
+    let modelRecord = this._getModelAddress(recordId);
     console.log(modelRecord);
     //assume if it is not on the list it is null
     if (!modelRecord) {
       modelRecord = this.service.getAddressModel();
     }
-    var rec = this._getFormAddress(recordId);
-    console.log(rec);
+    let rec = this._getFormAddress(recordId);
     rec.controls.address.setValue(modelRecord.address);
     rec.controls.city.setValue(modelRecord.city);
     this.addressDetailsChild.adressFormRecord.markAsPristine();
   }
 
   deleteAddress(id) {
-    console.log("Starting deletion of " + id);
-    //var modelRecord = this._getModelAddress(id);
-    const serviceResult = this.service.deleteModelAddress(id);
+
+    const serviceResult = this.service.deleteModelAddress(id); ///TODO check result? There is a use case for no model?
     let addressList = <FormArray>this.addressListForm.controls['addresses'];
-    console.log(addressList);
-    for (var i = 0; i < addressList.controls.length; i++) {
-      var temp = <FormGroup> addressList.controls[i];
+    for (let i = 0; i < addressList.controls.length; i++) {
+      let temp = <FormGroup> addressList.controls[i];
       if (temp.controls.id.value === id) {
-        console.log("Deleting record " + id);
-        console.log(addressList);
         addressList.removeAt(i);
       }
       this.deleteRecordMsg++;
@@ -254,6 +242,5 @@ export class AddressListComponent implements OnInit, OnChanges {
       this.prevRow = -1;
     }
   }
-
 
 }

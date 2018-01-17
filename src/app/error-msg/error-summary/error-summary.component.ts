@@ -1,5 +1,5 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
-
+import {ChangeDetectorRef, Component, Input, OnInit, Pipe, PipeTransform, SimpleChanges} from '@angular/core';
+import {JsonKeysPipe} from '../../main-pipe/json-keys.pipe';
 
 @Component({
   selector: 'error-summary',
@@ -9,29 +9,41 @@ import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 export class ErrorSummaryComponent implements OnInit {
   @Input() headingPreamble: String;
   @Input() errorList;
-  public errors={};
-  constructor() {
+
+  public errors = {};
+
+  constructor(private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+
+  }
+
+  ngAfterViewInit() {
+    console.log('all done loading :)');
+    this.cdr.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes['errorList']) {
       console.log(changes['errorList'].currentValue);
-      //this.processErrors(changes['errorList'].currentValue)
+      this.processErrors(changes['errorList'].currentValue);
     }
   }
 
   processErrors(errorList) {
     console.log('Processing errors');
 
-
+    this.errors = {};
     //let errors = {};
-    if (!errorList) return;
-    errorList.forEach(err => {
+    if (!errorList) {
+      return;
+    }
+    for (let err of errorList) {
+      // errorList.forEach(err => {
       console.log(err);
+
       if (this.errors.hasOwnProperty(err.parentId)) {
         //parent properties already set
         // let controlError={};
@@ -56,8 +68,8 @@ export class ErrorSummaryComponent implements OnInit {
         this.errors[err.parentId] = parentError;
         console.log(err);
       }
-      console.log(this.errors);
-    });
-  }
 
+    }
+    console.log(this.errors);
+  }
 }

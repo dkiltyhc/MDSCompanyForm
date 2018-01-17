@@ -69,7 +69,6 @@ export class ExpanderComponent implements OnChanges {
    * @param {SimpleChanges} changes
    */
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     if (changes['columnDefinitions']) {
       this.numberColSpan = (changes['columnDefinitions'].currentValue).length + 1;
     }
@@ -77,15 +76,12 @@ export class ExpanderComponent implements OnChanges {
       this.collapseTableRows();
       this.updateDataRows(this.itemsList);
       this.selectTableRowNoCheck(this._expanderTable.length - 1);
-      console.log('EXPANDER: RECORD ADDED ' + this.itemsList.length);
     }
     if (changes['itemsList']) {
-      console.log('*******changes to groups');
       this.updateDataRows(changes['itemsList'].currentValue);
     }
     if (changes['deleteRecord']) {
       this.updateDataRows(this.itemsList);
-      console.log('EXPANDER: RECORD deleted ' + this.itemsList.length);
     }
 
   }
@@ -154,9 +150,6 @@ export class ExpanderComponent implements OnChanges {
    * @param {number} index
    */
   public selectTableRow(index: number) {
-
-    console.log("Select Row index "+index);
-
     if (this._expanderTable.length < index) {
       console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
       return;
@@ -168,14 +161,11 @@ export class ExpanderComponent implements OnChanges {
       }
       this.collapseTableRows();
       this._expanderTable[index] = !temp;
-    console.log("results "+temp+ this._expanderTable[index]);
       if (this._expanderTable[index]) {
         this.tableRowIndexCurrExpanded = index;
       } else {
         this.tableRowIndexCurrExpanded = -1;
       }
-    console.log(this._expanderTable);
-
   }
 
 
@@ -198,7 +188,6 @@ export class ExpanderComponent implements OnChanges {
    * Collapses all the table rows. Ignores any error states in the details.
    */
   public collapseTableRows() {
-    console.log("Collapsing all the table rows")
     for (let i = 0; i < this._expanderTable.length; i++) {
       this._expanderTable[i] = false;
     }

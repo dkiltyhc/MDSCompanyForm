@@ -11,6 +11,8 @@ import {ValidationService} from './validation.service';
 import { AddressListComponent } from './address.list/address.list.component';
 import {ErrorSummaryModule} from './error-msg/error-msg.module';
 import { CompanyBaseComponent } from './company-base/company-base.component';
+import {MainPipeModule} from './main-pipe/main-pipe.module';
+
 
 
 @NgModule({
@@ -21,13 +23,14 @@ import { CompanyBaseComponent } from './company-base/company-base.component';
     AddressDetailsComponent,
     ControlMessagesComponent,
     AddressListComponent,
-    CompanyBaseComponent
+    CompanyBaseComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    ErrorSummaryModule
+    ErrorSummaryModule,
+    MainPipeModule
   ],
   providers: [ ValidationService ],
   bootstrap: [AppComponent]

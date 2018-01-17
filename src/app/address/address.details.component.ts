@@ -47,11 +47,14 @@ export class AddressDetailsComponent implements OnInit, OnChanges {
   ngAfterViewInit() {
 
     this.msgList.changes.subscribe(errorObjs => {
-      console.log("There are details changed")
+      console.log("There are errors changed in the address details")
 
       let temp=[];
       errorObjs.forEach(
-        error =>temp.push(error)
+
+        error =>{
+            temp.push(error)
+        }
       )
       this.errorList.emit(temp);
     })
