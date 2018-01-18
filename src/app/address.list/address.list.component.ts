@@ -31,7 +31,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
   public service: CompanyModelService;
   public addRecordMsg = 0;
   public deleteRecordMsg = 0;
-  private errorList = [];
+  public errorList = [];
   public showErrorSummary:boolean=false;
   public columnDefinitions = [
     {
@@ -58,7 +58,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     });
     let addressDataList = this.service.getAddresses();
     const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
-
+    //TODO temp setting some initial data
     for (let i = 0; i < addressDataList.length; i++) {
       let formAddress = this.initAddress(true);
       formAddress.controls.city.setValue(addressDataList[i].city);
@@ -68,9 +68,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
       console.log(formAddress);
     }
 
-
   }
-
   ngAfterViewInit() {
     console.log('Starting adddress list onViewInit');
     this.processSummaries(this.errorSummaryChildList);
@@ -104,7 +102,8 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     const rowNum = this.expander.getExpandedRow();
     //used to sync the expander with the details
     //TODO will prevrow work with the delete scenario && this.prevRow !== rowNum
-    if (rowNum > -1) {
+    if (rowNum > -1 && this.prevRow!=rowNum) {
+      console.log("####### Synching current row...")
       const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
       this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[rowNum];
       this.updateAddressDetails++;
@@ -124,11 +123,14 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  public isValid(override: boolean): boolean {
+  public isValid(override: boolean=false): boolean {
     if (override) {
       return true;
     }
-    return this.addressListForm.valid;
+    if(this.addressDetailsChild && this.addressDetailsChild.adressFormRecord) {
+      return (this.addressListForm.valid && !this.addressDetailsChild.adressFormRecord.dirty);
+    }
+    return (this.addressListForm.valid);
   }
 
   public addAddress(): void {
@@ -179,7 +181,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     if(!record){
       this.showErrorSummary=true;
       //set the focus
-      this.errorSummaryChild.nativeElement.focus(); //TODO this seems bad
+      //this.errorSummaryChild.nativeElement.focus(); //TODO this seems bad
       return;
     }
     let modelAddresses = this.service.getAddresses();
@@ -200,6 +202,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
    */
   public getRow(row): void {
     if (row > -1) {
+      console.log("####### Getting Row...")
       let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
       this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[row];
       this.updateAddressDetails++;

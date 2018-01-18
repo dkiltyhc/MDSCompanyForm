@@ -2,6 +2,34 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="5f2ebbf884e49822f437889ac1e826aef4d99e73" datatype="html">
+        <source>For the </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/error-msg/error-summary/error-summary.component.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="22690b46e9de9b50fa31b4b43af036414045fbb1" datatype="html">
+        <source>Errors Found</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/error-msg/error-summary/error-summary.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5538c5bcce513a77a1d88d03c48269f0313c3dac" datatype="html">
+        <source>Error Found</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/error-msg/error-summary/error-summary.component.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="expander.rowTitle" datatype="html">
+        <source>Expand Row <x id="INTERPOLATION" equiv-text="{{i+1}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/expander.component.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="729754dd19eb9ce0670b0aeb5a6ae60574c2c563" datatype="html">
         <source>Address</source>
         <context-group purpose="location">
@@ -13,7 +41,28 @@
         <source>City</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/address/address.details.component.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5a697106417ab799c073387c6fc4d5d27f4eb825" datatype="html">
+        <source>Save Address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/address/address.details.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="875c2e939baead758116b4bbd1ac8ad498f23f88" datatype="html">
+        <source>Revert Address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/address/address.details.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="91bb7d9976fef58f04bf91b66c7746c47964fb4f" datatype="html">
+        <source>Delete Address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/address/address.details.component.ts</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
     </body>

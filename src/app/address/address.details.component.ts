@@ -56,7 +56,9 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes['detailsChanged']) { //used as a change indicator for the model
+      console.log("################ngOnChanges changed for Address Details");
       if (this.adressFormRecord) {
+        console.log("################Setting to local model");
         this.setToLocalModel();
       } else {
         this.adressFormLocalModel = this.initAddress();

@@ -14,7 +14,7 @@ export class ErrorSummaryComponent implements AfterViewInit{
   @Input() compId = 'error-summary-';
   public type: String;
   public errors = {};
-  private componentId = '';
+  public componentId = '';
 
   constructor(private cdr: ChangeDetectorRef,private globals: GlobalsService) {
     this.type = globals.errorSummClassName;

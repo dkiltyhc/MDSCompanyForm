@@ -11,6 +11,14 @@
                        (saveRecord)="saveAddressRecord($event)"
                        (errorList)="updateErrorList($event)"
                        (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></address-details>
+      <div class="row" *ngIf="showErrorSummary">
+        <div class="col-xs-7">
+          <div class="alert alert-danger" role="alert"
+               aria-live="polite">
+            <span>Please Save or revert the record</span>
+          </div>
+        </div>
+      </div>
     </expander-component>
   </div>
   <div>

@@ -4,21 +4,23 @@
       <label for="address" i18n>Address</label>
       <input id="address" formControlName="address"/>
       <control-messages *ngIf="adressFormLocalModel.controls.address.invalid"
-        [control]="adressFormLocalModel.controls.address"
-        controlId="address" label="Street Address" parentId="addressDetails"
-        parentLabel="REP Address" [index]="adressFormLocalModel.controls.id.value"></control-messages>
+                        [control]="adressFormLocalModel.controls.address"
+                        controlId="address" label="Street Address" parentId="addressDetails"
+                        parentLabel="REP Address" [index]="adressFormLocalModel.controls.id.value"></control-messages>
     </div>
     <div>
       <label for="city" i18n>City</label>
       <input id="city" formControlName="city"/>
       <control-messages *ngIf="adressFormLocalModel.controls.city.invalid"
-        [control]="adressFormLocalModel.controls.city"
-        controlId="city" label="City" parentId="addressDetails"
-        parentLabel="REP Address" [index]="adressFormLocalModel.controls.id.value"></control-messages>
+                        [control]="adressFormLocalModel.controls.city"
+                        controlId="city" label="City" parentId="addressDetails"
+                        parentLabel="REP Address" [index]="adressFormLocalModel.controls.id.value"></control-messages>
     </div>
   </div>
-  <button (click)="saveAddressRecord()" i18n>Save Address</button>
-  <button (click)="revertAddressRecord()" i18n>Revert Address</button>
-  <button (click)="deleteAddressRecord()" i18n>Delete Address</button>
+  <div>
+    <button (click)="saveAddressRecord()" i18n>Save Address</button>
+    <button (click)="revertAddressRecord()" i18n>Revert Address</button>
+    <button (click)="deleteAddressRecord()" i18n>Delete Address</button>
+  </div>
 </div>
 

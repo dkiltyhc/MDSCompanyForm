@@ -156,7 +156,7 @@ export class ExpanderComponent implements OnChanges {
     }
       let temp = this._expanderTable[index];
       if (temp && !this.isValid && this.disableCollapse) {
-        console.warn('select table row did not meet conditions');
+       // console.warn('select table row did not meet conditions');
         return;
       }
       this.collapseTableRows();

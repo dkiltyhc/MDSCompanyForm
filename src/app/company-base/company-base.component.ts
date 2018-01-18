@@ -14,7 +14,7 @@ export class CompanyBaseComponent implements OnInit {
   //@ViewChild(ErrorSummaryComponent) errorSummary: ErrorSummaryComponent;
 
   public myForm: FormGroup; // our form model
-  public errorList = {};
+  public errorList = [];
 
   constructor(private _fb: FormBuilder,private cdr: ChangeDetectorRef) {
   }
@@ -47,6 +47,11 @@ export class CompanyBaseComponent implements OnInit {
     console.log(errorList);
     this.errorList=errorList;
     this.cdr.detectChanges();
+  }
+  public hideErrorSummary(){
+    if(!this.errorList) return false;
+    return this.errorList.length==0;
 
   }
+
 }
