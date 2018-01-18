@@ -1,32 +1,38 @@
-import {Component, OnInit, Input, ViewChild, SimpleChanges, OnChanges, ViewChildren, QueryList, EventEmitter, Output} from '@angular/core';
+import {
+  Component, OnInit, Input, ViewChild, SimpleChanges, OnChanges, ViewChildren, QueryList, EventEmitter, Output,
+  AfterViewInit
+} from '@angular/core';
 import {Form, FormArray, FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ExpanderComponent} from '../expander.component';
 import {AddressDetailsComponent} from '../address/address.details.component';
 import {CompanyModelService} from '../company.model.service';
-import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
+//import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
+import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.component';
 
 @Component({
   selector: 'address-list',
   templateUrl: './address.list.component.html',
   styleUrls: ['./address.list.component.css']
 })
-export class AddressListComponent implements OnInit, OnChanges {
+export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('group') public addresses: FormArray;
-  @Input() public saveRecord2;
-  @Output() public errors=new EventEmitter();
+  @Input() public saveRecord;
+  @Output() public errors = new EventEmitter();
 
   @ViewChild(ExpanderComponent) expander: ExpanderComponent;
   @ViewChild(AddressDetailsComponent) addressDetailsChild: AddressDetailsComponent;
-  @ViewChildren(AddressDetailsComponent) addressDetailsList: QueryList<AddressDetailsComponent>
+  @ViewChildren(ErrorSummaryComponent) errorSummaryChildList: QueryList<ErrorSummaryComponent>;
 
+  private errorSummaryChild = null;
   private prevRow = -1;
   public updateAddressDetails: number = 0;
   public newRecordInd = false;
   public addressListForm: FormGroup;
   public service: CompanyModelService;
   public addRecordMsg = 0;
-  public deleteRecordMsg=0;
-  private errorList=[];
+  public deleteRecordMsg = 0;
+  private errorList = [];
+  public showErrorSummary:boolean=false;
   public columnDefinitions = [
     {
       label: 'ADDRESS',
@@ -64,20 +70,29 @@ export class AddressListComponent implements OnInit, OnChanges {
 
 
   }
-  ngOnViewInit(){
 
-
-
-
-    this.addressDetailsList.changes.subscribe(list => {
-      list.forEach(writer => console.log(writer));
-    })
-
-
+  ngAfterViewInit() {
+    console.log('Starting adddress list onViewInit');
+    this.processSummaries(this.errorSummaryChildList);
+    this.errorSummaryChildList.changes.subscribe(list => {
+      this.processSummaries(list);
+    });
   }
 
-  ngDoCheck() {
+  /**
+   * Updates the error list to include the error summaries. Messages upwards
+   * @param {QueryList<ErrorSummaryComponent>} list
+   */
+  private processSummaries(list: QueryList<ErrorSummaryComponent>): void {
+    if (list.length > 1) {
+      console.warn('Address List found >1 Error Summary ' + list.length);
+    }
+    this.errorSummaryChild = list.first;
+    this._emitErrors();
+  }
 
+
+  ngDoCheck() {
     this._syncCurrentExpandedRow();
   }
 
@@ -89,114 +104,147 @@ export class AddressListComponent implements OnInit, OnChanges {
     const rowNum = this.expander.getExpandedRow();
     //used to sync the expander with the details
     //TODO will prevrow work with the delete scenario && this.prevRow !== rowNum
-    if (rowNum > -1 ) {
+    if (rowNum > -1) {
       const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
       this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[rowNum];
       this.updateAddressDetails++;
       this.prevRow = rowNum;
-    }else{
-
+    } else {
+      //do nothing?
     }
   }
 
+  /**
+   * Processes change events from inputs
+   * @param {SimpleChanges} changes
+   */
   ngOnChanges(changes: SimpleChanges) {
-
-    if (changes['saveRecord2']) {
+    if (changes['saveRecord']) {
       this.saveAddressRecord(changes['saveRecord'].currentValue);
     }
   }
 
-  isValid(override: boolean) {
+  public isValid(override: boolean): boolean {
     if (override) {
       return true;
     }
     return this.addressListForm.valid;
   }
 
-  addAddress() {
+  public addAddress(): void {
     // add address to the list
     this.expander.collapseTableRows(); //if you don't do this view will not work properly
     let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
 
-      let formAddress=this.initAddress(true);
-      mycontrol.push(formAddress);
-      this.addRecordMsg++;
-    this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length-1];
+    let formAddress = this.initAddress(true);
+    mycontrol.push(formAddress);
+    this.addRecordMsg++;
+    this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length - 1];
     this.updateAddressDetails++;
     this.newRecordInd = true;
   }
 
 
-
-  initAddress(skipIndex:boolean=false) {
+  public initAddress(skipIndex: boolean = false): FormGroup {
 
     // initialize our address
-    let indexValue=-1;
-    if(!skipIndex) {
-      indexValue= this.service.getNextIndex();
+    let indexValue = -1;
+    if (!skipIndex) {
+      indexValue = this.service.getNextIndex();
     }
 
     return this._fb.group({
       id: [indexValue, Validators.min(0)],
       address: [null, Validators.required],
-      city: [null,Validators.required]
+      city: [null, Validators.required]
     });
   }
 
-  removeAddress(i: number) {
+  /**
+   * Removes an address FormGroup from the UI
+   * @param {number} i
+   */
+  public removeAddress(i: number): void {
     // remove address from the list
     const control = <FormArray>this.addressListForm.controls['addresses'];
     control.removeAt(i);
   }
 
   /**
-   * Saves the record to the list. If new adds to the end of the list
+   * Saves the record to the list. If new adds to the end of the list. Does no error Checking
    * @param record
    */
-  saveAddressRecord(record) {
-    //const addressList = <FormArray>this.addressListForm.controls['addresses'];
-    let modelAddresses=this.service.getAddresses();
-    let addressModel=this.service.getAddressModel();
-    addressModel.id=record.controls.id.value;
-    addressModel.address=record.controls.address.value;
-    addressModel.city=record.controls.address.value;
-    let resultId=this.service.saveAddress(addressModel);
+  public saveAddressRecord(record): void {
+
+    if(!record){
+      this.showErrorSummary=true;
+      //set the focus
+      this.errorSummaryChild.nativeElement.focus(); //TODO this seems bad
+      return;
+    }
+    let modelAddresses = this.service.getAddresses();
+    let addressModel = this.service.getAddressModel();
+    addressModel.id = record.controls.id.value;
+    addressModel.address = record.controls.address.value;
+    addressModel.city = record.controls.address.value;
+    let resultId = this.service.saveAddress(addressModel);
     record.controls.id.setValue(resultId);
     this.addressDetailsChild.adressFormRecord.markAsPristine();
     this.expander.collapseTableRows();
-
+    this.showErrorSummary=false;
   }
 
   /**
-   * Gets a
+   * Sets the address details controls form to a given row
    * @param row
    */
-  getRow(row){
-    if(row>-1){
+  public getRow(row): void {
+    if (row > -1) {
       let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
       this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[row];
       this.updateAddressDetails++;
-    }else{
-      console.info("Address List row number is "+row);
+    } else {
+      console.info('Address List row number is ' + row);
     }
   }
 
-  _getModelAddress(id){
-    const modelList=this.service.getAddresses();
-
+  /**
+   * Returns a model json object for a given record id
+   * @param id
+   * @returns {Json}
+   * @private
+   */
+  private _getModelAddress(id) {
+    const modelList = this.service.getAddresses();
     for (let i = 0; i < modelList.length; i++) {
-      if(modelList[i].id===id){
+      if (modelList[i].id === id) {
         return modelList[i];
       }
     }
-
     return null;
   }
-  updateErrorList(errs){
 
-    this.errorList=errs;
-    this.errors.emit(errs);
-    console.log(this.errorList);
+  /**
+   *  Updates the error list
+   * @param errs
+   */
+  updateErrorList(errs) {
+    this.errorList = errs;
+    this._emitErrors(); //needed or will generate a valuechanged error
+  }
+
+  /***
+   * Emits errors to higher level error summaries. Used for linking summaries
+   * @private
+   */
+  private _emitErrors(): void {
+    let emitErrors = [];
+    if (this.errorSummaryChild) {
+      emitErrors.push(this.errorSummaryChild);
+    }
+    console.log('####Emitting Errors');
+    console.log(emitErrors);
+    this.errors.emit(emitErrors);
   }
 
   _getFormAddress(id): FormGroup {
@@ -214,7 +262,7 @@ export class AddressListComponent implements OnInit, OnChanges {
    * Loads the last saved version of the record data
    * @param record
    */
-  revertAddress(record) {
+  public revertAddress(record):void {
     let recordId = record.controls.id.value;
     let modelRecord = this._getModelAddress(recordId);
     console.log(modelRecord);
@@ -228,8 +276,7 @@ export class AddressListComponent implements OnInit, OnChanges {
     this.addressDetailsChild.adressFormRecord.markAsPristine();
   }
 
-  deleteAddress(id) {
-
+  public deleteAddress(id):void {
     const serviceResult = this.service.deleteModelAddress(id); ///TODO check result? There is a use case for no model?
     let addressList = <FormArray>this.addressListForm.controls['addresses'];
     for (let i = 0; i < addressList.controls.length; i++) {

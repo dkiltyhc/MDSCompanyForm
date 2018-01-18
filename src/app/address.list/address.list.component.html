@@ -2,25 +2,24 @@
   <h3>This is the address List Component</h3>
   <div formArrayName="addresses">
     <expander-component [group]="addressListForm.controls.addresses['controls']"
-                        [isValid]="addressListForm.valid && !addressListForm.dirty" [addRecord]="addRecordMsg"
-                        [columnDefinitions]="columnDefinitions" (expandedRow2)="getRow($event)" [deleteRecord]="deleteRecordMsg">
-      <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE" (saveRecord) = "saveAddressRecord($event)"
+                        [isValid]="isValid()" [addRecord]="addRecordMsg"
+                        [columnDefinitions]="columnDefinitions" (expandedRow2)="getRow($event)"
+                        [deleteRecord]="deleteRecordMsg">
+      <error-summary *ngIf="errorList.length>0 && showErrorSummary" [errorList]="errorList" headingPreamble="Address Details"
+                     compId="fff"></error-summary>
+      <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE"
+                       (saveRecord)="saveAddressRecord($event)"
                        (errorList)="updateErrorList($event)"
-                       (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)" ></address-details>
+                       (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></address-details>
     </expander-component>
   </div>
-<!-- <div>
-    <address-details *ngIf="newRecordInd" formType="NEW" [detailsChanged]="updateAddressDetails" (saveRecord) = "saveAddressRecord($event)" ></address-details>
-  </div>-->
   <div>
     <div class="margin-20">
-      <button (click)="addAddress()"  [disabled]="!addressListForm.valid || addressDetailsChild?.adressFormRecord?.dirty">
-        Add another address +
+      <button (click)="addAddress()"
+              [disabled]="!addressListForm.valid || addressDetailsChild?.adressFormRecord?.dirty">
+        Add another address
       </button>
     </div>
   </div>
-  <pre> Address List Value{{addressListForm.value |json}}</pre>
-  <pre>Address Model Value {{service.getAddresses() |json}}</pre>
-
 </div>
 

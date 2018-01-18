@@ -1,7 +1,9 @@
-import {Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList} from '@angular/core';
-import { FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {
+  Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList,
+  AfterViewInit
+} from '@angular/core';
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
-
 
 
 @Component({
@@ -12,84 +14,69 @@ import {ControlMessagesComponent} from '../control-messages.component/control-me
 /**
  * Sample component is used for nothing
  */
-export class AddressDetailsComponent implements OnInit, OnChanges {
+export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit {
 
-  @Input('group')
-  public adressFormRecord: FormGroup;
   public adressFormLocalModel: FormGroup;
-  @Input ()  detailsChanged:number;
-  @Output () saveRecord =new EventEmitter() ;
-  @Output () revertRecord =new EventEmitter() ;
-  @Output () deleteRecord =new EventEmitter() ;
-  @Output () errorList =new EventEmitter() ;
-
+  @Input('group') public adressFormRecord: FormGroup;
+  @Input() detailsChanged: number;
+  @Input() formType: string;
+  @Output() saveRecord = new EventEmitter();
+  @Output() revertRecord = new EventEmitter();
+  @Output() deleteRecord = new EventEmitter();
+  @Output() errorList = new EventEmitter();
   @Output() createRecord; //TODO don't know if needed
-  @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>
-
-  @Input() formType:string;
-
+  @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
 
   constructor(private _fb: FormBuilder) {
 
   }
 
   ngOnInit() {
-    console.log(this.adressFormRecord);
-    console.log(this.adressFormLocalModel);
-    if(!this.adressFormLocalModel) {
+    if (!this.adressFormLocalModel) {
       this.adressFormLocalModel = this.initAddress();
-    }else{
-     // this.setToLocalModel();
     }
-    this.detailsChanged=0;
-
+    this.detailsChanged = 0;
   }
+
   ngAfterViewInit() {
 
     this.msgList.changes.subscribe(errorObjs => {
-      console.log("There are errors changed in the address details")
-
-      let temp=[];
+      console.log('There are errors changed in the address details');
+      let temp = [];
       errorObjs.forEach(
-
-        error =>{
-            temp.push(error)
+        error => {
+          temp.push(error);
         }
-      )
+      );
       this.errorList.emit(temp);
-    })
-
+    });
   }
 
 
-  ngOnChanges(changes: SimpleChanges){
+  ngOnChanges(changes: SimpleChanges) {
 
-    console.log("There have been changes to details");
-
-    if(changes['detailsChanged']){ //used as a change indicator for the model
-      console.log("copying the adressFormLocalModel ");
-      console.log(this.adressFormRecord);
-      if(this.adressFormRecord) {
+    if (changes['detailsChanged']) { //used as a change indicator for the model
+      if (this.adressFormRecord) {
         this.setToLocalModel();
-      }else{
+      } else {
         this.adressFormLocalModel = this.initAddress();
-        console.warn("There was no model, not updating")
-
+        console.warn('There was no model, not updating');
+        this.adressFormLocalModel.markAsPristine();
       }
     }
-
   }
-   setToLocalModel(){
 
-     this.adressFormLocalModel=this.adressFormRecord;
-   }
+  setToLocalModel() {
+    this.adressFormLocalModel = this.adressFormRecord;
+    this.adressFormLocalModel.markAsPristine();
+  }
 
 
   /**
    * Changes the local model back to the last saved version of the address
    */
-  revertAddress(){
-    this.adressFormLocalModel=this.adressFormRecord;
+  revertAddress() {
+    this.adressFormLocalModel = this.adressFormRecord;
   }
 
   /**
@@ -101,36 +88,42 @@ export class AddressDetailsComponent implements OnInit, OnChanges {
     return this._fb.group({
       id: -1,
       address: [null, Validators.required],
-      city: [null, Validators.required]
+      city: [null, Validators.required, Validators.min(5)],
     });
   }
 
-    saveAddressRecord(){
-    // this.saveRecord=_.cloneDeep(this.adressFormLocalModel);
-     if( this.adressFormLocalModel.valid) {
-       this.saveRecord.emit((this.adressFormLocalModel));
-     }else{
-       var temp=this.adressFormLocalModel.value.id;
-       this.adressFormLocalModel.controls.id.setValue(1);
-       if( this.adressFormLocalModel.valid){
-         this.adressFormLocalModel.controls.id.setValue(temp);
-         this.saveRecord.emit((this.adressFormLocalModel));
-       }else{
-         this.adressFormLocalModel.controls.id.setValue(temp);
-       }
-
-     }
-     console.log(this.saveRecord);
+  public saveAddressRecord(): void {
+    if (this.adressFormLocalModel.valid) {
+      this.saveRecord.emit((this.adressFormLocalModel));
+      this.adressFormLocalModel.markAsPristine();
+    } else {
+      //id is used for an error to ensure the record gets saved
+      let temp = this.adressFormLocalModel.value.id;
+      this.adressFormLocalModel.controls.id.setValue(1);
+      if (this.adressFormLocalModel.valid) {
+        this.adressFormLocalModel.controls.id.setValue(temp);
+        this.saveRecord.emit((this.adressFormLocalModel));
+      } else {
+        this.adressFormLocalModel.controls.id.setValue(temp);
+        this.saveRecord.emit((null));
+      }
+    }
   }
 
-  revertAddressRecord(){
+  /**
+   * Reverts the address record to what was last saved in the model
+   */
+  public revertAddressRecord(): void {
     this.revertRecord.emit(this.adressFormLocalModel);
     this.adressFormLocalModel.markAsPristine();
   }
-  deleteAddressRecord(){
+
+  /***
+   * Deletes the address reocord with the selected id from both the model and the form
+   */
+  public deleteAddressRecord(): void {
     this.deleteRecord.emit(this.adressFormLocalModel.value.id);
   }
-
 
 }
 

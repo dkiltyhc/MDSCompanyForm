@@ -12,6 +12,8 @@ import { AddressListComponent } from './address.list/address.list.component';
 import {ErrorSummaryModule} from './error-msg/error-msg.module';
 import { CompanyBaseComponent } from './company-base/company-base.component';
 import {MainPipeModule} from './main-pipe/main-pipe.module';
+import {GlobalsService} from './globals/globals.service';
+//import {FocusModule} from 'angular2-focus';
 
 
 
@@ -31,8 +33,12 @@ import {MainPipeModule} from './main-pipe/main-pipe.module';
     ReactiveFormsModule,
     ErrorSummaryModule,
     MainPipeModule
+   // FocusModule.forRoot()
   ],
-  providers: [ ValidationService ],
+  providers: [
+    ValidationService,
+    GlobalsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
