@@ -8,6 +8,8 @@ import {AddressDetailsComponent} from '../address/address.details.component';
 import {CompanyModelService} from '../company.model.service';
 //import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
 import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.component';
+import {CompanyAddressRecordComponent} from '../address/company-address-record/company-address-record.component';
+
 
 @Component({
   selector: 'address-list',
@@ -17,10 +19,12 @@ import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.co
 export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('group') public addresses: FormArray;
   @Input() public saveRecord;
+  @Input() public showErrors:boolean=false;
   @Output() public errors = new EventEmitter();
 
   @ViewChild(ExpanderComponent) expander: ExpanderComponent;
-  @ViewChild(AddressDetailsComponent) addressDetailsChild: AddressDetailsComponent;
+ // @ViewChild(AddressDetailsComponent) addressDetailsChild: AddressDetailsComponent;
+  @ViewChild(CompanyAddressRecordComponent)companyAddressChild: CompanyAddressRecordComponent;
   @ViewChildren(ErrorSummaryComponent) errorSummaryChildList: QueryList<ErrorSummaryComponent>;
 
   private errorSummaryChild = null;
@@ -105,7 +109,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     if (rowNum > -1 && this.prevRow!=rowNum) {
       console.log("####### Synching current row...")
       const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
-      this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[rowNum];
+      this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[rowNum];
       this.updateAddressDetails++;
       this.prevRow = rowNum;
     } else {
@@ -127,8 +131,8 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     if (override) {
       return true;
     }
-    if(this.addressDetailsChild && this.addressDetailsChild.adressFormRecord) {
-      return (this.addressListForm.valid && !this.addressDetailsChild.adressFormRecord.dirty);
+    if(this.companyAddressChild && this.companyAddressChild.adressFormRecord) {
+      return (this.addressListForm.valid && !this.companyAddressChild.adressFormRecord.dirty);
     }
     return (this.addressListForm.valid);
   }
@@ -141,7 +145,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     let formAddress = this.initAddress(true);
     mycontrol.push(formAddress);
     this.addRecordMsg++;
-    this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length - 1];
+    this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length - 1];
     this.updateAddressDetails++;
     this.newRecordInd = true;
   }
@@ -191,7 +195,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     addressModel.city = record.controls.address.value;
     let resultId = this.service.saveAddress(addressModel);
     record.controls.id.setValue(resultId);
-    this.addressDetailsChild.adressFormRecord.markAsPristine();
+    this.companyAddressChild.adressFormRecord.markAsPristine();
     this.expander.collapseTableRows();
     this.showErrorSummary=false;
   }
@@ -204,7 +208,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     if (row > -1) {
       console.log("####### Getting Row...")
       let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
-      this.addressDetailsChild.adressFormRecord = <FormGroup> mycontrol.controls[row];
+      this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[row];
       this.updateAddressDetails++;
     } else {
       console.info('Address List row number is ' + row);
@@ -276,7 +280,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     let rec = this._getFormAddress(recordId);
     rec.controls.address.setValue(modelRecord.address);
     rec.controls.city.setValue(modelRecord.city);
-    this.addressDetailsChild.adressFormRecord.markAsPristine();
+    this.companyAddressChild.adressFormRecord.markAsPristine();
   }
 
   public deleteAddress(id):void {

@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ng xi18n":"ng xi18n",
+    "ng xi18n": "ng xi18n",
     "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.json",
     "docs": "npm run docs:build",
     "docs:build": "compodoc -p tsconfig.json -n companyFormTest -d docs --hideGenerator",
@@ -30,6 +30,7 @@
     "@angular/router": "5.1.0",
     "angular2-focus": "^1.1.1",
     "core-js": "^2.5.3",
+    "ng2-select": "^2.0.0",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.20"
   },

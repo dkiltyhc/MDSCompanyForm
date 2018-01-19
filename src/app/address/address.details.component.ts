@@ -19,12 +19,11 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   public adressFormLocalModel: FormGroup;
   @Input('group') public adressFormRecord: FormGroup;
   @Input() detailsChanged: number;
-  @Input() formType: string;
-  @Output() saveRecord = new EventEmitter();
+  //@Input() formType: string;
+/*  @Output() saveRecord = new EventEmitter();
   @Output() revertRecord = new EventEmitter();
-  @Output() deleteRecord = new EventEmitter();
+  @Output() deleteRecord = new EventEmitter();*/
   @Output() errorList = new EventEmitter();
-  @Output() createRecord; //TODO don't know if needed
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
 
   constructor(private _fb: FormBuilder) {
@@ -56,9 +55,9 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes['detailsChanged']) { //used as a change indicator for the model
-      console.log("################ngOnChanges changed for Address Details");
+      console.log('################ngOnChanges changed for Address Details');
       if (this.adressFormRecord) {
-        console.log("################Setting to local model");
+        console.log('################Setting to local model');
         this.setToLocalModel();
       } else {
         this.adressFormLocalModel = this.initAddress();
@@ -70,7 +69,10 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
 
   setToLocalModel() {
     this.adressFormLocalModel = this.adressFormRecord;
-    this.adressFormLocalModel.markAsPristine();
+    console.log(this.adressFormLocalModel);
+    if (!this.adressFormLocalModel.pristine) {
+      this.adressFormLocalModel.markAsPristine();
+    }
   }
 
 
@@ -88,13 +90,12 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   initAddress() {
 
     return this._fb.group({
-      id: -1,
       address: [null, Validators.required],
       city: [null, Validators.required, Validators.min(5)],
     });
   }
 
-  public saveAddressRecord(): void {
+  /*public saveAddressRecord(): void {
     if (this.adressFormLocalModel.valid) {
       this.saveRecord.emit((this.adressFormLocalModel));
       this.adressFormLocalModel.markAsPristine();
@@ -110,22 +111,26 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
         this.saveRecord.emit((null));
       }
     }
-  }
+  }*/
 
   /**
    * Reverts the address record to what was last saved in the model
    */
+/*
   public revertAddressRecord(): void {
     this.revertRecord.emit(this.adressFormLocalModel);
     this.adressFormLocalModel.markAsPristine();
   }
+*/
 
   /***
    * Deletes the address reocord with the selected id from both the model and the form
    */
+/*
   public deleteAddressRecord(): void {
     this.deleteRecord.emit(this.adressFormLocalModel.value.id);
   }
+*/
 
 }
 

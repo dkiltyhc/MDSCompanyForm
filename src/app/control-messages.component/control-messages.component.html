@@ -1,7 +1,6 @@
-<div  *ngIf="makeErrorVisible()">
-  <strong class="error">
-        <span class="label label-danger">
-              <span>{{errorMessage}}</span>
+<strong *ngIf="makeErrorVisible()" class="error">
+        <span class="label label-danger rep">
+          <span class="rep"> {{errorMessage}}</span>
+
         </span>
-  </strong>
-</div>
+</strong>

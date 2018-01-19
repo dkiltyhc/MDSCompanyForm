@@ -13,6 +13,9 @@ import {ErrorSummaryModule} from './error-msg/error-msg.module';
 import { CompanyBaseComponent } from './company-base/company-base.component';
 import {MainPipeModule} from './main-pipe/main-pipe.module';
 import {GlobalsService} from './globals/globals.service';
+import {AddressModule} from './address/address.module';
+import {CompanyAddressRecordComponent} from './address/company-address-record/company-address-record.component';
+
 //import {FocusModule} from 'angular2-focus';
 
 
@@ -22,18 +25,16 @@ import {GlobalsService} from './globals/globals.service';
     AppComponent,
     ExpanderComponent,
     TestComponentComponent,
-    AddressDetailsComponent,
-    ControlMessagesComponent,
     AddressListComponent,
-    CompanyBaseComponent,
+    CompanyBaseComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     ErrorSummaryModule,
-    MainPipeModule
-   // FocusModule.forRoot()
+    MainPipeModule,
+    AddressModule
   ],
   providers: [
     ValidationService,
