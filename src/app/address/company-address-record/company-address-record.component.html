@@ -1,0 +1,25 @@
+<div  [formGroup]="adressRecordModel">
+<h3> Company Address Recored</h3>
+  <address-details
+  [detailsChanged]="updateChild" [group]="adressFormRecord"
+  (errorList)="updateErrorList($event)"></address-details>
+
+  <div class="row">
+    <div class="btn-group-sm col-xs-12">
+      <button (click)="saveAddressRecord()" i18n>Save Address</button>
+      <button (click)="revertAddressRecord()" i18n>Revert Address</button>
+      <button (click)="deleteAddressRecord()" i18n>Delete Address</button>
+    </div>
+  <div class="row" *ngIf="adressRecordModel.dirty">
+    <div class="col-xs-7">
+      <div class="alert alert-info" role="alert"
+           aria-live="polite">
+        <span>Please Save or revert the record</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
