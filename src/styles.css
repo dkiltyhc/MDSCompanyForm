@@ -7,3 +7,7 @@ label > input {
   font-weight: normal;
   margin-bottom: 5px !important;
 }
+span.ui-select-toggle{
+  width:100%;
+
+}

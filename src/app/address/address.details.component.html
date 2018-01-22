@@ -27,18 +27,29 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-error':adressFormLocalModel.controls.country.invalid}">
-        <label for="city" class="required full-width" aria-required="true">
+      <div class="form-group col-md-6 col-xs-12">
+        <label for="country" class="required" aria-required="true">
           <span class="field-name" i18n>Country</span>
           <strong class="required" i18n>(required)</strong>
-          <input id="country" class="form-control full-width" formControlName="country"/>
-          <control-messages *ngIf="adressFormLocalModel.controls.country.invalid"
-                            [control]="adressFormLocalModel.controls.country"
-                            controlId="country" label="Country" parentId="addressDetails"
-                            parentLabel="REP Address"></control-messages>
+          <div class="full-width">
+            <ng-select id="country" class="required"
+                       [allowClear]="false"
+                       [items]="countries"
+                       (selected)="selected($event)"
+                       (removed)="removed($event)"
+            >
+            </ng-select>
+          </div>
+          <!--  <input id="country" class="form-control full-width" formControlName="country"/>
+            <control-messages *ngIf="adressFormLocalModel.controls.country.invalid"
+                              [control]="adressFormLocalModel.controls.country"
+                              controlId="country" label="Country" parentId="addressDetails"
+                              parentLabel="REP Address"></control-messages>-->
         </label>
       </div>
+
     </div>
+    <pre>{{adressFormLocalModel.value |json}}</pre>
   </div>
 </div>
 

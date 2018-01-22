@@ -20,11 +20,16 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   @Input('group') public adressFormRecord: FormGroup;
   @Input() detailsChanged: number;
   //@Input() formType: string;
-/*  @Output() saveRecord = new EventEmitter();
-  @Output() revertRecord = new EventEmitter();
-  @Output() deleteRecord = new EventEmitter();*/
+  /*  @Output() saveRecord = new EventEmitter();
+    @Output() revertRecord = new EventEmitter();
+    @Output() deleteRecord = new EventEmitter();*/
   @Output() errorList = new EventEmitter();
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
+  public countries: Array<any> = [
+    {'id': 'ABW', 'text': 'Aruba' , langs:{en:'AFff',fr:'fdf'}},
+    {'id': 'AFG', 'text': 'Afghanistan',langs:{en:'AFff',fr:'fdf'}}
+
+  ];
 
   constructor(private _fb: FormBuilder) {
 
@@ -91,9 +96,19 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
 
     return this._fb.group({
       address: [null, Validators.required],
-      city: [null, Validators.required, Validators.min(5)],
+      city: [null, [Validators.required, Validators.min(5)]],
+      country: [null, Validators.required]
     });
   }
+
+  selected(rec){
+    console.log(rec)
+    this.adressFormLocalModel.controls.country.setValue(rec.id);
+  }
+  removed(rec){
+    console.log(rec)
+  }
+
 
   /*public saveAddressRecord(): void {
     if (this.adressFormLocalModel.valid) {
@@ -116,21 +131,21 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   /**
    * Reverts the address record to what was last saved in the model
    */
-/*
-  public revertAddressRecord(): void {
-    this.revertRecord.emit(this.adressFormLocalModel);
-    this.adressFormLocalModel.markAsPristine();
-  }
-*/
+  /*
+    public revertAddressRecord(): void {
+      this.revertRecord.emit(this.adressFormLocalModel);
+      this.adressFormLocalModel.markAsPristine();
+    }
+  */
 
   /***
    * Deletes the address reocord with the selected id from both the model and the form
    */
-/*
-  public deleteAddressRecord(): void {
-    this.deleteRecord.emit(this.adressFormLocalModel.value.id);
-  }
-*/
+  /*
+    public deleteAddressRecord(): void {
+      this.deleteRecord.emit(this.adressFormLocalModel.value.id);
+    }
+  */
 
 }
 

@@ -19,12 +19,12 @@ import {CompanyAddressRecordComponent} from '../address/company-address-record/c
 export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('group') public addresses: FormArray;
   @Input() public saveRecord;
-  @Input() public showErrors:boolean=false;
+  @Input() public showErrors: boolean = false;
   @Output() public errors = new EventEmitter();
 
   @ViewChild(ExpanderComponent) expander: ExpanderComponent;
- // @ViewChild(AddressDetailsComponent) addressDetailsChild: AddressDetailsComponent;
-  @ViewChild(CompanyAddressRecordComponent)companyAddressChild: CompanyAddressRecordComponent;
+  // @ViewChild(AddressDetailsComponent) addressDetailsChild: AddressDetailsComponent;
+  @ViewChild(CompanyAddressRecordComponent) companyAddressChild: CompanyAddressRecordComponent;
   @ViewChildren(ErrorSummaryComponent) errorSummaryChildList: QueryList<ErrorSummaryComponent>;
 
   private errorSummaryChild = null;
@@ -36,7 +36,8 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
   public addRecordMsg = 0;
   public deleteRecordMsg = 0;
   public errorList = [];
-  public showErrorSummary:boolean=false;
+  public showErrorSummary: boolean = false;
+  public  dataModel=[];
   public columnDefinitions = [
     {
       label: 'ADDRESS',
@@ -50,10 +51,9 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     }
   ];
 
-
   constructor(private _fb: FormBuilder) {
     this.service = new CompanyModelService();
-
+    this.dataModel = this.service.getAddresses();
   }
 
   ngOnInit() {
@@ -64,15 +64,17 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
     //TODO temp setting some initial data
     for (let i = 0; i < addressDataList.length; i++) {
-      let formAddress = this.initAddress(true);
-      formAddress.controls.city.setValue(addressDataList[i].city);
-      formAddress.controls.address.setValue(addressDataList[i].address);
+      //let formAddress = this.initAddress(true);
+      let formAddress = this.service.getNewAddressRecord(this._fb);
       formAddress.controls.id.setValue(addressDataList[i].id);
+      formAddress.controls.addressDetails.controls.city.setValue(addressDataList[i].city);
+      formAddress.controls.addressDetails.controls.address.setValue(addressDataList[i].address);
       mycontrol.push(formAddress);
-      console.log(formAddress);
+      this.dataModel = this.service.getAddresses();
     }
 
   }
+
   ngAfterViewInit() {
     console.log('Starting adddress list onViewInit');
     this.processSummaries(this.errorSummaryChildList);
@@ -106,8 +108,9 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     const rowNum = this.expander.getExpandedRow();
     //used to sync the expander with the details
     //TODO will prevrow work with the delete scenario && this.prevRow !== rowNum
-    if (rowNum > -1 && this.prevRow!=rowNum) {
-      console.log("####### Synching current row...")
+    if (rowNum > -1 && this.prevRow != rowNum) {
+      console.log('####### Synching current row...');
+
       const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
       this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[rowNum];
       this.updateAddressDetails++;
@@ -127,11 +130,11 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  public isValid(override: boolean=false): boolean {
+  public isValid(override: boolean = false): boolean {
     if (override) {
       return true;
     }
-    if(this.companyAddressChild && this.companyAddressChild.adressFormRecord) {
+    if (this.companyAddressChild && this.companyAddressChild.adressFormRecord) {
       return (this.addressListForm.valid && !this.companyAddressChild.adressFormRecord.dirty);
     }
     return (this.addressListForm.valid);
@@ -161,9 +164,13 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
 
     return this._fb.group({
       id: [indexValue, Validators.min(0)],
-      address: [null, Validators.required],
-      city: [null, Validators.required]
+      detailsDirty: [false, Validators.required],
+      addressDetails: {
+        address: [null, Validators.required],
+        city: [null, Validators.required]
+      }
     });
+
   }
 
   /**
@@ -182,8 +189,8 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
    */
   public saveAddressRecord(record): void {
 
-    if(!record){
-      this.showErrorSummary=true;
+    if (!record) {
+      this.showErrorSummary = true;
       //set the focus
       //this.errorSummaryChild.nativeElement.focus(); //TODO this seems bad
       return;
@@ -191,13 +198,14 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     let modelAddresses = this.service.getAddresses();
     let addressModel = this.service.getAddressModel();
     addressModel.id = record.controls.id.value;
-    addressModel.address = record.controls.address.value;
-    addressModel.city = record.controls.address.value;
+    addressModel.address = record.controls.addressDetails.controls.address.value;
+    addressModel.city = record.controls.addressDetails.controls.city.value;
     let resultId = this.service.saveAddress(addressModel);
     record.controls.id.setValue(resultId);
     this.companyAddressChild.adressFormRecord.markAsPristine();
     this.expander.collapseTableRows();
-    this.showErrorSummary=false;
+    this.showErrorSummary = false;
+    this.dataModel = this.service.getAddresses();
   }
 
   /**
@@ -206,7 +214,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
    */
   public getRow(row): void {
     if (row > -1) {
-      console.log("####### Getting Row...")
+      console.log('####### Getting Row...');
       let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
       this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[row];
       this.updateAddressDetails++;
@@ -269,7 +277,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
    * Loads the last saved version of the record data
    * @param record
    */
-  public revertAddress(record):void {
+  public revertAddress(record): void {
     let recordId = record.controls.id.value;
     let modelRecord = this._getModelAddress(recordId);
     console.log(modelRecord);
@@ -283,7 +291,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     this.companyAddressChild.adressFormRecord.markAsPristine();
   }
 
-  public deleteAddress(id):void {
+  public deleteAddress(id): void {
     const serviceResult = this.service.deleteModelAddress(id); ///TODO check result? There is a use case for no model?
     let addressList = <FormArray>this.addressListForm.controls['addresses'];
     for (let i = 0; i < addressList.controls.length; i++) {

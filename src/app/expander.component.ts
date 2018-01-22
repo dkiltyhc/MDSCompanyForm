@@ -57,6 +57,7 @@ export class ExpanderComponent implements OnChanges {
    * @type {number}
    */
   private numberColSpan: number = 1;
+  public dataItems=[];
 
   constructor() {
   }
@@ -79,6 +80,10 @@ export class ExpanderComponent implements OnChanges {
     }
     if (changes['itemsList']) {
       this.updateDataRows(changes['itemsList'].currentValue);
+      this.dataItems=changes['itemsList'].currentValue;
+      if(!Array.isArray(this.dataItems)){
+        this.dataItems=[];
+      }
     }
     if (changes['deleteRecord']) {
       this.updateDataRows(this.itemsList);

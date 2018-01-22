@@ -1,7 +1,7 @@
 <div  [formGroup]="adressRecordModel">
 <h3> Company Address Recored</h3>
   <address-details
-  [detailsChanged]="updateChild" [group]="adressFormRecord"
+  [detailsChanged]="updateChild" [group]="adressRecordModel.controls.addressDetails"
   (errorList)="updateErrorList($event)"></address-details>
 
   <div class="row">
@@ -19,6 +19,7 @@
     </div>
   </div>
 </div>
+  <pre>{{adressRecordModel.value |json}}</pre>
 </div>
 
 

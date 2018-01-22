@@ -1,7 +1,7 @@
 <div [formGroup]="addressListForm">
   <h3>This is the address List Component</h3>
   <div formArrayName="addresses">
-    <expander-component [group]="addressListForm.controls.addresses['controls']"
+    <expander-component [group]="dataModel"
                         [isValid]="isValid()" [addRecord]="addRecordMsg"
                         [columnDefinitions]="columnDefinitions" (expandedRow2)="getRow($event)"
                         [deleteRecord]="deleteRecordMsg">
@@ -39,6 +39,7 @@
       </button>
     </div>
   </div>
-
+<pre>{{addressListForm.value |json}}</pre>
+  <pre>{{dataModel|json}}</pre>
 </div>
 

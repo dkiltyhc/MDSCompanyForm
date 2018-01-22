@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, SimpleChanges, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
+import {AddressDetailsComponent} from '../address.details.component';
 
 @Component({
   selector: 'company-address-record',
@@ -20,9 +21,10 @@ export class CompanyAddressRecordComponent implements OnInit {
 
 
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
+  @ViewChild (AddressDetailsComponent) addressDetailsChild;
 
-  public updateChild:number=0;
-  public errorList =null;
+  public updateChild: number = 0;
+  public errorList = null;
 
   constructor(private _fb: FormBuilder) {
 
@@ -41,7 +43,11 @@ export class CompanyAddressRecordComponent implements OnInit {
     return this._fb.group({
       id: -1,
       detailsDirty: [false, Validators.required],
-      addressDetails: {}
+      addressDetails: this._fb.group({
+        address: [null, Validators.required],
+        city: [null, [Validators.required, Validators.min(5)]]
+
+      })
     });
   }
 
@@ -68,21 +74,21 @@ export class CompanyAddressRecordComponent implements OnInit {
 
     return this._fb.group({
       id: -1,
-      address: [null, Validators.required],
-      city: [null, Validators.required, Validators.min(5)],
+      detailsDirty: false,
+      addressDetails:  this.addressDetailsChild.initAddress()
     });
   }
 
 
   setToLocalModel() {
-    console.log("Address Record being set to the address form")
+    console.log('Address Record being set to the address form');
     console.log(this.adressFormRecord);
     this.adressRecordModel = this.adressFormRecord;
     this.adressRecordModel.markAsPristine();
   }
 
   updateErrorList(errs) {
-    this.errorList=errs;
+    this.errorList = errs;
     this.errors.emit(this.errorList);
   }
 
@@ -93,12 +99,14 @@ export class CompanyAddressRecordComponent implements OnInit {
     this.revertRecord.emit(this.adressRecordModel);
     this.adressRecordModel.markAsPristine();
   }
+
   /***
    * Deletes the address reocord with the selected id from both the model and the form
    */
   public deleteAddressRecord(): void {
     this.deleteRecord.emit(this.adressRecordModel.value.id);
   }
+
   public saveAddressRecord(): void {
     if (this.adressRecordModel.valid) {
       this.saveRecord.emit((this.adressRecordModel));

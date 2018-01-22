@@ -17,24 +17,24 @@ export class CompanyModelService {
     }
 
   ];
-  private _indexValue=-1;
+  private _indexValue = -1;
 
 
-  _initIndex(){
+  _initIndex() {
 
-    for(var i=0;i<this.addressList.length;i++){
-      if(this.addressList[i].id>this._indexValue){
-          this._indexValue=this.addressList[i].id;
+    for (var i = 0; i < this.addressList.length; i++) {
+      if (this.addressList[i].id > this._indexValue) {
+        this._indexValue = this.addressList[i].id;
       }
     }
   }
 
-  getNextIndex(){
+  getNextIndex() {
     this._indexValue++;
     return this._indexValue;
   }
-  resetIndex(){
-    this._indexValue=-1;
+  resetIndex() {
+    this._indexValue = -1;
   }
 
   constructor() {
@@ -61,16 +61,16 @@ export class CompanyModelService {
 
   saveAddress(record) {
     //new record. Verify the index is -1. Set it to the next index
-    if(record.id===-1) {
-      record.id=this.getNextIndex();
+    if (record.id === -1) {
+      record.id = this.getNextIndex();
       this.addressList.push(record);
       return record.id;
     }
-    for (var i = 0; i < this.addressList.length; i++){
+    for (var i = 0; i < this.addressList.length; i++) {
       if (this.addressList[i].id === record.id) {
-        this.addressList[i].address=record.address;
-        this.addressList[i].city=record.city;
-       return record.id;
+        this.addressList[i].address = record.address;
+        this.addressList[i].city = record.city;
+        return record.id;
       }
     }
     return -1;
@@ -87,15 +87,42 @@ export class CompanyModelService {
     return null;
   }
 
-  deleteModelAddress(id):boolean{
+  deleteModelAddress(id): boolean {
     var modelList = this.getAddresses();
     for (var i = 0; i < modelList.length; i++) {
       if (modelList[i].id === id) {
-        this.addressList.splice(i,1);
+        this.addressList.splice(i, 1);
         return true;
       }
     }
-    return false
+    return false;
+  }
+
+  public getNewAddressRecord(fb, getIndex: boolean = false) {
+    if (!fb) return null;
+
+    let index = -1;
+    if (getIndex) {
+      index = this.getNextIndex();
+    }
+    return (
+      fb.group({
+        id: index,
+        detailsDirty: [false, Validators.required],
+        addressDetails:  this.getNewAddressDetails(fb)
+      })
+    );
+  }
+
+  public getNewAddressDetails(fb) {
+    return (
+      fb.group({
+        address: [null, Validators.required],
+        city: [null, [Validators.required, Validators.min(5)]],
+        country: [null, Validators.required]
+
+      })
+    );
   }
 
 }
