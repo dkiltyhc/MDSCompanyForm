@@ -27,24 +27,24 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-6 col-xs-12">
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-error':adressFormLocalModel.controls.country.invalid}">
         <label for="country" class="required" aria-required="true">
           <span class="field-name" i18n>Country</span>
           <strong class="required" i18n>(required)</strong>
           <div class="full-width">
-            <ng-select id="country" class="required"
+            <ng-select id="country" formControlName="country" class="required"
                        [allowClear]="false"
                        [items]="countries"
+                       (typed)="typed($event)"
                        (selected)="selected($event)"
                        (removed)="removed($event)"
             >
             </ng-select>
           </div>
-          <!--  <input id="country" class="form-control full-width" formControlName="country"/>
-            <control-messages *ngIf="adressFormLocalModel.controls.country.invalid"
-                              [control]="adressFormLocalModel.controls.country"
-                              controlId="country" label="Country" parentId="addressDetails"
-                              parentLabel="REP Address"></control-messages>-->
+          <control-messages *ngIf="adressFormLocalModel.controls.country.invalid"
+                            [control]="adressFormLocalModel.controls.country"
+                            controlId="country" label="Country" parentId="addressDetails"
+                            parentLabel="REP Address"></control-messages>
         </label>
       </div>
 

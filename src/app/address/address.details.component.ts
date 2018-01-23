@@ -103,12 +103,26 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
 
   selected(rec){
     console.log(rec)
-    this.adressFormLocalModel.controls.country.setValue(rec.id);
+    //this.adressFormLocalModel.controls.country.setValue([rec.id]);
   }
   removed(rec){
     console.log(rec)
   }
+  typed(rec){
+    var content = rec.replace(/[\x00-\x7F]/g,'', '');
+    if(content && this.existsInList(content)) {
+      this.adressFormLocalModel.controls.country.setValue([content]);
+    }
+  }
 
+  existsInList(rec){
+    for(let country of this.countries){
+        if(country.id==rec){
+          return true;
+        }
+    }
+    return false;
+  }
 
   /*public saveAddressRecord(): void {
     if (this.adressFormLocalModel.valid) {
