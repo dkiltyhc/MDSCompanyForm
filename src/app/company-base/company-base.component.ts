@@ -2,21 +2,25 @@ import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren
 import {AddressListComponent} from '../address.list/address.list.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 //import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.component';
+import * as FileSaver from 'file-saver';
+import {FilereaderComponent} from '../filereader/file-io/filereader/filereader.component';
 
 @Component({
   selector: 'company-base',
   templateUrl: './company-base.component.html',
   styleUrls: ['./company-base.component.css']
 })
+
 export class CompanyBaseComponent implements OnInit {
   public errors;
- // @ViewChildren(AddressListComponent) addressLists: QueryList<AddressListComponent>;
+
+  // @ViewChildren(AddressListComponent) addressLists: QueryList<AddressListComponent>;
   //@ViewChild(ErrorSummaryComponent) errorSummary: ErrorSummaryComponent;
 
   public myForm: FormGroup; // our form model
   public errorList = [];
 
-  constructor(private _fb: FormBuilder,private cdr: ChangeDetectorRef) {
+  constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -27,9 +31,9 @@ export class CompanyBaseComponent implements OnInit {
 
   ngAfterViewInit() {
 
-   /* this.addressLists.changes.subscribe(list => {
-      list.forEach(writer => console.log(writer));
-    });*/
+    /* this.addressLists.changes.subscribe(list => {
+       list.forEach(writer => console.log(writer));
+     });*/
   }
 
   initAddress() {
@@ -45,13 +49,27 @@ export class CompanyBaseComponent implements OnInit {
   processErrors(errorList) {
     console.log('@@@@@@@@@@@@ Processing errors in Company base component @@@@@@@@@@@@');
     console.log(errorList);
-    this.errorList=errorList;
+    this.errorList = errorList;
     this.cdr.detectChanges();
   }
-  public hideErrorSummary(){
-    if(!this.errorList) return false;
-    return this.errorList.length==0;
+
+  public hideErrorSummary() {
+    if (!this.errorList) return false;
+    return this.errorList.length == 0;
 
   }
 
+  public saveFile() {
+    /*let blob = new Blob([document.getElementById('exportDiv').innerHTML], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
+    });*/
+    var makeStrSave = 'test';
+    let blob = new Blob([makeStrSave], {type: 'text/plain;charset=utf-8'});
+    FileSaver.saveAs(blob, 'test.txt');
+
+  }
+  public processFile(data){
+    console.log("processing file.....")
+    console.log(data)
+  }
 }

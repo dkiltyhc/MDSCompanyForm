@@ -8,5 +8,9 @@
     <button type="submit" [disabled]="!myForm?.valid">Submit</button>
     <pre> myForm valid{{myForm.valid}}</pre>
     <pre> myForm{{myForm.value |json}}</pre>
+    <button (click)="saveFile()" i18n>Save File Test</button>
+    <div class="row">
+    <filereader (complete)="processFile($event)"></filereader>
+    </div>
   </form>
 </div>

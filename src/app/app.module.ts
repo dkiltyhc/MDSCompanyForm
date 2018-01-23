@@ -14,7 +14,9 @@ import { CompanyBaseComponent } from './company-base/company-base.component';
 import {MainPipeModule} from './main-pipe/main-pipe.module';
 import {GlobalsService} from './globals/globals.service';
 import {AddressModule} from './address/address.module';
-import {CompanyAddressRecordComponent} from './address/company-address-record/company-address-record.component';
+import {FileIoModule} from './filereader/file-io/file-io.module';
+import {FilereaderComponent} from './filereader/file-io/filereader/filereader.component';
+
 
 //import {FocusModule} from 'angular2-focus';
 
@@ -26,7 +28,8 @@ import {CompanyAddressRecordComponent} from './address/company-address-record/co
     ExpanderComponent,
     TestComponentComponent,
     AddressListComponent,
-    CompanyBaseComponent
+    CompanyBaseComponent,
+    FilereaderComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import {CompanyAddressRecordComponent} from './address/company-address-record/co
     ReactiveFormsModule,
     ErrorSummaryModule,
     MainPipeModule,
-    AddressModule
+    AddressModule,
+    FileIoModule
   ],
   providers: [
     ValidationService,

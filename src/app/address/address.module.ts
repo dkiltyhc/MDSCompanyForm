@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
 import {SelectModule} from 'ng2-select';
+import {FileIoModule} from '../filereader/file-io/file-io.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {SelectModule} from 'ng2-select';
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
-    SelectModule
+    SelectModule,
+    FileIoModule
 
   ],
   declarations: [
