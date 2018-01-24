@@ -1,16 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FilereaderComponent} from './filereader/filereader.component';
-import {CompanyAddressRecordComponent} from '../../address/company-address-record/company-address-record.component';
-import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
-import {AddressDetailsComponent} from '../../address/address.details.component';
+import {FileIoGlobalsService} from './file-io-globals.service';
+import {ConvertResults} from './convert-results';
+import {FileConversionService} from './file-conversion.service';
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [FilereaderComponent],
+  declarations: [
+    FilereaderComponent
+  ],
   exports:[
     FilereaderComponent
+  ],
+  providers:[
+    ConvertResults,
+    FileConversionService,
+    FileIoGlobalsService
   ]
 })
 export class FileIoModule { }

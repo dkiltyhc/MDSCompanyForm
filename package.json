@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint  ",
     "e2e": "ng e2e",
     "ng xi18n": "ng xi18n",
     "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.json",
@@ -28,6 +28,8 @@
     "@angular/platform-browser": "5.1.0",
     "@angular/platform-browser-dynamic": "5.1.0",
     "@angular/router": "5.1.0",
+    "@ngx-translate/core": "^9.1.1",
+    "@ngx-translate/http-loader": "^2.0.1",
     "@types/file-saver": "^1.3.0",
     "angular2-focus": "^1.1.1",
     "core-js": "^2.5.3",
@@ -59,6 +61,7 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
-    "typescript": "~2.4.2"
+    "typescript": "~2.4.2",
+    "xsd4js": "^1.0.2"
   }
 }

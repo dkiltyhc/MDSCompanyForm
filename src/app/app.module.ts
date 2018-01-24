@@ -15,7 +15,10 @@ import {MainPipeModule} from './main-pipe/main-pipe.module';
 import {GlobalsService} from './globals/globals.service';
 import {AddressModule} from './address/address.module';
 import {FileIoModule} from './filereader/file-io/file-io.module';
-import {FilereaderComponent} from './filereader/file-io/filereader/filereader.component';
+
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 
 //import {FocusModule} from 'angular2-focus';
@@ -28,8 +31,7 @@ import {FilereaderComponent} from './filereader/file-io/filereader/filereader.co
     ExpanderComponent,
     TestComponentComponent,
     AddressListComponent,
-    CompanyBaseComponent,
-    FilereaderComponent
+    CompanyBaseComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,15 @@ import {FilereaderComponent} from './filereader/file-io/filereader/filereader.co
     ErrorSummaryModule,
     MainPipeModule,
     AddressModule,
-    FileIoModule
+    FileIoModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     ValidationService,
@@ -47,3 +57,9 @@ import {FilereaderComponent} from './filereader/file-io/filereader/filereader.co
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+  //return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}

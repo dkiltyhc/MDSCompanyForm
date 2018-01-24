@@ -1,9 +1,7 @@
-import {ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {AddressListComponent} from '../address.list/address.list.component';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-//import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.component';
 import * as FileSaver from 'file-saver';
-import {FilereaderComponent} from '../filereader/file-io/filereader/filereader.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'company-base',
