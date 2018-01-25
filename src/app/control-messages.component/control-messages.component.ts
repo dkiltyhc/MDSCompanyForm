@@ -11,12 +11,12 @@ import { ValidationService } from '../validation.service';
 export class ControlMessagesComponent {
   @Input() control: FormControl;
   @Input() showError:boolean=false;
-  @Input() label:String;
-  @Input() controlId:String;
-  @Input() parentId:String;
-  @Input() parentLabel:String;
+  @Input() label:string;
+  @Input() controlId:string;
+  @Input() parentId:string;
+  @Input() parentLabel:string;
   @Input() index:Number;
-  public currentError:String="";
+  public currentError:string="";
   private _errorVisible=false;
   constructor() { }
 

@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class FileIoGlobalsService {
-  public static attributeKey:String='_attr';
-  public static innerTextKey:String='_text' ;
-  public static defaultXSLName:String='REP_Combined.xsl' ;
-  public static importSuccess:String='fileio.msg.success'; //json key
-  public static parseFail:String='fileio.msg.parseFail';  //json key
-  public static fileTypeError:String='fileio.msg.fileTypeError';
+  public static attributeKey:string='_attr';
+  public static innerTextKey:string='_text' ;
+  public static defaultXSLName:string='REP_Combined.xsl' ;
+  public static importSuccess:string='fileio.msg.success'; //json key
+  public static parseFail:string='fileio.msg.parseFail';  //json key
+  public static fileTypeError:string='fileio.msg.fileTypeError';
+  public static dataTypeError:string='fileio.msg.dataTypeError';
+  public static draftFileType:string='hcsc';
+  public static finalFileType:string='xml';
   constructor() { }
 
 }

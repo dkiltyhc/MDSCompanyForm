@@ -9,10 +9,10 @@ import {GlobalsService} from '../../globals/globals.service';
   styleUrls: ['./error-summary.component.css']
 })
 export class ErrorSummaryComponent implements AfterViewInit{
-  @Input() headingPreamble: String;
+  @Input() headingPreamble: string;
   @Input() errorList;
   @Input() compId = 'error-summary-';
-  public type: String;
+  public type: string;
   public errors = {};
   public componentId = '';
 

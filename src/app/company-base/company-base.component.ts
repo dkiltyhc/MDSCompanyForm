@@ -1,7 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import * as FileSaver from 'file-saver';
+
 import {TranslateService} from '@ngx-translate/core';
+import {FileConversionService} from '../filereader/file-io/file-conversion.service';
+import {ConvertResults} from '../filereader/file-io/convert-results';
 
 @Component({
   selector: 'company-base',
@@ -17,6 +19,8 @@ export class CompanyBaseComponent implements OnInit {
 
   public myForm: FormGroup; // our form model
   public errorList = [];
+  public  rootTagText="DOSSIER_ENROL";
+  public testData:ConvertResults=null;
 
   constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
@@ -62,12 +66,13 @@ export class CompanyBaseComponent implements OnInit {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-16le"
     });*/
     var makeStrSave = 'test';
-    let blob = new Blob([makeStrSave], {type: 'text/plain;charset=utf-8'});
-    FileSaver.saveAs(blob, 'test.txt');
 
+    let  fileServices:FileConversionService =new FileConversionService();
+    fileServices.saveXmlToFile( this.testData.data,'testFile',true,null);
   }
-  public processFile(data){
+  public processFile(data:ConvertResults){
     console.log("processing file.....")
     console.log(data)
+    this.testData=data;
   }
 }

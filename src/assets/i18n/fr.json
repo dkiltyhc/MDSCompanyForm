@@ -10,6 +10,7 @@
 	"fileio.msg.success": "fr_Success",
 	"fileio.msg.parseFail": "fr_Parssing of the file has failed",
 	"fileio.msg.fileTypeError": "File Type Error",
+	"fileio.msg.dataTypeError": "Erreur: le type de formulaire incorrect a été sélectionné pour ce formulaire.",
 	"addressRecord.save": "fr_Save Address",
 	"addressRecord.delete": "fr_Delete Address"
 }

@@ -11,7 +11,7 @@
     <pre> myForm{{myForm.value |json}}</pre>
     <button (click)="saveFile()" i18n>Save File Test</button>
     <div class="row">
-    <filereader (complete)="processFile($event)"></filereader>
+    <filereader (complete)="processFile($event)" [rootTag]="rootTagText"></filereader>
     </div>
   </form>
 </div>
