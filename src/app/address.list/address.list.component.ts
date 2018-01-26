@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, ViewChild, SimpleChanges, OnChanges, ViewChildren, QueryList, EventEmitter, Output,
-  AfterViewInit
+  AfterViewInit, ChangeDetectionStrategy
 } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ExpanderComponent} from '../expander.component';
@@ -154,6 +154,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     this.addRecordMsg++;
     this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length - 1];
     this.updateAddressDetails++;
+    this.expander.selectTableRow(mycontrol.length-1);
     this.newRecordInd = true;
   }
 
@@ -217,6 +218,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     addressDetails.controls.city.setValue(modelRecord.city);
     addressDetails.controls.address.setValue(modelRecord.address);
     addressDetails.controls.country.setValue([modelRecord.country]);
+    //addressDetails.controls.provText.setValue('test');
     return formAddress;
   }
 

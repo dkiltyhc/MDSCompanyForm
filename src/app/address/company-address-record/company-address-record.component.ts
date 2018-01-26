@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
 import {AddressDetailsComponent} from '../address.details/address.details.component';
 import {CompanyAddressRecordService} from './company-address-record.service';
@@ -55,26 +55,13 @@ export class CompanyAddressRecordComponent implements OnInit {
         console.log('************Setting to local model for Address Record****************');
         this.setToLocalModel();
       } else {
-        this.adressRecordModel = this.initAddress();
+        this.adressRecordModel = this._initAddress();
         console.warn('**************There was no model for Address Record, not updating*****************');
         this.adressRecordModel.markAsPristine();
       }
       this.updateChild++;
     }
   }
-  /**
-   * Intializes a local model for address. This is needed otherwise the component will fail since we are implementing reactive forms
-   * @returns {FormGroup}
-   */
-  initAddress() {
-
-    return this._fb.group({
-      id: -1,
-      detailsDirty: false,
-      addressDetails:  this.addressDetailsChild.initAddress()
-    });
-  }
-
 
   setToLocalModel() {
     console.log('Address Record being set to the address form');

@@ -57,7 +57,7 @@ export class ExpanderComponent implements OnChanges {
    * @type {number}
    */
   private numberColSpan: number = 1;
-  public dataItems=[];
+  public dataItems = [];
 
   constructor() {
   }
@@ -80,9 +80,9 @@ export class ExpanderComponent implements OnChanges {
     }
     if (changes['itemsList']) {
       this.updateDataRows(changes['itemsList'].currentValue);
-      this.dataItems=changes['itemsList'].currentValue;
-      if(!Array.isArray(this.dataItems)){
-        this.dataItems=[];
+      this.dataItems = changes['itemsList'].currentValue;
+      if (!Array.isArray(this.dataItems)) {
+        this.dataItems = [];
       }
     }
     if (changes['deleteRecord']) {
@@ -155,22 +155,27 @@ export class ExpanderComponent implements OnChanges {
    * @param {number} index
    */
   public selectTableRow(index: number) {
-    if (this._expanderTable.length < index) {
-      console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
-      return;
-    }
-      let temp = this._expanderTable[index];
-      if (temp && !this.isValid && this.disableCollapse) {
-       // console.warn('select table row did not meet conditions');
+    console.log(this._expanderTable.length);
+    if (this._expanderTable.length <= index) {
+      //console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
+      this.updateDataRows(this.itemsList);
+      if (this._expanderTable.length <= index) {
+        console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
         return;
       }
-      this.collapseTableRows();
-      this._expanderTable[index] = !temp;
-      if (this._expanderTable[index]) {
-        this.tableRowIndexCurrExpanded = index;
-      } else {
-        this.tableRowIndexCurrExpanded = -1;
-      }
+    }
+    let temp = this._expanderTable[index];
+    if (temp && !this.isValid && this.disableCollapse) {
+      // console.warn('select table row did not meet conditions');
+      return;
+    }
+    this.collapseTableRows();
+    this._expanderTable[index] = !temp;
+    if (this._expanderTable[index]) {
+      this.tableRowIndexCurrExpanded = index;
+    } else {
+      this.tableRowIndexCurrExpanded = -1;
+    }
   }
 
 

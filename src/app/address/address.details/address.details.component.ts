@@ -1,6 +1,6 @@
 import {
   Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList,
-  AfterViewInit
+  AfterViewInit, ChangeDetectionStrategy
 } from '@angular/core';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
@@ -11,7 +11,8 @@ import {AddressDetailsService} from './address.details.service';
 
 @Component({
   selector: 'address-details',
-  templateUrl: 'address.details.component.html'
+  templateUrl: 'address.details.component.html',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 
 /**
@@ -65,7 +66,7 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
         console.log('################Setting to local model');
         this.setToLocalModel();
       } else {
-        this.adressFormLocalModel = this.initAddress();
+        this.adressFormLocalModel = AddressDetailsService.getReactiveModel(this._fb);
         console.warn('There was no model, not updating');
         this.adressFormLocalModel.markAsPristine();
       }
@@ -84,18 +85,6 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
     }
   }
 
-  /**
-   * Intializes a local model for address. This is needed otherwise the component will fail since we are implementing reactive forms
-   * @returns {FormGroup}
-   */
-  initAddress() {
-
-    return this._fb.group({
-      address: [null, Validators.required],
-      city: [null, [Validators.required, Validators.min(5)]],
-      country: [null, Validators.required]
-    });
-  }
   //note ng-select expects an array of values even with a single select
   selected(rec){
     console.log(rec)

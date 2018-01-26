@@ -27,8 +27,9 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-error':adressFormLocalModel.controls.country.invalid}">
-        <label for="country" class="required" aria-required="true">
+      <div class="form-group col-sm-6 col-xs-12"
+           [ngClass]="{'has-error':adressFormLocalModel.controls.country.invalid}">
+        <label for="country" class="required full-width" aria-required="true">
           <span class="field-name" i18n>Country</span>
           <strong class="required" i18n>(required)</strong>
           <div class="full-width">
@@ -47,46 +48,30 @@
                             parentLabel="REP Address"></control-messages>
         </label>
       </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-6"  >
+        <label for="provText" class="required full-width" aria-required="true">
+          <span class="field-name">Province or State</span>
+          <input id="provText" class="form-control full-width" formControlName="provText"/>
+        </label>
+      </div>
+      <!--<div class="form-group col-xs-12 col-sm-6"
+           [ngClass]="{'has-error':adressFormLocalModel.controls.provList.invalid}">
+        <label for="provList">Province</label>
+        <select class="form-control full-width" data-ng-model="adr.addressModel.stateList"
+                id="provList" formControlName="provList"
+                data-ng-options="province |translate for province in adr.provinces"
+                ng-required="adr.hideProvinceText"></select>
+      </div>-->
 
     </div>
-  <!--  <pre>{{adressFormLocalModel.value |json}}</pre>-->
+    <pre>{{adressFormLocalModel.value |json}}</pre>
   </div>
 </div>
 
 <!--
-</div>
 
-  <div class="col-md-5 form-group">
-    <label for="{{::adr.countryId}}" class="required full-width">
-      <span class="field-name">{{::"COUNTRY" |translate}}</span>
-      <strong class="required">{{::"REQUIRED" |translate}}</strong>
-
-      <div class="rep-pad-top">
-        <div class="rep-error" ng-class="{'has-error':adr.addressForm[adr.countryId].$invalid}">
-          <ui-select ng-model="adr.addressModel.country" id="{{::adr.countryId}}"
-                     name="{{::adr.countryId}}"
-                     on-select="adr.countryChanged()" ng-required="adr.isCountryEditable()"
-                     ng-disabled="!adr.isCountryEditable()" title="{{'COUNTRY_CHOOSE'|translate}}"
-                     class="rep-selectize-font full-width">
-            <ui-select-match placeholder="{{::'COUNTRY_CHOOSE'|translate}}"
-                             id="country_match{{::$id}}"
-                             class="rep-selectize-font rep-selectize-dropdown form-control">
-              {{$select.selected[adr.lang]}}
-            </ui-select-match>
-            <ui-select-choices
-              repeat="countryRecord in adr.countryList | filter:{[adr.lang]: $select.search}"
-              class="rep-selectize-font">
-              <span ng-bind-html="countryRecord[adr.lang] | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-      </div>
-      <cmp-error-message field-name="adr.countryId" form-ref="adr.addressForm"
-                         show-error="adr.showError(adr.addressForm[adr.countryId])" error-types="adr.requiredOnly">
-      </cmp-error-message>
-    </label>
-  </div>
-</div>
 <div class="row">
   <div class="col-md-6">
     <div class="form-group" ng-show="adr.hideProvinceText"
