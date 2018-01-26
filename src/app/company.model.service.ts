@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {FormGroup, Validators, FormBuilder, FormArray} from '@angular/forms';
 
 @Injectable()
 export class CompanyModelService {
@@ -8,12 +8,23 @@ export class CompanyModelService {
     {
       id: 1,
       address: 'address1',
-      city: 'city1'
+      city: 'city1',
+      country:
+        {
+          "id": "ABW",
+          "text": "Aruba"
+        }
     },
     {
       id: 2,
       address: 'address2',
-      city: 'city2'
+      city: 'city2',
+      country:
+        {
+          "id": "ABW",
+          "text": "Aruba"
+        }
+
     }
 
   ];
@@ -55,7 +66,8 @@ export class CompanyModelService {
     return {
       id: -1,
       address: null,
-      city: null
+      city: null,
+      country:null
     };
   }
 
@@ -70,6 +82,7 @@ export class CompanyModelService {
       if (this.addressList[i].id === record.id) {
         this.addressList[i].address = record.address;
         this.addressList[i].city = record.city;
+        this.addressList[i].country = record.country;
         return record.id;
       }
     }
@@ -97,32 +110,4 @@ export class CompanyModelService {
     }
     return false;
   }
-
-  public getNewAddressRecord(fb, getIndex: boolean = false) {
-    if (!fb) return null;
-
-    let index = -1;
-    if (getIndex) {
-      index = this.getNextIndex();
-    }
-    return (
-      fb.group({
-        id: index,
-        detailsDirty: [false, Validators.required],
-        addressDetails:  this.getNewAddressDetails(fb)
-      })
-    );
-  }
-
-  public getNewAddressDetails(fb) {
-    return (
-      fb.group({
-        address: [null, Validators.required],
-        city: [null, [Validators.required, Validators.min(5)]],
-        country: [null, Validators.required]
-
-      })
-    );
-  }
-
 }

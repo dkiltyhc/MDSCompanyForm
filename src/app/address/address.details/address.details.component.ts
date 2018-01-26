@@ -3,7 +3,10 @@ import {
   AfterViewInit
 } from '@angular/core';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
+import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
+import {AddressDetailsService} from './address.details.service';
+
+
 
 
 @Component({
@@ -19,10 +22,6 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   public adressFormLocalModel: FormGroup;
   @Input('group') public adressFormRecord: FormGroup;
   @Input() detailsChanged: number;
-  //@Input() formType: string;
-  /*  @Output() saveRecord = new EventEmitter();
-    @Output() revertRecord = new EventEmitter();
-    @Output() deleteRecord = new EventEmitter();*/
   @Output() errorList = new EventEmitter();
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
   public countries: Array<any> = [
@@ -30,14 +29,14 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
     {'id': 'AFG', 'text': 'Afghanistan',langs:{en:'AFff',fr:'fdf'}}
 
   ];
+  private detailsService: AddressDetailsService;
 
   constructor(private _fb: FormBuilder) {
-
   }
 
   ngOnInit() {
     if (!this.adressFormLocalModel) {
-      this.adressFormLocalModel = this.initAddress();
+      this.adressFormLocalModel = AddressDetailsService.getReactiveModel(this._fb);
     }
     this.detailsChanged = 0;
   }
@@ -59,6 +58,7 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
 
   ngOnChanges(changes: SimpleChanges) {
 
+    //since we can't detect changes on objects, using a separate flag
     if (changes['detailsChanged']) { //used as a change indicator for the model
       console.log('################ngOnChanges changed for Address Details');
       if (this.adressFormRecord) {
@@ -72,20 +72,16 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
     }
   }
 
+
+  /**
+   * Uses the updated reactive forms model locally
+   */
+
   setToLocalModel() {
     this.adressFormLocalModel = this.adressFormRecord;
-    console.log(this.adressFormLocalModel);
     if (!this.adressFormLocalModel.pristine) {
       this.adressFormLocalModel.markAsPristine();
     }
-  }
-
-
-  /**
-   * Changes the local model back to the last saved version of the address
-   */
-  revertAddress() {
-    this.adressFormLocalModel = this.adressFormRecord;
   }
 
   /**
@@ -100,13 +96,15 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
       country: [null, Validators.required]
     });
   }
-
+  //note ng-select expects an array of values even with a single select
   selected(rec){
     console.log(rec)
     //this.adressFormLocalModel.controls.country.setValue([rec.id]);
+    //this.adressFormLocalModel.controls.country.setValue([rec]);
   }
   removed(rec){
     console.log(rec)
+    //this.adressFormLocalModel.controls.country.setValue(null)
   }
   typed(rec){
     var content = rec.replace(/[\x00-\x7F]/g,'', '');
@@ -124,42 +122,6 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
     return false;
   }
 
-  /*public saveAddressRecord(): void {
-    if (this.adressFormLocalModel.valid) {
-      this.saveRecord.emit((this.adressFormLocalModel));
-      this.adressFormLocalModel.markAsPristine();
-    } else {
-      //id is used for an error to ensure the record gets saved
-      let temp = this.adressFormLocalModel.value.id;
-      this.adressFormLocalModel.controls.id.setValue(1);
-      if (this.adressFormLocalModel.valid) {
-        this.adressFormLocalModel.controls.id.setValue(temp);
-        this.saveRecord.emit((this.adressFormLocalModel));
-      } else {
-        this.adressFormLocalModel.controls.id.setValue(temp);
-        this.saveRecord.emit((null));
-      }
-    }
-  }*/
-
-  /**
-   * Reverts the address record to what was last saved in the model
-   */
-  /*
-    public revertAddressRecord(): void {
-      this.revertRecord.emit(this.adressFormLocalModel);
-      this.adressFormLocalModel.markAsPristine();
-    }
-  */
-
-  /***
-   * Deletes the address reocord with the selected id from both the model and the form
-   */
-  /*
-    public deleteAddressRecord(): void {
-      this.deleteRecord.emit(this.adressFormLocalModel.value.id);
-    }
-  */
 
 }
 

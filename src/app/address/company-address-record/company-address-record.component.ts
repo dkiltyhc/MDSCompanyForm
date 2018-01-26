@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
-import {AddressDetailsComponent} from '../address.details.component';
+import {AddressDetailsComponent} from '../address.details/address.details.component';
+import {CompanyAddressRecordService} from './company-address-record.service';
+
 
 @Component({
   selector: 'company-address-record',
@@ -31,6 +33,7 @@ export class CompanyAddressRecordComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this._initAddress());
     if (!this.adressRecordModel) {
       this.adressRecordModel = this._initAddress();
     }
@@ -39,16 +42,9 @@ export class CompanyAddressRecordComponent implements OnInit {
   }
 
   private _initAddress() {
-
-    return this._fb.group({
-      id: -1,
-      detailsDirty: [false, Validators.required],
-      addressDetails: this._fb.group({
-        address: [null, Validators.required],
-        city: [null, [Validators.required, Validators.min(5)]]
-
-      })
-    });
+    let temp= CompanyAddressRecordService.getReactiveModel(this._fb);
+    console.log(temp);
+    return temp;
   }
 
   ngOnChanges(changes: SimpleChanges) {
