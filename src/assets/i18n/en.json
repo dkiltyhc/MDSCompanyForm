@@ -1,0 +1,16 @@
+{
+	"company.title": "Company Address Form",
+	"addressDetails.address": "Street Address",
+	"addressDetails.city": "City",
+	"addressDetails.country": "Country",
+	"addressDetails.postalCode": "Postal Code",
+	"addressDetails.zipCode": "Zip Code",
+	"addressDetails.provState": "Province or State\t",
+	"addressDetails.cityTown": "City or Town",
+	"fileio.msg.success": "Success",
+	"fileio.msg.parseFail": "Parssing of the file has failed",
+	"fileio.msg.fileTypeError": "File Type Error",
+	"fileio.msg.dataTypeError": "Error: the wrong form data was selected for this form.",
+	"addressRecord.save": "Save Address",
+	"addressRecord.delete": "Delete Address"
+}

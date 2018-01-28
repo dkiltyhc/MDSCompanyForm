@@ -1,22 +1,19 @@
 
-<div  id="errors-summary">
+<div  id="{{componentId}}">
   <section  class="alert alert-danger" tabindex="-1">
     <h1>
-     <!-- <span ng-if="errSummaryCtrl.errorArray.length>1">{{'ERRORS_FOUND'|translate}}</span>
-      <span ng-if="errSummaryCtrl.errorArray.length==1">{{'ERROR_FOUND'|translate}}</span>-->
+      <span i18n>For the </span><span>{{headingPreamble}}</span>
+      <span i18n>Errors Found</span>
+      <span i18n>Error Found</span>
     </h1>
-    <ul>
-      <div ng-repeat="errorRec in errSummaryCtrl.errorArray">
-       <!-- <li ng-if="!errorRec.isSummary"><a  href="#{{errorRec.name}}" target="_self">{{errorRec.translateKey|translate}}
-          &nbsp;&#8208;&nbsp;{{errorRec.type |translate}}</a></li>
-        <li ng-if="errSummaryCtrl.isSummaryLink(errorRec)"><a href="#errors-summary-{{errorRec.name}}" ng-click="errSummaryCtrl.scrollTo(errorRec)">{{'THERE_ARE_ERRORS'|translate}}&nbsp;{{errorRec.translateKey|translate}}
-        </a></li>
-        <li ng-if="errSummaryCtrl.isTabLink(errorRec)"><a href="#errors-summary-{{errorRec.name}}" ng-click="errSummaryCtrl.selectVisibleTab(errorRec)">{{'THERE_ARE_ERRORS'|translate}}&nbsp;{{errorRec.translateKey|translate}}
-        </a></li>
-        <li ng-if="errSummaryCtrl.isExpanderLink(errorRec)"><a  href="#errors-summary-{{errorRec.name}}" ng-click="errSummaryCtrl.scrollTo(errorRec)">{{'THERE_ARE_ERRORS'|translate}}&nbsp;{{errorRec.translateKey|translate}}&nbsp;{{errorRec.exIndex+1}}
-        </a></li>-->
+    <ul *ngFor="let parentError of errors | keys">
+      <div  *ngFor="let controlError of parentError.value.controls" >
+        <li *ngIf="controlError.type=='ErrorSummaryComponent'"><a  href="#{{controlError.componentId}}" target="_self">{{controlError.label}} has errors</a></li>
+        <li *ngIf="controlError.type!='ErrorSummaryComponent'"><a href="#{{controlError.controlId}}" target="_self">{{controlError.label}}
+          &nbsp;&#8208;&nbsp;{{controlError.error}}</a></li>
       </div>
     </ul>
   </section>
-
+<!-- <pre>{{errors|json}}</pre>-->
+  <pre *ngFor="let parentError of errors | keys"></pre>
 </div>

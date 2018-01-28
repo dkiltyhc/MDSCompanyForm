@@ -1,26 +1,45 @@
 <div [formGroup]="addressListForm">
   <h3>This is the address List Component</h3>
   <div formArrayName="addresses">
-    <expander-component [group]="addressListForm.controls.addresses['controls']"
-                        [isValid]="addressListForm.valid && !addressListForm.dirty" [addRecord]="addRecordMsg"
-                        [columnDefinitions]="columnDefinitions" (expandedRow2)="getRow($event)" [deleteRecord]="deleteRecordMsg">
-      <address-details [detailsChanged]="updateAddressDetails" formType="UPDATE" (saveRecord) = "saveAddressRecord($event)"
+    <expander-component [group]="dataModel"
+                        [isValid]="isValid()" [addRecord]="addRecordMsg"
+                        [columnDefinitions]="columnDefinitions" (expandedRow2)="getRow($event)"
+                        [deleteRecord]="deleteRecordMsg">
+      <error-summary *ngIf="errorList.length>0 && showErrorSummary" [errorList]="errorList" headingPreamble="Address Details"
+                     compId="fff"></error-summary>
+     <!-- <address-details [detailsChanged]="updateAddressDetails"
+                       (saveRecord)="saveAddressRecord($event)"
                        (errorList)="updateErrorList($event)"
-                       (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)" ></address-details>
+                       (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></address-details>-->
+
+      <company-address-record
+        [detailsChanged]="updateAddressDetails"
+        (saveRecord)="saveAddressRecord($event)"
+        (errorList)="updateErrorList($event)"
+        (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></company-address-record>
+
+      <div>
+
+      </div>
+    <!--  <div class="row" *ngIf="addressListForm.dirty">
+        <div class="col-xs-7">
+          <div class="alert alert-info" role="alert"
+               aria-live="polite">
+            <span>Please Save or revert the record</span>
+          </div>
+        </div>
+      </div>-->
     </expander-component>
   </div>
-<!-- <div>
-    <address-details *ngIf="newRecordInd" formType="NEW" [detailsChanged]="updateAddressDetails" (saveRecord) = "saveAddressRecord($event)" ></address-details>
-  </div>-->
   <div>
     <div class="margin-20">
-      <button (click)="addAddress()"  [disabled]="!addressListForm.valid || addressDetailsChild?.adressFormRecord?.dirty">
-        Add another address +
+      <button (click)="addAddress()"
+              [disabled]="!addressListForm.valid || addressDetailsChild?.adressFormRecord?.dirty">
+        Add another address
       </button>
     </div>
   </div>
-  <pre> Address List Value{{addressListForm.value |json}}</pre>
-  <pre>Address Model Value {{service.getAddresses() |json}}</pre>
-
+<pre>Form Data {{addressListForm.value |json}}</pre>
+  <pre>Data Model {{dataModel|json}}</pre>
 </div>
 

@@ -7,29 +7,29 @@
         <th scope="col" *ngFor="let heading of columnDefinitions">{{heading.label}}</th>
       </tr>
       </thead>
-      <tbody *ngFor="let record of itemsList; index as i;">
-      <tr [formGroup]="record" id="tr-expand-row-{{i}}" class="clickableRow" role="button"
+      <tbody *ngFor="let record of dataItems; index as i;">
+      <tr  id="tr-expand-row-{{i}}" class="clickableRow" role="button"
           [ngClass]="{'selected':isExpanded(i)}"
-          [attr.aria-expanded]="getExpandedState(i)" title="TOGGLE_EXPAND {{i+1}}"
+          [attr.aria-expanded]="getExpandedState(i)" i18n-title="@@expander.rowTitle" title="Expand Row {{i+1}}"
           (click)="selectTableRow(i)">
         <td width="2%"><span class="fa fa-lg fa-fw"
                              [ngClass]="{'fa-caret-right':isCollapsed(i), 'fa-caret-down':isExpanded(i) }"
         ></span>{{i}}
         </td>
         <td *ngFor="let def of columnDefinitions" width="{{def.width}}%">
-          <span>{{record.value[def.binding]}}</span>
+          <span>{{record[def.binding]}}</span>
           <!-- <span ng-if="!def.isHtml"> {{  record[def.binding]|translate}}</span>-->
           <!--  <span ng-if="def.isHtml" ng-bind-html="record[def.binding]"></span>-->
         </td>
       </tr>
-      <tr *ngIf="isExpanded(i)">
+      <tr class="table-override"  *ngIf="isExpanded(i)">
         <td [attr.colspan]="numberColSpan">
           <ng-content></ng-content>
         </td>
       </tr>
       </tbody>
     </table>
-  <!--  <pre>{{_expanderTable}}</pre>-->
+<!--  <pre>{{dataItems |json}}</pre>-->
   </div>
 </div>
 

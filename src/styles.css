@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+input{
+
+}
+label > input {
+  margin-top: 5px;
+  font-weight: normal;
+  margin-bottom: 5px !important;
+}
+span.ui-select-toggle{
+  width:100%;
+
+}
+.table-override{
+
+  background-color: #fff !important;
+}
+.ui-select-match .btn-default{
+
+  background-color: #fff !important;
+}

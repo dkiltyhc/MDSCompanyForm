@@ -1,0 +1,114 @@
+<div class="address-details-form container-fluid">
+  <div [formGroup]="adressFormLocalModel">
+    <div class="row">
+      <div class="form-group col-xs-12" [ngClass]="{'has-error':adressFormLocalModel.controls.address.invalid}">
+        <label for="address" class="required full-width" aria-required="true">
+          <span class="field-name" i18n>Street Address</span>
+          <strong class="required" i18n>(required)</strong>
+          <input id="address" class="form-control full-width" formControlName="address"/>
+          <control-messages *ngIf="adressFormLocalModel.controls.address.invalid"
+                            [control]="adressFormLocalModel.controls.address"
+                            controlId="address" label="Street" parentId="addressDetails"
+                            parentLabel="REP Address"></control-messages>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-error':adressFormLocalModel.controls.city.invalid}">
+        <label for="city" class="required full-width" aria-required="true">
+          <span class="field-name" i18n>City</span>
+          <strong class="required" i18n>(required)</strong>
+          <input id="city" class="form-control full-width" formControlName="city"/>
+          <control-messages *ngIf="adressFormLocalModel.controls.city.invalid"
+                            [control]="adressFormLocalModel.controls.city"
+                            controlId="city" label="City" parentId="addressDetails"
+                            parentLabel="REP Address"></control-messages>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-6 col-xs-12"
+           [ngClass]="{'has-error':adressFormLocalModel.controls.country.invalid}">
+        <label for="country" class="required full-width" aria-required="true">
+          <span class="field-name" i18n>Country</span>
+          <strong class="required" i18n>(required)</strong>
+          <div class="full-width">
+            <ng-select id="country" formControlName="country" class="required"
+                       [allowClear]="false"
+                       [items]="countries"
+                       (typed)="typed($event)"
+                       (selected)="selected($event)"
+                       (removed)="removed($event)"
+            >
+            </ng-select>
+          </div>
+          <control-messages *ngIf="adressFormLocalModel.controls.country.invalid"
+                            [control]="adressFormLocalModel.controls.country"
+                            controlId="country" label="Country" parentId="addressDetails"
+                            parentLabel="REP Address"></control-messages>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-6"  >
+        <label for="provText" class="required full-width" aria-required="true">
+          <span class="field-name">Province or State</span>
+          <input id="provText" class="form-control full-width" formControlName="provText"/>
+        </label>
+      </div>
+      <!--<div class="form-group col-xs-12 col-sm-6"
+           [ngClass]="{'has-error':adressFormLocalModel.controls.provList.invalid}">
+        <label for="provList">Province</label>
+        <select class="form-control full-width" data-ng-model="adr.addressModel.stateList"
+                id="provList" formControlName="provList"
+                data-ng-options="province |translate for province in adr.provinces"
+                ng-required="adr.hideProvinceText"></select>
+      </div>-->
+
+    </div>
+    <pre>{{adressFormLocalModel.value |json}}</pre>
+  </div>
+</div>
+
+<!--
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group" ng-show="adr.hideProvinceText"
+         ng-class="{'has-error':adr.addressForm[adr.stateListId].$invalid}">
+      <label for="{{::adr.stateListId}}" class="required">
+        <span class="field-name">{{adr.provListLabel |translate}}</span>
+        <strong class="required"> {{::"REQUIRED" |translate}} </strong>
+        <select class="form-control full-width" data-ng-model="adr.addressModel.stateList"
+                id="{{::adr.stateListId}}" name="{{::adr.stateListId}}"
+                data-ng-options="province |translate for province in adr.provinces"
+                ng-disabled="!adr.isEditable" ng-required="adr.hideProvinceText"></select>
+
+        <cmp-error-message field-name="adr.stateListId" form-ref="adr.addressForm"
+                           show-error="adr.showError(adr.addressForm[adr.stateListId])" error-types="adr.requiredOnly">
+        </cmp-error-message>
+      </label>
+    </div>
+    <div class="form-group " ng-show="adr.hideProvinceDdl"
+         ng-class="{'has-error':adr.addressForm[adr.stateTextId].$invalid}">
+      <label for="{{::adr.stateTextId}}">{{::"PROVSTATE" |translate}}</label>
+      <input type="text" id="{{::adr.stateTextId}}" name="{{::adr.stateTextId}}"
+             data-ng-model="adr.addressModel.stateText" class="form-control full-width" maxlength="40"
+             size="40" ng-readonly="!adr.isEditable"/>
+    </div>
+  </div>
+  <div class="form-group col-md-6" ng-class="{'has-error':adr.addressForm[adr.postalId].$invalid}">
+    <label for="{{::adr.postalId}}" ng-class="{required:adr.isPostalRequired}">
+      <span class="field-name">{{adr.postalLabel |translate}}</span>
+      <strong ng-show="adr.isPostalRequired" class="required">{{::"REQUIRED" |translate}} </strong>
+      <input type="text" id="{{::adr.postalId}}" name="{{::adr.postalId}}"
+             data-ng-model="adr.addressModel.postalCode"
+             class="form-control" ng-maxlength="7" ng-required="adr.isPostalRequired"
+             ng-change="adr.postalCodeChanged()"
+             maxlength="7" ng-pattern="adr.postalPattern" ng-readonly="!adr.isEditable"/>
+      <cmp-error-message field-name="adr.postalId" form-ref="adr.addressForm"
+                         show-error="adr.showError(adr.addressForm[adr.postalId])" error-types="adr.postalErrorList">
+      </cmp-error-message>
+    </label>
+  </div>
+</div>-->

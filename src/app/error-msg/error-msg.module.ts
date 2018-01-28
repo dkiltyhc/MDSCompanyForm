@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ErrorSummaryComponent } from './error-summary/error-summary.component';
+import {MainPipeModule} from '../main-pipe/main-pipe.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MainPipeModule
   ],
   declarations: [
     ErrorSummaryComponent

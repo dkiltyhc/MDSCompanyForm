@@ -1,0 +1,17 @@
+<div>
+  <form [formGroup]="myForm" novalidate>
+    <!-- we will place our fields here -->
+    <div >
+      <h1>{{'company.title'|translate}}</h1>
+      <error-summary [hidden]="hideErrorSummary()"  [errorList]="errorList" headingPreamble="Address Form"></error-summary>
+      <address-list [group]="myForm.controls.addresses" (errors)="processErrors($event)"></address-list>
+    </div>
+    <button type="submit" [disabled]="!myForm?.valid">Submit</button>
+    <pre> myForm valid{{myForm.valid}}</pre>
+    <pre> myForm{{myForm.value |json}}</pre>
+    <button (click)="saveFile()" i18n>Save File Test</button>
+    <div class="row">
+    <filereader (complete)="processFile($event)" [rootTag]="rootTagText"></filereader>
+    </div>
+  </form>
+</div>
