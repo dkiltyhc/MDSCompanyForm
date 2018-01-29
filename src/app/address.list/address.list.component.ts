@@ -97,7 +97,9 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     if (list.length > 1) {
       console.warn('Address List found >1 Error Summary ' + list.length);
     }
+    console.log("AddressList process Summaries");
     this.errorSummaryChild = list.first;
+    console.log(this.errorSummaryChild)
     this._emitErrors();
   }
 
@@ -135,10 +137,15 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   public isValid(override: boolean = false): boolean {
+
+    console.log(this.newAddressForm);
     if (override) {
       return true;
+    }if (this.newAddressForm){
+      console.log("There is an new Address Form")
+      return false;
     }
-    if (this.companyAddressChild && this.companyAddressChild.adressFormRecord) {
+    else if (this.companyAddressChild && this.companyAddressChild.adressFormRecord) {
       return (this.addressListForm.valid && !this.companyAddressChild.adressFormRecord.dirty);
     }
     return (this.addressListForm.valid);
@@ -180,6 +187,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     //TODO should we be checking the record Id? or rely on the indicator
     if(this.newRecordInd ||record.controls.id.value<0) {
       this.saveNewAddress(record);
+      this.newAddressForm=null;
       return;
     }
     //case 3 an existing record. Update the model
@@ -229,6 +237,7 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
    * @param errs
    */
   updateErrorList(errs) {
+    console.log("Adddress List: Updating the errors")
     this.errorList = errs;
     this._emitErrors(); //needed or will generate a valuechanged error
   }
@@ -239,9 +248,16 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
    */
   private _emitErrors(): void {
     let emitErrors = [];
+
+    //adding the child errors
+    if(this.errorList){
+      emitErrors=this.errorList;
+    }
     if (this.errorSummaryChild) {
+      console.log("AddressList: Threre is a summary child")
       emitErrors.push(this.errorSummaryChild);
     }
+    console.log(this.errorSummaryChild)
     this.errors.emit(emitErrors);
   }
 

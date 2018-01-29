@@ -1,5 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, Pipe, PipeTransform, SimpleChanges} from '@angular/core';
-import {JsonKeysPipe} from '../../main-pipe/json-keys.pipe';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, SimpleChanges} from '@angular/core';
 import {GlobalsService} from '../../globals/globals.service';
 
 

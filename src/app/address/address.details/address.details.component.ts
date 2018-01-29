@@ -2,7 +2,7 @@ import {
   Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList,
   AfterViewInit, ChangeDetectionStrategy
 } from '@angular/core';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {FormGroup, Validators, FormBuilder, FormControl} from '@angular/forms';
 import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
 import {AddressDetailsService} from './address.details.service';
 
@@ -22,6 +22,7 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   public adressFormLocalModel: FormGroup;
   @Input('group') public adressFormRecord: FormGroup;
   @Input() detailsChanged: number;
+  @Input() showErrors:boolean;
   @Output() errorList = new EventEmitter();
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
   public countries: Array<any> = [
@@ -29,9 +30,13 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
     {'id': 'AFG', 'text': 'Afghanistan',langs:{en:'AFff',fr:'fdf'}}
 
   ];
+  public showFieldErrors:boolean=false;
+
   private detailsService: AddressDetailsService;
 
   constructor(private _fb: FormBuilder) {
+    this.showFieldErrors=false;
+    this.showErrors=false;
   }
 
   ngOnInit() {
@@ -69,6 +74,10 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
         console.warn('There was no model, not updating');
         this.adressFormLocalModel.markAsPristine();
       }
+    }
+    if(changes['showErrors']){
+
+      this.showFieldErrors=changes['showErrors'].currentValue;
     }
   }
 

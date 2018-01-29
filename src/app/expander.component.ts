@@ -15,12 +15,12 @@ export class ExpanderComponent implements OnChanges {
    * When set to true, disables collapse of a details section that is in error
    * @type {boolean}
    */
-  @Input() disableCollapse = true;
+ // @Input() disableCollapse = true;
   /**
    * sets if the details form is valid. Controls collapses state
    * @type {boolean}
    */
-  @Input() isValid = true;
+  @Input() isValid :boolean;
 
   /**
    * The list of records to display in the expander component
@@ -58,8 +58,10 @@ export class ExpanderComponent implements OnChanges {
    */
   private numberColSpan: number = 1;
   public dataItems = [];
+  private _expanderValid:boolean;
 
   constructor() {
+    this._expanderValid=true;
   }
 
   ngOnInit() {
@@ -81,6 +83,10 @@ export class ExpanderComponent implements OnChanges {
         this.dataItems = [];
       }
     }
+    if(changes['isValid']){
+
+      this._expanderValid=changes['isValid'].currentValue;
+    }
     if (changes['addRecord']) {
       this.collapseTableRows();
       this.updateDataRows(this.itemsList);
@@ -89,6 +95,7 @@ export class ExpanderComponent implements OnChanges {
     if (changes['deleteRecord']) {
       this.updateDataRows(this.itemsList);
     }
+
 
   }
 
@@ -145,19 +152,17 @@ export class ExpanderComponent implements OnChanges {
    * @param {number} index
    */
   public selectTableRow(index: number) {
-    if (this._expanderTable.length <= index) {
-      //console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
-      this.updateDataRows(this.itemsList);
-      if (this._expanderTable.length <= index) {
-        console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
-        return;
-      }
-    }
-    let temp = this._expanderTable[index];
-    if (temp && !this.isValid && this.disableCollapse) {
-      // console.warn('select table row did not meet conditions');
+    console.log("IS It valid? "+this._expanderValid);
+    if (!this._expanderValid) {
+       console.warn('select table row did not meet conditions');
       return;
     }
+
+  /*  if (this._expanderTable.length <= index) {
+      //console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
+      this.updateDataRows(this.itemsList);
+    }*/
+    let temp = this._expanderTable[index];
     this.collapseTableRows();
     this._expanderTable[index] = !temp;
     if (this._expanderTable[index]) {

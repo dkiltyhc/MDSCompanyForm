@@ -5,30 +5,12 @@
                         [isValid]="isValid()" [addRecord]="addRecordMsg"
                         [columnDefinitions]="columnDefinitions" (expandedRow2)="getRow($event)"
                         [deleteRecord]="deleteRecordMsg">
-      <error-summary *ngIf="errorList.length>0 && showErrorSummary" [errorList]="errorList" headingPreamble="Address Details"
-                     compId="fff"></error-summary>
-     <!-- <address-details [detailsChanged]="updateAddressDetails"
-                       (saveRecord)="saveAddressRecord($event)"
-                       (errorList)="updateErrorList($event)"
-                       (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></address-details>-->
-
       <company-address-record
         [detailsChanged]="updateAddressDetails"
         (saveRecord)="saveAddressRecord($event)"
-        (errorList)="updateErrorList($event)"
+        (errors)="updateErrorList($event)"
         (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></company-address-record>
 
-      <div>
-
-      </div>
-    <!--  <div class="row" *ngIf="addressListForm.dirty">
-        <div class="col-xs-7">
-          <div class="alert alert-info" role="alert"
-               aria-live="polite">
-            <span>Please Save or revert the record</span>
-          </div>
-        </div>
-      </div>-->
     </expander-component>
     <div *ngIf="newRecordInd">
       <company-address-record

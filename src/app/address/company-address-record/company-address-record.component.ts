@@ -1,16 +1,22 @@
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, QueryList, SimpleChanges, ViewChild,
+  ViewChildren
+} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
+//import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
 import {AddressDetailsComponent} from '../address.details/address.details.component';
 import {CompanyAddressRecordService} from './company-address-record.service';
+import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
 
 
 @Component({
   selector: 'company-address-record',
   templateUrl: './company-address-record.component.html',
-  styleUrls: ['./company-address-record.component.css']
+  styleUrls: ['./company-address-record.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CompanyAddressRecordComponent implements OnInit {
+export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
 
   public adressRecordModel: FormGroup;
   @Input('group') public adressFormRecord: FormGroup;
@@ -18,22 +24,27 @@ export class CompanyAddressRecordComponent implements OnInit {
   @Output() saveRecord = new EventEmitter();
   @Output() revertRecord = new EventEmitter();
   @Output() deleteRecord = new EventEmitter();
+  @Output() errors = new EventEmitter();
   @Output() createRecord; //TODO don't know if needed
-  @Output() public errors = new EventEmitter();
+  //@Output() public errors = new EventEmitter();
 
 
-  @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
-  @ViewChild (AddressDetailsComponent) addressDetailsChild;
+  //@ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
+  @ViewChild(AddressDetailsComponent) addressDetailsChild;
+  @ViewChildren(ErrorSummaryComponent) errorSummaryChildList: QueryList<ErrorSummaryComponent>;
 
   public updateChild: number = 0;
-  public errorList = null;
+  public errorList = [];
+  public showErrorSummary:boolean;
+  public showErrors:boolean;
+  public errorSummaryChild:ErrorSummaryComponent=null;
 
-  constructor(private _fb: FormBuilder) {
-
+  constructor(private _fb: FormBuilder,  private cdr: ChangeDetectorRef) {
+    this.showErrors=false;
+    this.showErrorSummary=false;
   }
 
   ngOnInit() {
-    console.log(this._initAddress());
     if (!this.adressRecordModel) {
       this.adressRecordModel = this._initAddress();
     }
@@ -41,10 +52,38 @@ export class CompanyAddressRecordComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+    this.errorSummaryChildList.changes.subscribe(list => {
+      this.processSummaries(list);
+    });
+  }
+
+  private processSummaries(list: QueryList<ErrorSummaryComponent>): void {
+    if (list.length > 1) {
+      console.warn('Address List found >1 Error Summary ' + list.length);
+    }
+    this.errorSummaryChild = list.first;
+    console.log("Processing summaries in the Address Record Component")
+    console.log(this.errorSummaryChild);
+    this._emitErrors();
+  }
+  /***
+   * Emits errors to higher level error summaries. Used for linking summaries
+   * @private
+   */
+  private _emitErrors(): void {
+    let emitErrors = [];
+    if (this.errorSummaryChild) {
+      console.log("Address Record emit errors has a child")
+      emitErrors.push(this.errorSummaryChild);
+    }
+    this.errors.emit(emitErrors);
+  }
+
+
+
   private _initAddress() {
-    let temp= CompanyAddressRecordService.getReactiveModel(this._fb);
-    console.log(temp);
-    return temp;
+    return CompanyAddressRecordService.getReactiveModel(this._fb);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -73,7 +112,8 @@ export class CompanyAddressRecordComponent implements OnInit {
 
   updateErrorList(errs) {
     this.errorList = errs;
-    this.errors.emit(this.errorList);
+    console.log('The error list is updated');
+    //this.errors.emit(this.errorList);
   }
 
   /**
@@ -94,6 +134,8 @@ export class CompanyAddressRecordComponent implements OnInit {
   public saveAddressRecord(): void {
     if (this.adressRecordModel.valid) {
       this.saveRecord.emit((this.adressRecordModel));
+      this.showErrorSummary = false;
+      this.showErrors=false;
       this.adressRecordModel.markAsPristine();
     } else {
       //id is used for an error to ensure the record gets saved
@@ -104,7 +146,11 @@ export class CompanyAddressRecordComponent implements OnInit {
         this.saveRecord.emit((this.adressRecordModel));
       } else {
         this.adressRecordModel.controls.id.setValue(temp);
-        this.saveRecord.emit((null));
+        this.showErrorSummary = true;
+        this.showErrors=true;
+        this.cdr.detectChanges();
+        console.log("The error list length is + "+this.errorList)
+        //this.saveRecord.emit((null));
       }
     }
   }

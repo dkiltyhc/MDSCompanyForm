@@ -58,7 +58,6 @@ export class CompanyBaseComponent implements OnInit {
   public hideErrorSummary() {
     if (!this.errorList) return false;
     return this.errorList.length == 0;
-
   }
 
   public saveFile() {

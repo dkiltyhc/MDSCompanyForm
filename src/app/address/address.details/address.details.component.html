@@ -7,6 +7,7 @@
           <strong class="required" i18n>(required)</strong>
           <input id="address" class="form-control full-width" formControlName="address"/>
           <control-messages *ngIf="adressFormLocalModel.controls.address.invalid"
+                            [showError]="showFieldErrors"
                             [control]="adressFormLocalModel.controls.address"
                             controlId="address" label="Street" parentId="addressDetails"
                             parentLabel="REP Address"></control-messages>
@@ -20,6 +21,7 @@
           <strong class="required" i18n>(required)</strong>
           <input id="city" class="form-control full-width" formControlName="city"/>
           <control-messages *ngIf="adressFormLocalModel.controls.city.invalid"
+                            [showError]="showFieldErrors"
                             [control]="adressFormLocalModel.controls.city"
                             controlId="city" label="City" parentId="addressDetails"
                             parentLabel="REP Address"></control-messages>
@@ -38,11 +40,11 @@
                        [items]="countries"
                        (typed)="typed($event)"
                        (selected)="selected($event)"
-                       (removed)="removed($event)"
-            >
+                       (removed)="removed($event)">
             </ng-select>
           </div>
           <control-messages *ngIf="adressFormLocalModel.controls.country.invalid"
+                            [showError]="showFieldErrors"
                             [control]="adressFormLocalModel.controls.country"
                             controlId="country" label="Country" parentId="addressDetails"
                             parentLabel="REP Address"></control-messages>
@@ -51,7 +53,7 @@
     </div>
     <div class="row">
       <div class="form-group col-xs-12 col-sm-6"  >
-        <label for="provText" class="required full-width" aria-required="true">
+        <label for="provText" class="full-width" >
           <span class="field-name">Province or State</span>
           <input id="provText" class="form-control full-width" formControlName="provText"/>
         </label>
