@@ -4,7 +4,7 @@ import {FormGroup, Validators, FormBuilder, FormArray} from '@angular/forms';
 @Injectable()
 export class CompanyModelService {
 
-  private addressList = [
+  /*private addressList = [
     {
       id: 1,
       address: 'address1',
@@ -27,7 +27,8 @@ export class CompanyModelService {
 
     }
 
-  ];
+  ];*/
+  private addressList=[];
   private _indexValue = -1;
 
 
@@ -54,6 +55,7 @@ export class CompanyModelService {
 
 
   getAddresses() {
+    //this.addressList=[];
     return this.addressList;
   }
 
@@ -71,8 +73,20 @@ export class CompanyModelService {
     };
   }
 
+  addressFormToData(record){
+    let addressModel=this.getAddressModel();
+    //TODO implement the proper mapping
+    //this.addressList[i].address = record.address;
+   // this.addressList[i].city = record.city;
+    //this.addressList[i].country = record.country;
+
+
+  }
+
+
   saveAddress(record) {
     //new record. Verify the index is -1. Set it to the next index
+    console.log("This is the the recor id"+record.id);
     if (record.id === -1) {
       record.id = this.getNextIndex();
       this.addressList.push(record);

@@ -30,6 +30,13 @@
         </div>
       </div>-->
     </expander-component>
+    <div *ngIf="newRecordInd">
+      <company-address-record
+        [detailsChanged]="updateAddressDetails"
+        (saveRecord)="saveAddressRecord($event)"
+        (errorList)="updateErrorList($event)"
+        (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></company-address-record>
+    </div>
   </div>
   <div>
     <div class="margin-20">
@@ -40,6 +47,6 @@
     </div>
   </div>
 <pre>Form Data {{addressListForm.value |json}}</pre>
-  <pre>Data Model {{dataModel|json}}</pre>
+  <pre>Data Model for Address List {{dataModel|json}}</pre>
 </div>
 

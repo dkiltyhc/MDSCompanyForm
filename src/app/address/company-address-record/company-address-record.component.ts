@@ -59,6 +59,7 @@ export class CompanyAddressRecordComponent implements OnInit {
         console.warn('**************There was no model for Address Record, not updating*****************');
         this.adressRecordModel.markAsPristine();
       }
+      console.log('Updating the child');
       this.updateChild++;
     }
   }

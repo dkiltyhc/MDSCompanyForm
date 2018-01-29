@@ -11,8 +11,7 @@ import {AddressDetailsService} from './address.details.service';
 
 @Component({
   selector: 'address-details',
-  templateUrl: 'address.details.component.html',
-  changeDetection:ChangeDetectionStrategy.OnPush
+  templateUrl: 'address.details.component.html'
 })
 
 /**

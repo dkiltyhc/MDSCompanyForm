@@ -73,17 +73,19 @@ export class ExpanderComponent implements OnChanges {
     if (changes['columnDefinitions']) {
       this.numberColSpan = (changes['columnDefinitions'].currentValue).length + 1;
     }
-    if (changes['addRecord']) {
-      this.collapseTableRows();
-      this.updateDataRows(this.itemsList);
-      this.selectTableRowNoCheck(this._expanderTable.length - 1);
-    }
+
     if (changes['itemsList']) {
       this.updateDataRows(changes['itemsList'].currentValue);
       this.dataItems = changes['itemsList'].currentValue;
       if (!Array.isArray(this.dataItems)) {
         this.dataItems = [];
       }
+    }
+    if (changes['addRecord']) {
+      console.log("A record has bee added")
+      this.collapseTableRows();
+      this.updateDataRows(this.itemsList);
+      this.selectTableRowNoCheck(this._expanderTable.length - 1);
     }
     if (changes['deleteRecord']) {
       this.updateDataRows(this.itemsList);

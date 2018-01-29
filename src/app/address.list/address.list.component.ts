@@ -151,10 +151,11 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
 
     let formAddress = CompanyAddressRecordService.getReactiveModel(this._fb);
     mycontrol.push(formAddress);
-    this.addRecordMsg++;
     this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length - 1];
+    console.log(this.companyAddressChild.adressFormRecord );
     this.updateAddressDetails++;
-    this.expander.selectTableRow(mycontrol.length-1);
+    this.addRecordMsg++;
+    //this.expander.selectTableRow(mycontrol.length-1);
     this.newRecordInd = true;
   }
 
@@ -180,6 +181,12 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
       //this.errorSummaryChild.nativeElement.focus(); //TODO this seems bad
       return;
     }
+    if(this.newRecordInd) {
+      console.log("New record indicator")
+      console.log(record);
+      this.saveNewAddress(record);
+      return;
+    }
     /* let modelAddresses = this.service.getAddresses();
      let addressModel = this.service.getAddressModel();
  */
@@ -195,6 +202,31 @@ export class AddressListComponent implements OnInit, OnChanges, AfterViewInit {
     this.showErrorSummary = false;
     this.dataModel = this.service.getAddresses();
   }
+
+  public saveNewAddress(record){
+    if (!record) {
+      this.showErrorSummary = true;
+      //set the focus
+      //this.errorSummaryChild.nativeElement.focus(); //TODO this seems bad
+      return;
+    }
+    /* let modelAddresses = this.service.getAddresses();
+     let addressModel = this.service.getAddressModel();
+ */
+    console.log("Writing to the model")
+    //this.service.saveAddress(record);
+    //let addressModel = this._writeFormRecordToModel(record);
+    let resultId = this.service.saveAddress(record);
+    console.log("This is the result id "+resultId);
+    record.controls.id.setValue(resultId);
+    //this.companyAddressChild.adressFormRecord.markAsPristine();
+    this.expander.collapseTableRows();
+    this.showErrorSummary = false;
+    this.dataModel = this.service.getAddresses();
+    this.newRecordInd = false;
+  }
+
+
 
   private _writeFormRecordToModel(addressFormRecord) {
 
