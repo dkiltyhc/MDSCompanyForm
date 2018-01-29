@@ -82,10 +82,9 @@ export class ExpanderComponent implements OnChanges {
       }
     }
     if (changes['addRecord']) {
-      console.log("A record has bee added")
       this.collapseTableRows();
       this.updateDataRows(this.itemsList);
-      this.selectTableRowNoCheck(this._expanderTable.length - 1);
+     // this.selectTableRowNoCheck(this._expanderTable.length - 1);
     }
     if (changes['deleteRecord']) {
       this.updateDataRows(this.itemsList);
@@ -130,17 +129,6 @@ export class ExpanderComponent implements OnChanges {
     return !this.isExpanded(index);
   }
 
-  /**
-   * Returns the row that is expanded. (-1) if no row is expanded
-   * @returns {number}
-   */
-
-  /*saveAddressRecord(){
-    // this.saveRecord=_.cloneDeep(this.adressFormLocalModel);
-
-    this.saveRecord.emit((this.adressFormLocalModel));
-    console.log(this.saveRecord);
-  }*/
 
   public getExpandedRow2() {
     // return this.tableRowIndexCurrExpanded;
@@ -157,7 +145,6 @@ export class ExpanderComponent implements OnChanges {
    * @param {number} index
    */
   public selectTableRow(index: number) {
-    console.log(this._expanderTable.length);
     if (this._expanderTable.length <= index) {
       //console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
       this.updateDataRows(this.itemsList);

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Injectable()
 export class AddressDetailsService {
@@ -22,5 +22,22 @@ export class AddressDetailsService {
 
     });
   }
+  public static mapFormModelToDataModel(formRecord:FormGroup, addressModel){
+    addressModel.address=formRecord.controls.address.value;
+    addressModel.city=formRecord.controls.city.value
+    if(formRecord.controls.country.value &&formRecord.controls.country.value.length>0) {
+      addressModel.country = formRecord.controls.country.value[0];
+    }else{
+      addressModel.country=null;
+    }
+  }
+  public static mapDataModelToFormModel(addressModel,formRecord:FormGroup,){
+    formRecord.controls.address.setValue(addressModel.address);
+    formRecord.controls.city.setValue(addressModel.city);
+    formRecord.controls.country.setValue([addressModel.country]);
+  }
+
+
+
 
 }

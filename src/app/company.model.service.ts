@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {FormGroup, Validators, FormBuilder, FormArray} from '@angular/forms';
+import {CompanyAddressRecordService} from './address/company-address-record/company-address-record.service';
 
 @Injectable()
 export class CompanyModelService {
 
-  /*private addressList = [
+  private addressList = [
     {
       id: 1,
       address: 'address1',
@@ -27,14 +28,14 @@ export class CompanyModelService {
 
     }
 
-  ];*/
-  private addressList=[];
+  ];
+ // private addressList=[];
   private _indexValue = -1;
 
 
   _initIndex() {
 
-    for (var i = 0; i < this.addressList.length; i++) {
+    for (let i = 0; i < this.addressList.length; i++) {
       if (this.addressList[i].id > this._indexValue) {
         this._indexValue = this.addressList[i].id;
       }
@@ -72,41 +73,42 @@ export class CompanyModelService {
       country:null
     };
   }
+  getAddressFormRecord(fb:FormBuilder){
 
-  addressFormToData(record){
-    let addressModel=this.getAddressModel();
-    //TODO implement the proper mapping
-    //this.addressList[i].address = record.address;
-   // this.addressList[i].city = record.city;
-    //this.addressList[i].country = record.country;
+    return CompanyAddressRecordService.getReactiveModel(fb);
+  }
 
+
+  addressFormToData(record,addressModel){
+
+    CompanyAddressRecordService.mapFormModelToDataModel(record,addressModel);
+    return(addressModel);
 
   }
+
+  addressDataToForm(addressModel,record){
+    CompanyAddressRecordService.mapDataModelFormModel(addressModel,record);
+    return(addressModel);
+  }
+
 
 
   saveAddress(record) {
-    //new record. Verify the index is -1. Set it to the next index
-    console.log("This is the the recor id"+record.id);
-    if (record.id === -1) {
-      record.id = this.getNextIndex();
-      this.addressList.push(record);
-      return record.id;
+    if (record.controls.id.value === -1) {
+      record.controls.id.value = this.getNextIndex();
+      let addressModel=this.getAddressModel();
+      this.addressList.push(this.addressFormToData(record,addressModel));
+      return addressModel.id;
+    }else{
+       let modelRecord= this.getModelAddress(record.controls.id.value);
+        this.addressFormToData(record,modelRecord);
     }
-    for (var i = 0; i < this.addressList.length; i++) {
-      if (this.addressList[i].id === record.id) {
-        this.addressList[i].address = record.address;
-        this.addressList[i].city = record.city;
-        this.addressList[i].country = record.country;
-        return record.id;
-      }
-    }
-    return -1;
   }
 
   getModelAddress(id) {
-    var modelList = this.getAddresses();
+    let modelList = this.getAddresses();
 
-    for (var i = 0; i < modelList.length; i++) {
+    for (let i = 0; i < modelList.length; i++) {
       if (modelList[i].id === id) {
         return modelList[i];
       }
@@ -115,8 +117,8 @@ export class CompanyModelService {
   }
 
   deleteModelAddress(id): boolean {
-    var modelList = this.getAddresses();
-    for (var i = 0; i < modelList.length; i++) {
+    let modelList = this.getAddresses();
+    for (let i = 0; i < modelList.length; i++) {
       if (modelList[i].id === id) {
         this.addressList.splice(i, 1);
         return true;

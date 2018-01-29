@@ -33,6 +33,7 @@
     <div *ngIf="newRecordInd">
       <company-address-record
         [detailsChanged]="updateAddressDetails"
+        [group]="newAddressForm"
         (saveRecord)="saveAddressRecord($event)"
         (errorList)="updateErrorList($event)"
         (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></company-address-record>
