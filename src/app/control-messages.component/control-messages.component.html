@@ -1,4 +1,4 @@
-<strong *ngIf="makeErrorVisible()" class="error">
+<strong [hidden]="!makeErrorVisible()" class="error">
         <span class="label label-danger rep">
           <span class="rep"> {{errorMessage}}</span>
 

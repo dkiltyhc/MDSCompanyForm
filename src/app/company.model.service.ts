@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {FormGroup, Validators, FormBuilder, FormArray} from '@angular/forms';
 import {CompanyAddressRecordService} from './address/company-address-record/company-address-record.service';
+import {IMasterDetails} from './master-details';
 
 @Injectable()
 export class CompanyModelService {
@@ -93,9 +94,9 @@ export class CompanyModelService {
 
 
 
-  saveAddress(record) {
+  saveRecord(record:FormGroup) {
     if (record.controls.id.value === -1) {
-      record.controls.id.value = this.getNextIndex();
+      record.controls.id.setValue(this.getNextIndex());
       let addressModel=this.getAddressModel();
       this.addressList.push(this.addressFormToData(record,addressModel));
       return addressModel.id;
@@ -116,7 +117,7 @@ export class CompanyModelService {
     return null;
   }
 
-  deleteModelAddress(id): boolean {
+  deleteModelRecord(id): boolean {
     let modelList = this.getAddresses();
     for (let i = 0; i < modelList.length; i++) {
       if (modelList[i].id === id) {

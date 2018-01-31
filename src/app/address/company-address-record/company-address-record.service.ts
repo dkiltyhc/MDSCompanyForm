@@ -28,6 +28,5 @@ export class CompanyAddressRecordService {
   public static mapDataModelFormModel(addressRecordModel, formRecord: FormGroup) {
     formRecord.controls.id.setValue(addressRecordModel.id);
     AddressDetailsService.mapDataModelToFormModel(addressRecordModel, <FormGroup>formRecord.controls.addressDetails);
-
   }
 }

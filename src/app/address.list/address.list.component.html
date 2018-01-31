@@ -12,7 +12,7 @@
         (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></company-address-record>
 
     </expander-component>
-    <div *ngIf="newRecordInd">
+    <div *ngIf="newRecordIndicator">
       <company-address-record
         [detailsChanged]="updateAddressDetails"
         [group]="newAddressForm"

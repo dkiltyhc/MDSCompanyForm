@@ -15,6 +15,7 @@ import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary
   templateUrl: './company-address-record.component.html',
   styleUrls: ['./company-address-record.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
 
@@ -26,8 +27,6 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
   @Output() deleteRecord = new EventEmitter();
   @Output() errors = new EventEmitter();
   @Output() createRecord; //TODO don't know if needed
-  //@Output() public errors = new EventEmitter();
-
 
   //@ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
   @ViewChild(AddressDetailsComponent) addressDetailsChild;
@@ -56,6 +55,7 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
     this.errorSummaryChildList.changes.subscribe(list => {
       this.processSummaries(list);
     });
+
   }
 
   private processSummaries(list: QueryList<ErrorSummaryComponent>): void {
@@ -63,8 +63,6 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
       console.warn('Address List found >1 Error Summary ' + list.length);
     }
     this.errorSummaryChild = list.first;
-    console.log("Processing summaries in the Address Record Component")
-    console.log(this.errorSummaryChild);
     this._emitErrors();
   }
   /***
@@ -74,7 +72,6 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
   private _emitErrors(): void {
     let emitErrors = [];
     if (this.errorSummaryChild) {
-      console.log("Address Record emit errors has a child")
       emitErrors.push(this.errorSummaryChild);
     }
     this.errors.emit(emitErrors);
@@ -89,31 +86,23 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes['detailsChanged']) { //used as a change indicator for the model
-      console.log('*******************ngOnChanges changed for Address record***************');
       if (this.adressFormRecord) {
-        console.log('************Setting to local model for Address Record****************');
         this.setToLocalModel();
       } else {
         this.adressRecordModel = this._initAddress();
-        console.warn('**************There was no model for Address Record, not updating*****************');
         this.adressRecordModel.markAsPristine();
       }
-      console.log('Updating the child');
       this.updateChild++;
     }
   }
 
   setToLocalModel() {
-    console.log('Address Record being set to the address form');
-    console.log(this.adressFormRecord);
     this.adressRecordModel = this.adressFormRecord;
     this.adressRecordModel.markAsPristine();
   }
 
   updateErrorList(errs) {
     this.errorList = errs;
-    console.log('The error list is updated');
-    //this.errors.emit(this.errorList);
   }
 
   /**
@@ -148,8 +137,7 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
         this.adressRecordModel.controls.id.setValue(temp);
         this.showErrorSummary = true;
         this.showErrors=true;
-        this.cdr.detectChanges();
-        console.log("The error list length is + "+this.errorList)
+       // this.cdr.detectChanges();
         //this.saveRecord.emit((null));
       }
     }

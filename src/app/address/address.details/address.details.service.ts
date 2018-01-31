@@ -34,7 +34,12 @@ export class AddressDetailsService {
   public static mapDataModelToFormModel(addressModel,formRecord:FormGroup,){
     formRecord.controls.address.setValue(addressModel.address);
     formRecord.controls.city.setValue(addressModel.city);
-    formRecord.controls.country.setValue([addressModel.country]);
+    console.log(addressModel.country);
+    if(addressModel.country) {
+      formRecord.controls.country.setValue([addressModel.country]);
+    }else{
+      formRecord.controls.country.setValue(null);
+    }
   }
 
 

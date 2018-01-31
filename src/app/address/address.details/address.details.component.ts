@@ -7,8 +7,6 @@ import {ControlMessagesComponent} from '../../control-messages.component/control
 import {AddressDetailsService} from './address.details.service';
 
 
-
-
 @Component({
   selector: 'address-details',
   templateUrl: 'address.details.component.html'
@@ -26,9 +24,8 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   @Output() errorList = new EventEmitter();
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
   public countries: Array<any> = [
-    {'id': 'ABW', 'text': 'Aruba' , langs:{en:'AFff',fr:'fdf'}},
+    {'id': 'ABW', 'text': 'Aruba' , langs:{en:'dd',fr:'fdf'}},
     {'id': 'AFG', 'text': 'Afghanistan',langs:{en:'AFff',fr:'fdf'}}
-
   ];
   public showFieldErrors:boolean=false;
 
@@ -44,12 +41,11 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
       this.adressFormLocalModel = AddressDetailsService.getReactiveModel(this._fb);
     }
     this.detailsChanged = 0;
+
   }
 
   ngAfterViewInit() {
-
     this.msgList.changes.subscribe(errorObjs => {
-      console.log('There are errors changed in the address details');
       let temp = [];
       errorObjs.forEach(
         error => {
@@ -58,6 +54,7 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
       );
       this.errorList.emit(temp);
     });
+    this.msgList.notifyOnChanges();
   }
 
 
@@ -65,19 +62,23 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
 
     //since we can't detect changes on objects, using a separate flag
     if (changes['detailsChanged']) { //used as a change indicator for the model
-      console.log('################ngOnChanges changed for Address Details');
       if (this.adressFormRecord) {
-        console.log('################Setting to local model');
         this.setToLocalModel();
       } else {
         this.adressFormLocalModel = AddressDetailsService.getReactiveModel(this._fb);
-        console.warn('There was no model, not updating');
         this.adressFormLocalModel.markAsPristine();
       }
     }
     if(changes['showErrors']){
 
       this.showFieldErrors=changes['showErrors'].currentValue;
+      let temp=[];
+      if(this.msgList) {
+        this.msgList.forEach(item=>{
+          temp.push(item);
+        });
+      }
+      this.errorList.emit(temp);
     }
   }
 

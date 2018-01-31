@@ -18,6 +18,7 @@ export class ControlMessagesComponent {
   @Input() index:Number;
   public currentError:string="";
   private _errorVisible=false;
+
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
