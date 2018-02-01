@@ -4,7 +4,6 @@ import {
   ViewChildren
 } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-//import {ControlMessagesComponent} from '../../control-messages.component/control-messages.component';
 import {AddressDetailsComponent} from '../address.details/address.details.component';
 import {CompanyAddressRecordService} from './company-address-record.service';
 import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
@@ -28,7 +27,7 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
   @Output() errors = new EventEmitter();
   @Output() createRecord; //TODO don't know if needed
 
-  //@ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
+
   @ViewChild(AddressDetailsComponent) addressDetailsChild;
   @ViewChildren(ErrorSummaryComponent) errorSummaryChildList: QueryList<ErrorSummaryComponent>;
 
@@ -137,8 +136,6 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
         this.adressRecordModel.controls.id.setValue(temp);
         this.showErrorSummary = true;
         this.showErrors=true;
-       // this.cdr.detectChanges();
-        //this.saveRecord.emit((null));
       }
     }
   }

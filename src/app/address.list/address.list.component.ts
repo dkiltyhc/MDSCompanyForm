@@ -13,8 +13,8 @@ import {ListOperations} from '../list-operations';
 @Component({
   selector: 'address-list',
   templateUrl: './address.list.component.html',
-  styleUrls: ['./address.list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./address.list.component.css']
+
 })
 export class AddressListComponent extends ListOperations implements OnInit, OnChanges, AfterViewInit {
   @Input('group') public addresses: FormArray;
@@ -22,23 +22,20 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   @Input() public showErrors: boolean = false;
   @Output() public errors = new EventEmitter();
 
-  //@ViewChild(ExpanderComponent) expander: ExpanderComponent;
   @ViewChild(CompanyAddressRecordComponent) companyAddressChild: CompanyAddressRecordComponent;
   @ViewChildren(ErrorSummaryComponent) errorSummaryChildList: QueryList<ErrorSummaryComponent>;
 
   private errorSummaryChild = null;
   //private prevRow = -1;
   public updateAddressDetails: number = 0;
-  public newRecordInd = false;
   public addressListForm: FormGroup;
   public newAddressForm: FormGroup;
   public service: AddressListService;
   public addRecordMsg = 0;
   public deleteRecordMsg = 0;
   public errorList = [];
-  //public showErrorSummary: boolean = false;
   public dataModel = [];
-  //public newRecordIndicator:boolean;
+  public validRec=true;
   public columnDefinitions = [
     {
       label: 'ADDRESS',
@@ -59,18 +56,16 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   }
 
   ngOnInit() {
-    // this.service.setExpander(this.expander);
     this.addressListForm = this._fb.group({
       addresses: this.addresses
     });
-    this.dataModel = this.service.getModelRecordList();
+    this.dataModel = this.service.getModelRecordList(); //TODO this is temporary. Normally respond to events
     this._loadAddressListData();
 
   }
 
   ngAfterViewInit() {
-    console.log('Starting adddress list onViewInit');
-    this.service.setExpander(this.expander);
+    this.setExpander(this.expander);
     this.processSummaries(this.errorSummaryChildList);
     this.errorSummaryChildList.changes.subscribe(list => {
       this.processSummaries(list);
@@ -86,7 +81,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   private _loadAddressListData() {
 
     let addressDataList = this.service.getModelRecordList();
-    const mycontrol = <FormArray>this.addressListForm.controls['addresses'];
+    const mycontrol = this.getFormAddressList();
     //TODO temp setting some initial data
     for (let i = 0; i < addressDataList.length; i++) {
       let formAddressRecord = this.service.getAddressFormRecord(this._fb);
@@ -113,11 +108,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
 
 
   ngDoCheck() {
-    // let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
-    //this.service.setExpander(this.expander);
-    // this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[rowNum];
-    // console.log(mycontrol);
-    //this.service.setExpander(this.expander);
+    this.isValid();
     this._syncCurrentExpandedRow();
   }
 
@@ -125,15 +116,18 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
    *
    * @private syncs the address details record with the reactive model. Uses view child functionality
    */
-  _syncCurrentExpandedRow() {
-    let addressFormList = <FormArray>this.addressListForm.controls['addresses'];
-    console.log(this.companyAddressChild);
+  private _syncCurrentExpandedRow():void {
     if (this.companyAddressChild) {
+      let addressFormList = this.getFormAddressList();
       let result = this.syncCurrentExpandedRow(addressFormList);
-      if (result) this.companyAddressChild.adressFormRecord = result;
-      this.updateAddressDetails++;
+      //Onlu update the results if there is a change. Otherwise the record will not be dirty
+
+      if (result) {
+        this.companyAddressChild.adressFormRecord = result;
+        this.updateAddressDetails++;
+      }
     } else {
-      console.log('There is no company address child');
+      console.warn('There is no company address child');
     }
   }
 
@@ -151,12 +145,15 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     if (override) {
       return true;
     }
-    if (this.newRecordInd) {
+    if (this.newRecordIndicator) {
+      this.validRec=false;
       return false;
     }
     else if (this.companyAddressChild && this.companyAddressChild.adressFormRecord) {
+      this.validRec=this.addressListForm.valid && !this.companyAddressChild.adressFormRecord.dirty;
       return (this.addressListForm.valid && !this.companyAddressChild.adressFormRecord.dirty);
     }
+    this.validRec=this.addressListForm.valid;
     return (this.addressListForm.valid);
   }
 
@@ -165,102 +162,50 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     return <FormArray>(this.addressListForm.controls['addresses']);
   }
 
+  /**
+   * returns an address record with a given id
+   * @param {number} id - the identifier for that address record
+   * @returns {FormGroup} -the address record, null if theere is no match
+   * @private
+   */
+  private _getFormAddress(id:number): FormGroup {
+    let addressList = this.getFormAddressList();
+    return this.getRecord(id,addressList);
+  }
+
+  /**
+   * Adds an address UI record to the address List
+   */
   public addAddress(): void {
 
     // add address to the list
-    //this.expander.collapseTableRows(); //if you don't do this view will not look right
     console.log('adding an address');
+    // 1. Get the list of reactive form Records
     let addressFormList = this.getFormAddressList();
+    //2. Get a blank Form Model for the new record
     let formAddress = CompanyAddressRecordService.getReactiveModel(this._fb);
-    this.service.addRecord(formAddress, addressFormList);
-    this.newRecordIndicator = true;
-    console.log('!!!!NewRecord indicator ' + this.getNewRecordInd());
-    // mycontrol.push(formAddress);
-    //this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[mycontrol.length - 1];
-    //set the reactive form model to the correct compoenent instance
+    //3. Add the form record using the super class. New form is addded at the end
+    this.addRecord(formAddress, addressFormList);
+    // 4. Set the new form to the new address form reference.
     this.newAddressForm = <FormGroup> addressFormList.controls[addressFormList.length - 1];
-    // this.newRecordInd = true;
-    //this.newRecordIndicator=true;
 
   }
-
-
-  /**
-   * Removes an address FormGroup from the UI
-   * @param {number} i
-   */
-  public removeAddress(id: number): void {
-    // remove address from the reactive form list of recorcs
-    let formList = this.getFormAddressList();
-    console.log(formList);
-    for (let i = 0; i < formList.controls.length; i++) {
-      let form = <FormGroup> formList.controls[i];
-     if (form.controls.id.value === id) {
-        formList.removeAt(i);
-          console.log("deleting the form adddress")
-      }
-    }
-  }
-
 
   /**
    * Saves the record to the list. If new adds to the end of the list. Does no error Checking
    * @param record
    */
   public saveAddressRecord(record: FormGroup) {
-
       this.saveRecord(record,this.service);
-      this.newRecordIndicator=false;
-  //  let recId = this.service.saveRecord(record);
-   // record.controls.id.setValue(recId); //in caae new
-
-    /* //Case 1 no record, just show error summary, shoud never happen
-     if (!record) {
-       this.showErrorSummary = true;
-       return;
-     }
-     //Case 2 a new record, save a new model record.
-     //TODO should we be checking the record Id? or rely on the indicator
-     if(this.newRecordInd ||record.controls.id.value<0) {
-       this.saveNewAddress(record);
-       this.newAddressForm=null;
-       return;
-     }
-     //case 3 an existing record. Update the model
-     let resultId = this.service.saveAddress(record);
-     this.showErrorSummary = false;
-     this.expander.collapseTableRows()
-     //this.dataModel = this.service.getAddresses();*/
-
   }
 
   /**
-   * Sacves a new address record
-   * @param record
-   */
-
-  /*public saveNewAddress(record){
-    if (!record) {
-      this.showErrorSummary = true;
-      return;
-    }
-    console.log("Writing to the model")
-    let resultId = this.service.saveAddress(record);
-    record.controls.id.setValue(resultId);
-    this.showErrorSummary = false;
-    this.dataModel = this.service.getAddresses();
-    this.newRecordInd = false;
-  }*/
-
-
-  /**
-   * Sets the address details controls form to a given row
+   * Sets the address details controls form to a given row (not an id)
    * @param row
    */
   public getRow(row): void {
     if (row > -1) {
-      console.log('####### Getting Row...');
-      let mycontrol = <FormArray>this.addressListForm.controls['addresses'];
+      let mycontrol = this.getFormAddressList();
       this.companyAddressChild.adressFormRecord = <FormGroup> mycontrol.controls[row];
       this.updateAddressDetails++;
     } else {
@@ -268,10 +213,9 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
   }
 
-
   /**
    *  Updates the error list
-   * @param errs
+   * @param errs - the list of errors to broadcast
    */
   updateErrorList(errs) {
     this.errorList = errs;
@@ -284,28 +228,18 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
    */
   private _emitErrors(): void {
     let emitErrors = [];
-
     //adding the child errors
     if (this.errorList) {
       emitErrors = this.errorList;
     }
     if (this.errorSummaryChild) {
-      console.log('AddressList: Threre is a summary child');
       emitErrors.push(this.errorSummaryChild);
     }
     this.errors.emit(emitErrors);
   }
 
-  _getFormAddress(id): FormGroup {
-    const addressList = <FormArray>this.addressListForm.controls['addresses'];
-    for (let i = 0; i < addressList.controls.length; i++) {
-      let temp = <FormGroup> addressList.controls[i];
-      if (temp.controls.id.value === id) {
-        return temp;
-      }
-    }
-    return null;
-  }
+
+
 
   /***
    * Loads the last saved version of the record data
@@ -315,40 +249,28 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     let recordId = record.controls.id.value;
 
     let modelRecord = this.service.getModelRecord(recordId);
+    //IF a new record, there will be no id in the model
     if (!modelRecord) {
       modelRecord = this.service.getAddressModel();
     }
     let rec = this._getFormAddress(recordId);
     if (rec) {
-
       CompanyAddressRecordService.mapDataModelFormModel(modelRecord, rec);
     } else {
+      //should never happen, there should always be a UI record
       console.warn('AddressList:rec is null');
     }
   }
 
+  /**
+   * Deletes a record from the UI list and the model list, if it exists
+   * @param id
+   */
   public deleteAddress(id): void {
-
-
-    // const serviceResult = this.service.deleteModelAddress(id); ///TODO check result? There is a use case for no model?
-    let addressList = <FormArray>this.addressListForm.controls['addresses'];
-
+    let addressList = this.getFormAddressList();
     this.deleteRecord(id,addressList,this.service);
-
-    //this.service.deleteModelRecord(id);
-    this.newRecordIndicator = false;
-    //this.removeAddress(id);
     this.deleteRecordMsg++;
-    /* for (let i = 0; i < addressList.controls.length; i++) {
-      let temp = <FormGroup> addressList.controls[i];
-      if (temp.controls.id.value === id) {
-        addressList.removeAt(i);
-      }
-      this.deleteRecordMsg++;
-      this.expander.collapseTableRows();
-      this.prevRow = -1;
-      this.newRecordInd=false;
-    }*/
   }
+
 
 }

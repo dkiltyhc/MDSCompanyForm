@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'expander-component',
@@ -137,14 +136,12 @@ export class ExpanderComponent implements OnChanges {
   }
 
 
-  public getExpandedRow2() {
+  public broadcastExpandedRow() {
     // return this.tableRowIndexCurrExpanded;
     this.expandedRow.emit(this.tableRowIndexCurrExpanded);
   }
-
   public getExpandedRow() {
-    return this.tableRowIndexCurrExpanded;
-
+    return this.tableRowIndexCurrExpanded
   }
 
   /**
@@ -152,23 +149,19 @@ export class ExpanderComponent implements OnChanges {
    * @param {number} index
    */
   public selectTableRow(index: number) {
-    console.log("IS It valid? "+this._expanderValid);
     if (!this._expanderValid) {
        console.warn('select table row did not meet conditions');
       return;
     }
-
-  /*  if (this._expanderTable.length <= index) {
-      //console.warn('The index is greater than the table length ' + index + ' ' + this._expanderTable.length);
-      this.updateDataRows(this.itemsList);
-    }*/
     let temp = this._expanderTable[index];
     this.collapseTableRows();
     this._expanderTable[index] = !temp;
     if (this._expanderTable[index]) {
       this.tableRowIndexCurrExpanded = index;
+      this.broadcastExpandedRow();
     } else {
       this.tableRowIndexCurrExpanded = -1;
+      this.broadcastExpandedRow();
     }
   }
 
@@ -192,8 +185,8 @@ export class ExpanderComponent implements OnChanges {
    * Collapses all the table rows. Ignores any error states in the details.
    */
   public collapseTableRows() {
-    for (let i = 0; i < this._expanderTable.length; i++) {
-      this._expanderTable[i] = false;
+    for ( let rec of this._expanderTable) {
+      rec = false;
     }
     this.tableRowIndexCurrExpanded = -1;
   }

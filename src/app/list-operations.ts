@@ -2,11 +2,12 @@ import {FormArray, FormGroup} from '@angular/forms';
 import {ExpanderComponent} from './expander.component';
 import {ErrorSummaryComponent} from './error-msg/error-summary/error-summary.component';
 import {ViewChild} from '@angular/core';
+import {IMasterDetails} from './master-details';
 
 
 export abstract class ListOperations {
 
-  private prevRow: number;
+  public prevRow: number;
   protected showErrorSummary: boolean;
   public newRecordIndicator: boolean;
   public foo;
@@ -23,10 +24,9 @@ export abstract class ListOperations {
 
   constructor() {
     this.prevRow = -1;
-    this.showErrorSummary= false;
-    //this.newRecordIndicator=false;
+    this.showErrorSummary = false;
+    this.newRecordIndicator = false;
   }
-
 
 
   /**
@@ -36,7 +36,7 @@ export abstract class ListOperations {
   public initIndex(recordList) {
     for (let record of recordList) {
       if (record.id > this._indexValue) {
-        this._indexValue =record.id;
+        this._indexValue = record.id;
       }
     }
   }
@@ -51,40 +51,62 @@ export abstract class ListOperations {
   }
 
   /**
-   * Resets the index to the base value
+   * Resets the index to the base value. Used for record ids
    */
   public resetIndex() {
     this._indexValue = -1;
   }
-  getCurrentIndex(){
 
-    return  this._indexValue;
-  }
-  public setIndex(value:number){
-    this._indexValue=value;
+  /**
+   * Gets the current id value to use for a record
+   * @returns {number}
+   */
+  getCurrentIndex() {
+
+    return this._indexValue;
   }
 
+
+  /**
+   * Sets the record id to a value
+   * @param {number} value
+   */
+  public setIndex(value: number) {
+    this._indexValue = value;
+  }
+
+  /**
+   * Sets an ErrorSummary object (optional)
+   * @param {ErrorSummaryComponent} errorSummaryInstance
+   */
   public setErrorSummary(errorSummaryInstance: ErrorSummaryComponent) {
     this.errorSummary = errorSummaryInstance;
   }
 
+  /**
+   * Sets a reference to an expander instance
+   * @param {ExpanderComponent} expanderInstance
+   */
   public setExpander(expanderInstance: ExpanderComponent) {
     this.expander = expanderInstance;
   }
 
+  /**
+   * Synchs the currently expanded row with the appropriate reactive form recortd
+   * @param {FormArray} reactiveFormList -list of UI records
+   * @returns {FormGroup} the record that matchs the currently open row
+   */
+  public syncCurrentExpandedRow(reactiveFormList: FormArray): FormGroup {
 
-  public syncCurrentExpandedRow(reactiveFormList:FormArray):FormGroup {
-
-    if(!this.expander){
-      console.warn("ListOperations-syncCurrentExpandedRow: There is no expander") ;
-      console.log(this.expander);
+    if (!this.expander) {
+      console.warn('ListOperations-syncCurrentExpandedRow: There is no expander');
       return;
     }
     const rowNum = this.expander.getExpandedRow();
-    console.log("This is the row number "+rowNum);
     //used to sync the expander with the details
     if (rowNum > -1 && this.prevRow !== rowNum) {
       this.prevRow = rowNum;
+      console.log('Prev control does not equal current row');
       return <FormGroup> reactiveFormList.controls[rowNum];
     } else {
       //do nothing?
@@ -92,6 +114,9 @@ export abstract class ListOperations {
     }
   }
 
+  /**
+   * Colllapses all the expander rows. Just a wrapper to the expander
+   */
   private collapseExpanderRows() {
     if (this.expander) {
       this.expander.collapseTableRows();
@@ -99,29 +124,43 @@ export abstract class ListOperations {
 
   }
 
-
-  public saveRecord(record: FormGroup, service): number {
+  /**
+   * Saves a record to the form model using the passed in service
+   * @param {FormGroup} record
+   * @param service
+   * @returns {number}
+   */
+  public saveRecord(record: FormGroup, service:IMasterDetails): number {
     //Case 1 no record, just show error summary, shoud never happen
     if (!record) {
       this.showErrorSummary = true;
-      return;
+      return -1;
     }
     let recordId = service.saveRecord(record);
     this.showErrorSummary = false;
-    //this.newRecordIndicator = false; //in case this was a new record
+    this.newRecordIndicator = false; //in case this was a new record
     this.collapseExpanderRows();
+    return recordId;
   }
 
-  public addRecord(formRecord:FormGroup,formList:FormArray){
+  /**
+   * Adds a  new reoord. Exposes the new record ui
+   * @param {FormGroup} formRecord
+   * @param {FormArray} formList
+   */
+  public addRecord(formRecord: FormGroup, formList: FormArray) {
     this.collapseExpanderRows(); //if you don't do this view will not look right
-    console.log("In super the value is "+ this.newRecordIndicator);
     formList.push(formRecord);
-    this.newRecordIndicator = true;
-    console.log("###In function the add record listOperations "+ this.newRecordIndicator);
+    this.newRecordIndicator = true;// TODO why does superclass variable not update
   }
 
-  public deleteRecord(id:number, recordList:FormArray,service){
-
+  /**
+   * Deletes a record of a given id
+   * @param {number} id
+   * @param {FormArray} recordList
+   * @param service
+   */
+  public deleteRecord(id: number, recordList: FormArray, service:IMasterDetails) {
     let serviceResult = service.deleteModelRecord(id);
     for (let i = 0; i < recordList.controls.length; i++) {
       let temp = <FormGroup> recordList.controls[i];
@@ -131,12 +170,23 @@ export abstract class ListOperations {
       }
     }
     this.collapseExpanderRows();
+    this.newRecordIndicator = false;
     this.prevRow = -1;
-   // this.newRecordIndicator=false;
   }
 
-  public getNewRecordInd(){
-    console.log(this.newRecordIndicator)
-    return this.newRecordIndicator;
+  /**
+   * Gets a recond of a given id, provided the list
+   * @param {number} id
+   * @param recordList
+   * @returns {any}
+   */
+  public getRecord(id: number, recordList) {
+    for (let i = 0; i < recordList.controls.length; i++) {
+      let temp = <FormGroup> recordList.controls[i];
+      if (temp.controls.id.value === id) {
+        return temp;
+      }
+    }
+    return null;
   }
 }
