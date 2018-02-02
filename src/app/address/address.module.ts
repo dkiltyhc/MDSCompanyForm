@@ -4,10 +4,12 @@ import {AddressDetailsComponent} from './address.details/address.details.compone
 import{CompanyAddressRecordComponent} from './company-address-record/company-address-record.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
-import {ControlMessagesComponent} from '../control-messages.component/control-messages.component';
 import {SelectModule} from 'ng2-select';
 import {FileIoModule} from '../filereader/file-io/file-io.module';
-import {ErrorSummaryModule} from '../error-msg/error-msg.module';
+import {ErrorModule} from '../error-msg/error-ui.module';
+import {AddressListComponent} from './address.list/address.list.component';
+import {AddressListService} from './address.list/address-list.service';
+import {CommonFeatureModule} from '../common/common-feature.module';
 
 @NgModule({
   imports: [
@@ -17,18 +19,23 @@ import {ErrorSummaryModule} from '../error-msg/error-msg.module';
     FormsModule,
     SelectModule,
     FileIoModule,
-    ErrorSummaryModule
+    ErrorModule,
+    CommonFeatureModule
 
   ],
   declarations: [
     CompanyAddressRecordComponent,
     AddressDetailsComponent,
-    ControlMessagesComponent
+    AddressListComponent
+
   ],
   exports:[
     CompanyAddressRecordComponent,
     AddressDetailsComponent,
-    ControlMessagesComponent
+    AddressListComponent
+  ],
+  providers: [
+   AddressListService
   ]
 })
 export class AddressModule { }

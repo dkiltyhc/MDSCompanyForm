@@ -3,12 +3,8 @@ import { NgModule } from '@angular/core';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import {ExpanderComponent} from './expander.component';
-import { TestComponentComponent } from './test-component/test-component.component';
-
 import {ValidationService} from './validation.service';
-import { AddressListComponent } from './address.list/address.list.component';
-import {ErrorSummaryModule} from './error-msg/error-msg.module';
+import {ErrorModule} from './error-msg/error-ui.module';
 import { CompanyBaseComponent } from './company-base/company-base.component';
 import {MainPipeModule} from './main-pipe/main-pipe.module';
 import {GlobalsService} from './globals/globals.service';
@@ -18,29 +14,26 @@ import {FileIoModule} from './filereader/file-io/file-io.module';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-
-
-//import {FocusModule} from 'angular2-focus';
-
+import {CommonFeatureModule} from './common/common-feature.module';
+import {TherapeuticModule} from './therapeutic/therapeutic.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ExpanderComponent,
-    TestComponentComponent,
-    AddressListComponent,
     CompanyBaseComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    ErrorSummaryModule,
+    ErrorModule,
     MainPipeModule,
     AddressModule,
     FileIoModule,
     HttpClientModule,
+    CommonFeatureModule,
+    TherapeuticModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -5,7 +5,7 @@
         <label for="address" class="required full-width" aria-required="true">
           <span class="field-name" i18n>Street Address</span>
           <strong class="required" i18n>(required)</strong>
-          <input id="address" class="form-control full-width" formControlName="address"/>
+          <input id="address" class="form-control full-width" formControlName="address" maxlength="80" />
           <control-messages *ngIf="adressFormLocalModel.controls.address.invalid"
                             [showError]="showFieldErrors"
                             [control]="adressFormLocalModel.controls.address"
@@ -19,7 +19,7 @@
         <label for="city" class="required full-width" aria-required="true">
           <span class="field-name" i18n>City</span>
           <strong class="required" i18n>(required)</strong>
-          <input id="city" class="form-control full-width" formControlName="city"/>
+          <input id="city" class="form-control full-width" formControlName="city" maxlength="40"/>
           <control-messages *ngIf="adressFormLocalModel.controls.city.invalid"
                             [showError]="showFieldErrors"
                             [control]="adressFormLocalModel.controls.city"

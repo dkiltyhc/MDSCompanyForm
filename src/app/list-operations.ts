@@ -1,5 +1,5 @@
 import {FormArray, FormGroup} from '@angular/forms';
-import {ExpanderComponent} from './expander.component';
+import {ExpanderComponent} from './common/expander/expander.component';
 import {ErrorSummaryComponent} from './error-msg/error-summary/error-summary.component';
 import {ViewChild} from '@angular/core';
 import {IMasterDetails} from './master-details';
@@ -10,7 +10,6 @@ export abstract class ListOperations {
   public prevRow: number;
   protected showErrorSummary: boolean;
   public newRecordIndicator: boolean;
-  public foo;
 
   @ViewChild(ExpanderComponent) expander: ExpanderComponent;
   private errorSummary: ErrorSummaryComponent;
@@ -87,10 +86,10 @@ export abstract class ListOperations {
    * Sets a reference to an expander instance
    * @param {ExpanderComponent} expanderInstance
    */
-  public setExpander(expanderInstance: ExpanderComponent) {
+ /* public setExpander(expanderInstance: ExpanderComponent) {
     this.expander = expanderInstance;
   }
-
+*/
   /**
    * Synchs the currently expanded row with the appropriate reactive form recortd
    * @param {FormArray} reactiveFormList -list of UI records

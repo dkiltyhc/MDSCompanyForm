@@ -1,15 +1,14 @@
 import {
   Component, OnInit, Input, ViewChild, SimpleChanges, OnChanges, ViewChildren, QueryList, EventEmitter, Output,
-  AfterViewInit, ChangeDetectionStrategy
-} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+  AfterViewInit} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
-import {ErrorSummaryComponent} from '../error-msg/error-summary/error-summary.component';
-import {CompanyAddressRecordComponent} from '../address/company-address-record/company-address-record.component';
-import {CompanyAddressRecordService} from '../address/company-address-record/company-address-record.service';
+import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
+import {CompanyAddressRecordComponent} from '../company-address-record/company-address-record.component';
+import {CompanyAddressRecordService} from '../company-address-record/company-address-record.service';
 import {AddressListService} from './address-list.service';
-import {ListOperations} from '../list-operations';
-
+import {ListOperations} from '../../list-operations';
+//import {ExpanderComponent} from '../../common/expander/expander.component';
 @Component({
   selector: 'address-list',
   templateUrl: './address.list.component.html',
@@ -65,7 +64,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   }
 
   ngAfterViewInit() {
-    this.setExpander(this.expander);
+    //this.setExpander(this.expander);
     this.processSummaries(this.errorSummaryChildList);
     this.errorSummaryChildList.changes.subscribe(list => {
       this.processSummaries(list);

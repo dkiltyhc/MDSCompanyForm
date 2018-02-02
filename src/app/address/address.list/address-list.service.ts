@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {CompanyAddressRecordService} from '../address/company-address-record/company-address-record.service';
-import {IMasterDetails} from '../master-details';
-import {ListOperations} from '../list-operations';
+import {CompanyAddressRecordService} from '../company-address-record/company-address-record.service';
+import {IMasterDetails} from '../../master-details';
+import {ListOperations} from '../../list-operations';
 
 @Injectable()
 export class AddressListService extends ListOperations implements IMasterDetails  {

@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div [formGroup]="theraDetailsModel">
+ <div class="row">
+      <div class="col-md-12 form-group"
+           [ngClass]="{'has-error':theraDetailsModel.controls.theraDetails.invalid}">
+        <label for="theraDetails" class="required rep-required-offset">
+          <span class="field-name">Therapeutic Classification&nbsp;{{theraDetailsModel.id}}</span>
+          <strong class="required">(required)</strong>
+         <control-messages *ngIf="theraDetailsModel.controls.theraDetails.invalid"
+                            [showError]="showFieldErrors"
+                            [control]="theraDetailsModel.controls.theraDetails"
+                            controlId="theraDetails" label="Therapeutic Classification" parentId="theraDetailsModel"
+          ></control-messages>
+        </label>
+        <textarea type="text" name="theraDetails" id="theraDetails" formControlName="theraDetails"
+                  class="form-control full-width"
+                  required rows="2" maxlength="256">
+                    </textarea>
+      </div>
+    </div>
+   <!-- <div class="row">
+      <div class="col-md-12 text-right">
+        <button ng-click="theraRecCtrl.deleteRecord()" name="deleteThera" id="deleteThera"
+                class="btn btn-danger btn-sm">Delete Record&nbsp;{{theraRecCtrl.record.id}}
+        </button>
+      </div>
+    </div>-->
+  <pre>{{theraDetailsModel.value|json}}</pre>
+  </div>
+</div>

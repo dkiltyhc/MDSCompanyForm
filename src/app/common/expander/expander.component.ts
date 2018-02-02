@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 
 @Component({
   selector: 'expander-component',
-  templateUrl: 'expander.component.html'
+  templateUrl: './expander.component.html'
 })
 
 /**
