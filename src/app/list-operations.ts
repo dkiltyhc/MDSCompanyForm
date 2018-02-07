@@ -154,7 +154,7 @@ export abstract class ListOperations {
   }
 
   /**
-   * Deletes a record of a given id
+   * Deletes a form record of a given id
    * @param {number} id
    * @param {FormArray} recordList
    * @param service
@@ -187,5 +187,10 @@ export abstract class ListOperations {
       }
     }
     return null;
+  }
+
+  public getExpandedRow():number{
+     return this.expander.getExpandedRow();
+
   }
 }

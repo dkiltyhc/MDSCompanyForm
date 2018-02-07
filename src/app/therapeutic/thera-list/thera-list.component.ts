@@ -1,8 +1,10 @@
-import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
+import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+//import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
 import {ListOperations} from '../../list-operations';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {TheraClassService} from '../therapeutic-classification/thera-class.service';
+import {TherapeuticClassificationComponent} from '../therapeutic-classification/therapeutic-classification.component';
+import {TheraListService} from './thera-list.service';
 
 @Component({
   selector: 'thera-list',
@@ -11,15 +13,20 @@ import {TheraClassService} from '../therapeutic-classification/thera-class.servi
 })
 export class TheraListComponent extends ListOperations implements OnInit, OnChanges, AfterViewInit {
 
-
+  @ViewChild(TherapeuticClassificationComponent) theraDetailsRecord: TherapeuticClassificationComponent;
   public theraListForm: FormGroup;
   public errorList = [];
   public dataModel = [];
-  public theraRecs:FormArray;
+  public addRecordMsg:number=0;
+  //public theraRecs:FormArray;
+  public deleteRecordMsg:number;
+  public validRec:boolean;
+  public service:TheraListService;
+  public updateDetails:number=0;
   public columnDefinitions = [
     {
       label: 'THERACLASS',
-      binding: 'address',
+      binding: 'theraDetails',
       width: '100'
     },
   ];
@@ -27,34 +34,89 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
 
   constructor(private _fb:FormBuilder) {
     super();
+    this.validRec=true;
+    this.service=new TheraListService();
+    this.deleteRecordMsg=0;
   }
 
   ngOnInit() {
     this.theraListForm = this._fb.group({
       theraList:   this._fb.array([])
     });
+    this.dataModel=this.service.getModelRecordList();
   }
 
   ngAfterViewInit() {
-    //this.setExpander(this.expander);
-    //this.processSummaries(this.errorSummaryChildList);
-    //this.errorSummaryChildList.changes.subscribe(list => {
-    //this.processSummaries(list);
-    //});
+    //subscribe to value changes in the form. Going to update modal automatically as the
+    this.theraListForm.valueChanges.subscribe(form => {
+        this.validRec=this.theraListForm.valid;
+        this._updateModelRecord();
+    });
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['saveAddress']) {
-     // this.saveAddressRecord(changes['saveAddress'].currentValue);
-    }
+
+  }
+  ngDoCheck() {
+    this._syncCurrentExpandedRow();
+  }
+
+  /**
+   * Synchs the model record with the form record since there is no save
+   * @private
+   */
+  private _updateModelRecord(){
+
+    let rowNum=this.getExpandedRow();
+    if(rowNum<0) return;
+    //MOVE to record service
+    let formList=this.getFormList();
+    if(!formList) return;
+    console.log(formList)
+    let formRecord=<FormGroup> formList.controls[rowNum];
+    if(!formRecord) return;
+    this.service.updateModelRecord(this.dataModel,formRecord);
   }
 
   public addClassRecord(){
-    console.log(this.getFormList());
-    this.addRecord(TheraClassService.getReactiveModel(this._fb),this.getFormList());
+    //1. Get a blank form record
+    let rec=TheraClassService.getReactiveModel(this._fb);
+    //Set the index immediately
+    rec.controls.id.setValue(this.getNextIndex());
+    //get an empty model record, update idea and add
+    var emptyModel=this.service.getEmptyModel();
+    emptyModel.id= rec.controls.id.value;
+    this.dataModel.push(emptyModel);
+    //add the form data record
+    this.addRecord(rec,this.getFormList());
+    //set the child details to the recrod
+    this.theraDetailsRecord.theraFormRecord=rec;
+    //update the expander message
+    this.addRecordMsg++;
+    //update the details message
+    this.updateDetails++;
+    this.validRec=false;
   }
   public getFormList(): FormArray {
-
     return <FormArray>(this.theraListForm.controls['theraList']);
   }
+  private _syncCurrentExpandedRow():void {
+    if (this.theraDetailsRecord) {
+      let addressFormList = this.getFormList();
+      let result = this.syncCurrentExpandedRow(addressFormList);
+      //Onlu update the results if there is a change. Otherwise the record will not be dirty
+      if (result) {
+        this.theraDetailsRecord.theraDetailsModel = result;
+        this.updateDetails++;
+      }
+    } else {
+      console.warn('There is no company address child');
+    }
+  }
+  public delete(id): void {
+    this.deleteRecord(id,this.getFormList(),this.service);
+    this.deleteRecordMsg++;
+  }
+
 }

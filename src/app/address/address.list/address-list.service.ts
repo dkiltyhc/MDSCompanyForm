@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {CompanyAddressRecordService} from '../company-address-record/company-address-record.service';
 import {IMasterDetails} from '../../master-details';
 import {ListOperations} from '../../list-operations';
+import {TheraClassService} from '../../therapeutic/therapeutic-classification/thera-class.service';
+import {AddressDetailsService} from '../address.details/address.details.service';
 
 @Injectable()
 export class AddressListService extends ListOperations implements IMasterDetails  {
@@ -85,8 +87,8 @@ export class AddressListService extends ListOperations implements IMasterDetails
 
 
   public saveRecord(record:FormGroup) {
-    if (record.controls.id.value === -1) {
-      record.controls.id.setValue(this.getNextIndex());
+    if (this.getRecordId( record) === -1) {
+      this.setRecordId(record,this.getNextIndex());
       let addressModel=this.getAddressModel();
       this.addressList.push(this.addressFormToData(record,addressModel));
       return addressModel.id;
@@ -118,6 +120,12 @@ export class AddressListService extends ListOperations implements IMasterDetails
       }
     }
     return false;
+  }
+  public getRecordId(record:FormGroup){
+    return AddressDetailsService.getRecordId(record);
+  }
+  public  setRecordId(record:FormGroup,value:number):void{
+   AddressDetailsService.setRecordId(record,value);
   }
 
 

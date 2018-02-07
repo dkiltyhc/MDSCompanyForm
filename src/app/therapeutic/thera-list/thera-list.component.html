@@ -2,10 +2,11 @@
   <h3>This is the address List Component</h3>
   <div formArrayName="theraList">
     <expander-component [group]="dataModel"
+                        expandOnAdd="true"
                         [isValid]="validRec" [addRecord]="addRecordMsg"
                         [columnDefinitions]="columnDefinitions"
                         [deleteRecord]="deleteRecordMsg">
-      <therapeutic-classification></therapeutic-classification>
+      <therapeutic-classification [detailsChanged]="updateDetails" (deleteRecord)="delete($event)"></therapeutic-classification>
     </expander-component>
   </div>
   <div>
@@ -16,7 +17,5 @@
       </button>
     </div>
   </div>
-  <pre>Form Data {{theraListForm.value |json}}</pre>
-  <pre>Data Model for thera List {{dataModel|json}}</pre>
 </div>
 

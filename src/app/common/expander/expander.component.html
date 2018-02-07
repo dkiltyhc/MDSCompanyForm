@@ -12,9 +12,8 @@
           [ngClass]="{'selected':isExpanded(i)}"
           [attr.aria-expanded]="getExpandedState(i)" i18n-title="@@expander.rowTitle" title="Expand Row {{i+1}}"
           (click)="selectTableRow(i)">
-        <td width="2%"><span class="fa fa-lg fa-fw"
-                             [ngClass]="{'fa-caret-right':isCollapsed(i), 'fa-caret-down':isExpanded(i) }"
-        ></span>{{i}}
+        <td width="1%"><span class="fa fa-lg fa-fw"
+                             [ngClass]="{'fa-caret-right':isCollapsed(i), 'fa-caret-down':isExpanded(i) }"></span>
         </td>
         <td *ngFor="let def of columnDefinitions" width="{{def.width}}%">
           <span>{{record[def.binding]}}</span>

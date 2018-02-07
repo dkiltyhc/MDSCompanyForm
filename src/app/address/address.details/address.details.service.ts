@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {TheraClassService} from '../../therapeutic/therapeutic-classification/thera-class.service';
 
 @Injectable()
 export class AddressDetailsService {
@@ -42,6 +43,13 @@ export class AddressDetailsService {
     }
   }
 
+  public static getRecordId(record:FormGroup){
+    return(record.controls.id.value);
+  }
+  public static setRecordId(record:FormGroup,value:number):void{
+    if(!record) return;
+    record.controls.id.setValue(value);
+  }
 
 
 

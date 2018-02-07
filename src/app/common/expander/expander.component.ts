@@ -27,16 +27,21 @@ export class ExpanderComponent implements OnChanges {
   @Input('group') itemsList;
 
   /**
-   * Tracks the currently expanded row. -1 if all the rows are collapsed or no rows
+   * Signal to indicate a record has been added
    * @type {number}
    */
-  @Input() addRecord: Number;
-  @Input() deleteRecord: Number;
+  @Input() addRecord: number;
+  /**
+   * Expands a record when it has been added. Default is false
+   */
+  @Input() expandOnAdd:boolean=false;
+  @Input() deleteRecord: number;
 
 
   @Output() expandedRow = new EventEmitter();
 
   private tableRowIndexCurrExpanded: number = -1;
+  private _expandAdd:boolean;
 
   /**
    * for each table row, stores the state i.e. collapsed or expanded
@@ -61,6 +66,7 @@ export class ExpanderComponent implements OnChanges {
 
   constructor() {
     this._expanderValid=true;
+    this._expandAdd=false;
   }
 
   ngOnInit() {
@@ -73,6 +79,9 @@ export class ExpanderComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['columnDefinitions']) {
       this.numberColSpan = (changes['columnDefinitions'].currentValue).length + 1;
+    }
+    if(changes['expandOnAdd']){
+      this._expandAdd=changes['expandOnAdd'].currentValue;
     }
 
     if (changes['itemsList']) {
@@ -89,13 +98,14 @@ export class ExpanderComponent implements OnChanges {
     if (changes['addRecord']) {
       this.collapseTableRows();
       this.updateDataRows(this.itemsList);
-     // this.selectTableRowNoCheck(this._expanderTable.length - 1);
+      if(this._expandAdd) {
+        //expands the table on the additon of a new record
+        this.selectTableRowNoCheck(this._expanderTable.length - 1);
+      }
     }
     if (changes['deleteRecord']) {
       this.updateDataRows(this.itemsList);
     }
-
-
   }
 
   /**
@@ -153,16 +163,7 @@ export class ExpanderComponent implements OnChanges {
        console.warn('select table row did not meet conditions');
       return;
     }
-    let temp = this._expanderTable[index];
-    this.collapseTableRows();
-    this._expanderTable[index] = !temp;
-    if (this._expanderTable[index]) {
-      this.tableRowIndexCurrExpanded = index;
-      this.broadcastExpandedRow();
-    } else {
-      this.tableRowIndexCurrExpanded = -1;
-      this.broadcastExpandedRow();
-    }
+    this.selectTableRowNoCheck(index);
   }
 
 

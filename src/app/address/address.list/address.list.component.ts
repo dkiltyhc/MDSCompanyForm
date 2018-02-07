@@ -39,12 +39,12 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     {
       label: 'ADDRESS',
       binding: 'address',
-      width: '25'
+      width: '50'
     },
     {
       label: 'CITY',
       binding: 'city',
-      width: '25'
+      width: '50'
     }
   ];
 
@@ -69,6 +69,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     this.errorSummaryChildList.changes.subscribe(list => {
       this.processSummaries(list);
     });
+
 
   }
 
@@ -137,6 +138,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   ngOnChanges(changes: SimpleChanges) {
     if (changes['saveAddress']) {
       this.saveAddressRecord(changes['saveAddress'].currentValue);
+
     }
   }
 
@@ -196,6 +198,9 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
    */
   public saveAddressRecord(record: FormGroup) {
       this.saveRecord(record,this.service);
+      this.dataModel = this.service.getModelRecordList();
+      this.addRecordMsg++;
+      this.validRec=true;
   }
 
   /**
@@ -268,6 +273,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   public deleteAddress(id): void {
     let addressList = this.getFormAddressList();
     this.deleteRecord(id,addressList,this.service);
+    this.validRec=true;
     this.deleteRecordMsg++;
   }
 

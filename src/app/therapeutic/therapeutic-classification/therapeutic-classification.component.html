@@ -18,13 +18,12 @@
                     </textarea>
       </div>
     </div>
-   <!-- <div class="row">
+    <div class="row">
       <div class="col-md-12 text-right">
-        <button ng-click="theraRecCtrl.deleteRecord()" name="deleteThera" id="deleteThera"
-                class="btn btn-danger btn-sm">Delete Record&nbsp;{{theraRecCtrl.record.id}}
+        <button (click)="deleteThera()" name="deleteThera" id="deleteThera"
+                class="btn btn-danger btn-sm">Delete Record&nbsp;
         </button>
       </div>
-    </div>-->
-  <pre>{{theraDetailsModel.value|json}}</pre>
+    </div>
   </div>
 </div>
