@@ -94,7 +94,7 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
     this.theraDetailsRecord.theraFormRecord=rec;
     //update the expander message
     this.addRecordMsg++;
-    //update the details message
+    //update the details message - Alternate just attach directly to the model?
     this.updateDetails++;
     this.validRec=false;
   }
@@ -103,11 +103,12 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   }
   private _syncCurrentExpandedRow():void {
     if (this.theraDetailsRecord) {
-      let addressFormList = this.getFormList();
-      let result = this.syncCurrentExpandedRow(addressFormList);
+      let formList = this.getFormList();
+      let result = this.syncCurrentExpandedRow(formList);
       //Onlu update the results if there is a change. Otherwise the record will not be dirty
       if (result) {
-        this.theraDetailsRecord.theraDetailsModel = result;
+        //alternate attach to the model directly. Is there any benefit to doing this?
+        this.theraDetailsRecord.theraFormRecord = result;
         this.updateDetails++;
       }
     } else {
