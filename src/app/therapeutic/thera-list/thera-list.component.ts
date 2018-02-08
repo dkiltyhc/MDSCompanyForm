@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 //import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
 import {ListOperations} from '../../list-operations';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
@@ -14,6 +14,8 @@ import {TheraListService} from './thera-list.service';
 export class TheraListComponent extends ListOperations implements OnInit, OnChanges, AfterViewInit {
 
   @ViewChild(TherapeuticClassificationComponent) theraDetailsRecord: TherapeuticClassificationComponent;
+  @Output() errors = new EventEmitter();
+  @Input() showErrors:boolean;
   public theraListForm: FormGroup;
   public errorList = [];
   public dataModel = [];
@@ -23,6 +25,7 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   public validRec:boolean;
   public service:TheraListService;
   public updateDetails:number=0;
+  public showFieldErrors:boolean=false;
   public columnDefinitions = [
     {
       label: 'THERACLASS',
@@ -56,7 +59,9 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   }
 
   ngOnChanges(changes: SimpleChanges) {
+      if(changes['showErrors']){
 
+      }
   }
   ngDoCheck() {
     this._syncCurrentExpandedRow();
@@ -73,7 +78,6 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
     //MOVE to record service
     let formList=this.getFormList();
     if(!formList) return;
-    console.log(formList)
     let formRecord=<FormGroup> formList.controls[rowNum];
     if(!formRecord) return;
     this.service.updateModelRecord(this.dataModel,formRecord);
@@ -118,6 +122,13 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   public delete(id): void {
     this.deleteRecord(id,this.getFormList(),this.service);
     this.deleteRecordMsg++;
+  }
+
+  processTheraErrors(errs){
+    if(this.getFormList().length==0){
+      errs=[];
+    }
+    this.errors.emit(errs);
   }
 
 }

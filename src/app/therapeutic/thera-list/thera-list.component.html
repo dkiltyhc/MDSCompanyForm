@@ -6,7 +6,7 @@
                         [isValid]="validRec" [addRecord]="addRecordMsg"
                         [columnDefinitions]="columnDefinitions"
                         [deleteRecord]="deleteRecordMsg">
-      <therapeutic-classification [detailsChanged]="updateDetails" (deleteRecord)="delete($event)"></therapeutic-classification>
+      <therapeutic-classification [showErrors]="showFieldErrors" [detailsChanged]="updateDetails" (deleteRecord)="delete($event)" (errors)="processTheraErrors($event)"></therapeutic-classification>
     </expander-component>
   </div>
   <div>

@@ -4,9 +4,9 @@
     <div >
       <h1>{{'company.title'|translate}}</h1>
       <error-summary [hidden]="hideErrorSummary()"  [errorList]="errorList" headingPreamble="Address Form"></error-summary>
-      <address-list [group]="myForm.controls.addresses" (errors)="processErrors($event)"></address-list>
+      <address-list [group]="myForm.controls.addresses" (errors)="processAddressErrors($event)"></address-list>
       <!--<therapeutic-classification></therapeutic-classification>-->
-      <thera-list></thera-list>
+      <thera-list (errors)="processTheraErrors($event)"></thera-list>
     </div>
     <button type="submit" [disabled]="!myForm?.valid">Submit</button>
     <pre> myForm valid{{myForm.valid}}</pre>

@@ -21,6 +21,8 @@ export class CompanyBaseComponent implements OnInit {
   public errorList = [];
   public  rootTagText="DOSSIER_ENROL";
   public testData:ConvertResults=null;
+  private _addressErrors=[];
+  private _theraErrors=[];
 
   constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
@@ -48,11 +50,22 @@ export class CompanyBaseComponent implements OnInit {
     });
   }
 
-  processErrors(errorList) {
+  processErrors() {
     console.log('@@@@@@@@@@@@ Processing errors in Company base component @@@@@@@@@@@@');
-    console.log(errorList);
-    this.errorList = errorList;
-    this.cdr.detectChanges();
+
+    this.errorList = [];
+    //concat the two array
+    this.errorList=this._addressErrors.concat(this._theraErrors);
+    this.cdr.detectChanges(); //doing our own change detection
+  }
+
+  processAddressErrors(errorList){
+    this._addressErrors=errorList;
+    this.processErrors();
+  }
+  processTheraErrors(errorList){
+    this._theraErrors=errorList;
+    this.processErrors();
   }
 
   public hideErrorSummary() {

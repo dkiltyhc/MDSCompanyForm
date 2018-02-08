@@ -133,6 +133,7 @@ export class ExpanderComponent implements OnChanges {
    * @returns {boolean}
    */
   public isExpanded(index: number) {
+    if(this.tableRowIndexCurrExpanded<0) return false;
     return this.tableRowIndexCurrExpanded === index;
   };
 

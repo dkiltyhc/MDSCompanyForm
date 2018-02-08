@@ -1,4 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges,
+  ViewChildren
+} from '@angular/core';
 import {FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {ControlMessagesComponent} from '../../error-msg/control-messages.component/control-messages.component';
 import {TheraClassService} from './thera-class.service';
@@ -8,11 +11,11 @@ import {TheraClassService} from './thera-class.service';
   templateUrl: './therapeutic-classification.component.html',
   styleUrls: ['./therapeutic-classification.component.css']
 })
-export class TherapeuticClassificationComponent implements OnInit, OnChanges {
+export class TherapeuticClassificationComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('group') public theraFormRecord: FormGroup;
   @Input() detailsChanged: number;
   @Input() showErrors:boolean;
-  @Output() errorList = new EventEmitter();
+  @Output() errors = new EventEmitter();
   @Output() deleteRecord=new EventEmitter();
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
   public theraDetailsModel: FormGroup;
@@ -26,22 +29,29 @@ export class TherapeuticClassificationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-      if(!this.theraDetailsModel){
-        console.warn("OnInit: creating a model for thera details");
-        this.theraDetailsModel==TheraClassService.getReactiveModel(this._fb);
 
-      }
   }
+  ngAfterViewInit(){
+    console.log("after view init")
+    this.msgList.changes.subscribe(errorObjs => {
+      let temp = [];
+      errorObjs.forEach(
+        error => {
+          temp.push(error);
+        }
+      );
+      console.log(temp);
+      this.errors.emit(temp);
+    });
+    this.msgList.notifyOnChanges();
+
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['showErrors']) {
       this.showFieldErrors = changes['showErrors'].currentValue;
       let temp = [];
-      if (this.msgList) {
-        this.msgList.forEach(item => {
-          temp.push(item);
-        });
-      }
-      this.errorList.emit(temp);
+      this._emitErrors();
     }
     if (changes['group']) {
       this.theraDetailsModel = this.theraFormRecord;
@@ -53,13 +63,24 @@ export class TherapeuticClassificationComponent implements OnInit, OnChanges {
         this.theraFormRecord = TheraClassService.getReactiveModel(this._fb);
       }
       this.theraFormRecord.markAsPristine();
-
+      this._emitErrors();
     }
   }
 
   public deleteThera(){
       this.deleteRecord.emit(this.theraDetailsModel.controls.id.value);
+      this._emitErrors();
   }
 
+  private _emitErrors(){
+    let temp = [];
+    if (this.msgList) {
+      this.msgList.forEach(item => {
+        temp.push(item);
+      });
+    }
+    this.errors.emit(temp);
+
+  }
 
 }
