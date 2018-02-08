@@ -16,7 +16,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {CommonFeatureModule} from './common/common-feature.module';
 import {TherapeuticModule} from './therapeutic/therapeutic.module';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,8 @@ import {TherapeuticModule} from './therapeutic/therapeutic.module';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    NgbModule.forRoot()
   ],
   providers: [
     ValidationService,

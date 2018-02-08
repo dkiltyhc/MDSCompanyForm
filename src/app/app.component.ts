@@ -7,8 +7,8 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent{
 
+export class AppComponent{
 
 // we will use form builder to simplify our syntax
   constructor(private translate: TranslateService) {

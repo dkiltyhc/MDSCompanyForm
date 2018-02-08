@@ -1,10 +1,12 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import {TranslateService} from '@ngx-translate/core';
+//import {TranslateService} from '@ngx-translate/core';
 import {FileConversionService} from '../filereader/file-io/file-conversion.service';
 import {ConvertResults} from '../filereader/file-io/convert-results';
+//import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+import {NgbTabset} from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: 'company-base',
   templateUrl: './company-base.component.html',
@@ -16,13 +18,14 @@ export class CompanyBaseComponent implements OnInit {
 
   // @ViewChildren(AddressListComponent) addressLists: QueryList<AddressListComponent>;
   //@ViewChild(ErrorSummaryComponent) errorSummary: ErrorSummaryComponent;
-
+  @ViewChild('tabs') private tabs:NgbTabset;
   public myForm: FormGroup; // our form model
   public errorList = [];
   public  rootTagText="DOSSIER_ENROL";
   public testData:ConvertResults=null;
   private _addressErrors=[];
-  private _theraErrors=[];
+  public _theraErrors=[];
+  public title="ggg"
 
   constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
@@ -38,6 +41,12 @@ export class CompanyBaseComponent implements OnInit {
     /* this.addressLists.changes.subscribe(list => {
        list.forEach(writer => console.log(writer));
      });*/
+    //testTabset
+    console.log(this.tabs);
+    console.log(this.tabs.tabs)
+
+
+
   }
 
   initAddress() {
@@ -65,6 +74,14 @@ export class CompanyBaseComponent implements OnInit {
   }
   processTheraErrors(errorList){
     this._theraErrors=errorList;
+
+    //TODO how to update the tab titles. Doesn't seem to work in Html
+    if(this._theraErrors.length>0) {
+      this.title = "Errors";
+    }else{
+      this.title = "";
+    }
+    console.log("error lenght"+this._theraErrors.length);
     this.processErrors();
   }
 

@@ -19,3 +19,14 @@ span.ui-select-toggle{
 
   background-color: #fff !important;
 }
+.nav-item > a.active {
+  border-top: #666 solid 4px !important;
+  background: inherit !important;
+}
+.nav-item > a {
+  background: #ebf2fc;
+}
+.nav-item > a.disabled {
+    background: #eee !important;;
+}
+
