@@ -17,7 +17,7 @@
         [detailsChanged]="updateAddressDetails"
         [group]="newAddressForm"
         (saveRecord)="saveAddressRecord($event)"
-        (errorList)="updateErrorList($event)"
+        (errors)="updateErrorList($event)"
         (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></company-address-record>
     </div>
   </div>
