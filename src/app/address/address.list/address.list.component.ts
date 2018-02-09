@@ -101,7 +101,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
     console.log('AddressList process Summaries');
     this.errorSummaryChild = list.first;
-    this.service.setErrorSummary(this.errorSummaryChild);
+    this.setErrorSummary(this.errorSummaryChild);
     console.log(this.errorSummaryChild);
     this._emitErrors();
   }

@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-//import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
 import {ListOperations} from '../../list-operations';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {TheraClassService} from '../therapeutic-classification/thera-class.service';

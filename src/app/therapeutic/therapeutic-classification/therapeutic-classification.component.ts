@@ -50,11 +50,11 @@ export class TherapeuticClassificationComponent implements OnInit, OnChanges, Af
   ngOnChanges(changes: SimpleChanges) {
     if (changes['showErrors']) {
       this.showFieldErrors = changes['showErrors'].currentValue;
-      let temp = [];
       this._emitErrors();
     }
     if (changes['group']) {
       this.theraDetailsModel = this.theraFormRecord;
+      this._emitErrors();
     }
     if (changes['detailsChanged']) { //used as a change indicator for the model
       if (this.theraFormRecord) {

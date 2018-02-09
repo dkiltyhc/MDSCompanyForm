@@ -16,7 +16,7 @@
     </div>
   </form>
   <pre>{{_theraErrors.length}}</pre>
-  <ngb-tabset class="nav nav-tabs" id="test" #tabs>
+  <ngb-tabset class="nav nav-tabs" id="test" #tabs [destroyOnHide]="false" >
     <ngb-tab class="tabpanels">
       <ng-template ngbTabTitle >Formulations <b>{{title}}</b></ng-template>
       <ng-template ngbTabContent>
@@ -40,5 +40,5 @@
       </ng-template>
     </ngb-tab>
   </ngb-tabset>
-
+  <button (click)="preload()">Preload Thera</button>
 </div>

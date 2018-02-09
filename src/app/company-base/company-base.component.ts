@@ -26,8 +26,8 @@ export class CompanyBaseComponent implements OnInit {
   private _addressErrors=[];
   public _theraErrors=[];
   public title="ggg";
-  public theraModelList=[ {"id":0,"theraDetails":"Test"}];
-
+ // public theraModelList=[ {"id":0,"theraDetails":"Test"}];
+  public theraModelList=[];
   constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
 
@@ -48,8 +48,6 @@ export class CompanyBaseComponent implements OnInit {
     //testTabset
     console.log(this.tabs);
     console.log(this.tabs.tabs)
-
-
 
   }
 
@@ -107,5 +105,10 @@ export class CompanyBaseComponent implements OnInit {
     console.log("processing file.....")
     console.log(data)
     this.testData=data;
+  }
+
+  public preload(){
+  console.log("Calling preload")
+  this.theraModelList=[ {"id":0,"theraDetails":"Test"}];
   }
 }
