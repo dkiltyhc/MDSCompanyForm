@@ -2,7 +2,7 @@
   <h3>This is the address List Component</h3>
   <div formArrayName="theraList">
     <expander-component [group]="dataModel"
-                        expandOnAdd="true"
+                        [expandOnAdd]="expandOnAdd"
                         [isValid]="validRec" [addRecord]="addRecordMsg"
                         [columnDefinitions]="columnDefinitions"
                         [deleteRecord]="deleteRecordMsg">
@@ -17,5 +17,6 @@
       </button>
     </div>
   </div>
+  <pre>{{theraListForm.value|json}}</pre>
 </div>
 

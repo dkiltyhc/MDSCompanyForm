@@ -25,14 +25,18 @@ export class CompanyBaseComponent implements OnInit {
   public testData:ConvertResults=null;
   private _addressErrors=[];
   public _theraErrors=[];
-  public title="ggg"
+  public title="ggg";
+  public theraModelList=[ {"id":0,"theraDetails":"Test"}];
 
   constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+
+    //TO DO get rid of this. Only get the model values
     this.myForm = this._fb.group({
-      addresses: this._fb.array([])
+      addresses: this._fb.array([]),
+      theraList: this._fb.array([])
     });
   }
 

@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {IMasterDetails} from '../../master-details';
 import {TheraClassService} from '../therapeutic-classification/thera-class.service';
 import {ListOperations} from '../../list-operations';
-import {FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {ListService} from '../../list-service';
 
 @Injectable()
-export class TheraListService extends ListOperations implements IMasterDetails {
+export class TheraListService extends ListService implements IMasterDetails {
 
   private modelList = [];
 
@@ -29,6 +30,12 @@ export class TheraListService extends ListOperations implements IMasterDetails {
     return this.modelList;
   }
 
+  setModelRecordList(value) {
+
+    this.modelList = value;
+    this.initIndex(this.modelList);
+  }
+
   getModelRecord(id) {
     let modelList = this.getModelRecordList();
     for (let i = 0; i < modelList.length; i++) {
@@ -42,46 +49,55 @@ export class TheraListService extends ListOperations implements IMasterDetails {
   public saveRecord(record: FormGroup) {
 
     if (this.getRecordId(record) === -1) {
-      record.controls.id.setValue(this.getNextIndex());
-      let theraModel = this.getEmptyModel();
+    /*  record.controls.id.setValue(this.getNextIndex());
+      let theraModel = TheraClassService.getEmptyModelRecord();
       TheraClassService.formToModelData(record, theraModel);
       this.modelList.push(theraModel);
-      return theraModel.id;
+      return theraModel.id;*/
     } else {
       let theraModel = this.getModelRecord(this.getRecordId(record));
       TheraClassService.formToModelData(record, theraModel);
     }
   }
 
-
-
-  public getEmptyModel() {
+  public static getEmptyReactiveModel(fb: FormBuilder) {
     return (
-      {
-        'id': -1,
-        'theraDetails': ''
-      }
+      fb.group({
+        theraList: fb.array([])})
     );
   }
+
+  public  createFormRecordsFromModel(fb: FormBuilder) {
+
+    let formList =  TheraListService.getEmptyReactiveModel(fb);
+
+    for (let record of  this.modelList) {
+      let formRecord: FormGroup = TheraClassService.getReactiveModel(fb);
+      TheraClassService.modelToFormData(record, formRecord);
+      console.log(formRecord);
+      (<FormArray> formList.controls.theraList).push(formRecord);
+    }
+    return formList;
+  }
+
 
   public getRecordId(record: FormGroup): number {
     return TheraClassService.getRecordId(record);
   }
 
-  public setRecordId(record: FormGroup, value:number): void {
-    return TheraClassService.setRecordId(record,value);
+  public setRecordId(record: FormGroup, value: number): void {
+    return TheraClassService.setRecordId(record, value);
   }
 
-  public updateModelRecord(modelList,formRecord) {
-    let recId=TheraClassService.getRecordId(formRecord);
+  public updateModelRecord(modelList, formRecord) {
+    let recId = TheraClassService.getRecordId(formRecord);
     for (let modelRec of modelList) {
       if (modelRec.id === recId) {
-        TheraClassService.formToModelData(formRecord,modelRec);
+        TheraClassService.formToModelData(formRecord, modelRec);
         return;
       }
     }
   }
-
 
 
 }

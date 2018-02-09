@@ -4,7 +4,7 @@
     <div >
       <h1>{{'company.title'|translate}}</h1>
       <error-summary [hidden]="hideErrorSummary()"  [errorList]="errorList" headingPreamble="Address Form"></error-summary>
-      <address-list [group]="myForm.controls.addresses" (errors)="processAddressErrors($event)"></address-list>
+      <address-list [(group)]="myForm.controls.addresses" (errors)="processAddressErrors($event)"></address-list>
    <!--   <thera-list (errors)="processTheraErrors($event)"></thera-list>-->
     </div>
     <button type="submit" [disabled]="!myForm?.valid">Submit</button>
@@ -20,7 +20,7 @@
     <ngb-tab class="tabpanels">
       <ng-template ngbTabTitle >Formulations <b>{{title}}</b></ng-template>
       <ng-template ngbTabContent>
-        <thera-list (errors)="processTheraErrors($event)"></thera-list>
+        <thera-list [modelData]="theraModelList" (errors)="processTheraErrors($event)"></thera-list>
       </ng-template>
     </ngb-tab>
     <ngb-tab class="tabpanels">

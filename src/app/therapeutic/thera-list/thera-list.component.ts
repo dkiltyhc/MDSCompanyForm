@@ -16,6 +16,8 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   @ViewChild(TherapeuticClassificationComponent) theraDetailsRecord: TherapeuticClassificationComponent;
   @Output() errors = new EventEmitter();
   @Input() showErrors:boolean;
+  @Input ('group') formDataList:FormArray; //TO DO not needed
+  @Input () modelData;
   public theraListForm: FormGroup;
   public errorList = [];
   public dataModel = [];
@@ -26,6 +28,7 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   public service:TheraListService;
   public updateDetails:number=0;
   public showFieldErrors:boolean=false;
+  public expandOnAdd:boolean;
   public columnDefinitions = [
     {
       label: 'THERACLASS',
@@ -40,13 +43,17 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
     this.validRec=true;
     this.service=new TheraListService();
     this.deleteRecordMsg=0;
+    this.expandOnAdd=false;
   }
 
   ngOnInit() {
-    this.theraListForm = this._fb.group({
+    /*this.theraListForm = this._fb.group({
       theraList:   this._fb.array([])
-    });
-    this.dataModel=this.service.getModelRecordList();
+    });*/
+    if(!this.theraListForm) {
+      this.theraListForm = TheraListService.getEmptyReactiveModel(this._fb);
+      this.dataModel = this.service.getModelRecordList();
+    }
   }
 
   ngAfterViewInit() {
@@ -62,6 +69,14 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
       if(changes['showErrors']){
 
       }
+      /*if(changes['group']){
+        this.theraListForm =changes['group'].currentValue;
+      }*/
+    if(changes['modelData']){
+      this.service.setModelRecordList(changes['modelData'].currentValue);
+      this.dataModel=this.service.getModelRecordList();
+      this.theraListForm=this.service.createFormRecordsFromModel(this._fb);
+    }
   }
   ngDoCheck() {
     this._syncCurrentExpandedRow();
@@ -85,13 +100,15 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
 
   public addClassRecord(){
     //1. Get a blank form record
+    this.expandOnAdd=true;
     let rec=TheraClassService.getReactiveModel(this._fb);
     //Set the index immediately
-    rec.controls.id.setValue(this.getNextIndex());
+    rec.controls.id.setValue(this.service.getNextIndex());
     //get an empty model record, update idea and add
-    var emptyModel=this.service.getEmptyModel();
+    var emptyModel=TheraClassService.getEmptyModelRecord();
     emptyModel.id= rec.controls.id.value;
     this.dataModel.push(emptyModel);
+    //add the form data record
     //add the form data record
     this.addRecord(rec,this.getFormList());
     //set the child details to the recrod

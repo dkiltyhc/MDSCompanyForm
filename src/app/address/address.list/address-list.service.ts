@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CompanyAddressRecordService} from '../company-address-record/company-address-record.service';
 import {IMasterDetails} from '../../master-details';
-import {ListOperations} from '../../list-operations';
-import {TheraClassService} from '../../therapeutic/therapeutic-classification/thera-class.service';
+
 import {AddressDetailsService} from '../address.details/address.details.service';
+import {ListService} from '../../list-service';
 
 @Injectable()
-export class AddressListService extends ListOperations implements IMasterDetails  {
+export class AddressListService extends ListService implements IMasterDetails  {
 
   /***
    *  The data list of address records

@@ -28,9 +28,19 @@ export class TheraClassService {
     model.id = TheraClassService.getRecordId(formRecord);
     model.theraDetails = formRecord.controls.theraDetails.value;
   }
-  public static modelToFormData( model,formRecord:FormGroup,) {
+  public static modelToFormData( model,formRecord:FormGroup,):void {
+    console.log(model);
     TheraClassService.setRecordId(formRecord,model.id) ;
      formRecord.controls.theraDetails.setValue(model.theraDetails);
+  }
+
+  public static getEmptyModelRecord(){
+      return (
+        {
+          'id': -1,
+          'theraDetails': ''
+        }
+      );
   }
 
 }

@@ -19,7 +19,6 @@ export abstract class ListOperations {
    * @type {number}
    * @private
    */
-  private _indexValue = -1;
 
   constructor() {
     this.prevRow = -1;
@@ -27,52 +26,6 @@ export abstract class ListOperations {
     this.newRecordIndicator = false;
   }
 
-
-  /**
-   * Parses the current data and finds the largest ID
-   * @public
-   */
-  public initIndex(recordList) {
-    for (let record of recordList) {
-      if (record.id > this._indexValue) {
-        this._indexValue = record.id;
-      }
-    }
-  }
-
-  /**
-   * Gets the next index id for the details record
-   * @returns {number}
-   */
-  getNextIndex() {
-    this._indexValue++;
-    return this._indexValue;
-  }
-
-  /**
-   * Resets the index to the base value. Used for record ids
-   */
-  public resetIndex() {
-    this._indexValue = -1;
-  }
-
-  /**
-   * Gets the current id value to use for a record
-   * @returns {number}
-   */
-  getCurrentIndex() {
-
-    return this._indexValue;
-  }
-
-
-  /**
-   * Sets the record id to a value
-   * @param {number} value
-   */
-  public setIndex(value: number) {
-    this._indexValue = value;
-  }
 
   /**
    * Sets an ErrorSummary object (optional)
