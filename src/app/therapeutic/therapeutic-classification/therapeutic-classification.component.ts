@@ -80,7 +80,6 @@ export class TherapeuticClassificationComponent implements OnInit, OnChanges, Af
       });
     }
     this.errors.emit(temp);
-
   }
 
 }

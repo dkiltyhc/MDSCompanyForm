@@ -57,12 +57,16 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
 
   ngAfterViewInit() {
     //subscribe to value changes in the form. Going to update modal automatically as the
+    this. _subscribeToFormChanges();
+  }
+  _subscribeToFormChanges(){
     this.theraListForm.valueChanges.subscribe(form => {
-        this.validRec=this.theraListForm.valid;
-        this._updateModelRecord();
+      this.validRec=this.theraListForm.valid;
+      this._updateModelRecord();
     });
 
   }
+
 
   ngOnChanges(changes: SimpleChanges) {
       if(changes['showErrors']){
@@ -75,6 +79,7 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
       this.service.setModelRecordList(changes['modelData'].currentValue);
       this.dataModel=this.service.getModelRecordList();
       this.theraListForm=this.service.createFormRecordsFromModel(this._fb);
+      this. _subscribeToFormChanges();
     }
   }
   ngDoCheck() {

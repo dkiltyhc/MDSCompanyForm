@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, SimpleChanges} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, SimpleChanges} from '@angular/core';
 import {GlobalsService} from '../../globals/globals.service';
 
 
