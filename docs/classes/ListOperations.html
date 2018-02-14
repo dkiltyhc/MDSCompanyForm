@@ -151,13 +151,13 @@
                                 id="xs-classes-links"
                             >
                                 <li class="link">
-                                    <a href="../classes/AppPage.html"  class="active" >AppPage</a>
+                                    <a href="../classes/AppPage.html" >AppPage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/ConvertResults.html" >ConvertResults</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/ListOperations.html" >ListOperations</a>
+                                    <a href="../classes/ListOperations.html"  class="active" >ListOperations</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/ListService.html" >ListService</a>
@@ -403,13 +403,13 @@
                                        id="classes-links"
                    >
                                        <li class="link">
-                                           <a href="../classes/AppPage.html"  class="active" >AppPage</a>
+                                           <a href="../classes/AppPage.html" >AppPage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/ConvertResults.html" >ConvertResults</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/ListOperations.html" >ListOperations</a>
+                                           <a href="../classes/ListOperations.html"  class="active" >ListOperations</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/ListService.html" >ListService</a>
@@ -528,7 +528,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>AppPage</li>
+  <li>ListOperations</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -546,10 +546,31 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>e2e/app.po.ts</code>
+            <code>src/app/list-operations.ts</code>
         </p>
 
 
+            <section>
+                <h3 id="constructor">Constructor</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>constructor()</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Used to create address ids</p>
+            </div>
+                                        <div class="io-description">
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </section>
 
             <section>
                 <h3 id="methods">Methods</h3>
@@ -557,18 +578,117 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b> navigateTo</b>
+                                    <b><span class="modifier">Public</span> setErrorSummary</b>
                                 </td>
                             </tr>
             
                             <tr>
                                 <td class="col-md-4">
-            <code>navigateTo()</code>
+                                        <span class="modifier-icon method fa fa-play circle">
+                                            <span class="fa fa-circle"></span>
+                                        </span>
+                                    <code>setErrorSummary(errorSummaryInstance: ErrorSummaryComponent)</code>
                                 </td>
                             </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>Sets an ErrorSummary object (optional)</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>errorSummaryInstance</b>
+                                                                    :     <code>ErrorSummaryComponent</code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Public</span> syncCurrentExpandedRow</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play circle">
+                                            <span class="fa fa-circle"></span>
+                                        </span>
+                                    <code>syncCurrentExpandedRow(reactiveFormList: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormArray-class.html" target="_blank" >FormArray</a>)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Sets a reference to an expander instance<br>Synchs the currently expanded row with the appropriate reactive form recortd</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>expanderInstance</b>
+                                                                    :     <code>ExpanderComponent</code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Private</span> collapseExpanderRows</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play lock">
+                                            <span class="fa fa-lock"></span>
+                                        </span>
+                                    <code>collapseExpanderRows()</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Colllapses all the expander rows. Just a wrapper to the expander</p>
+            </div>
                                         <div class="io-description">
                                             <b>Returns: </b>    <code>void</code>
             
@@ -581,20 +701,251 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b> getParagraphText</b>
+                                    <b><span class="modifier">Public</span> saveRecord</b>
                                 </td>
                             </tr>
             
                             <tr>
                                 <td class="col-md-4">
-            <code>getParagraphText()</code>
+                                        <span class="modifier-icon method fa fa-play circle">
+                                            <span class="fa fa-circle"></span>
+                                        </span>
+                                    <code>saveRecord(record: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a>, service: IMasterDetails)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Saves a record to the form model using the passed in service</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>record</b>
+                                                                    :     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>service</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>number</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Public</span> addRecord</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play circle">
+                                            <span class="fa fa-circle"></span>
+                                        </span>
+                                    <code>addRecord(formRecord: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a>, formList: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormArray-class.html" target="_blank" >FormArray</a>)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Adds a  new reoord. Exposes the new record ui</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>formRecord</b>
+                                                                    :     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>formList</b>
+                                                                    :     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormArray-class.html" target="_blank" >FormArray</a></code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Public</span> deleteRecord</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play circle">
+                                            <span class="fa fa-circle"></span>
+                                        </span>
+                                    <code>deleteRecord(id: number, recordList: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormArray-class.html" target="_blank" >FormArray</a>, service: IMasterDetails)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Deletes a form record of a given id</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>id</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>recordList</b>
+                                                                    :     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormArray-class.html" target="_blank" >FormArray</a></code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>service</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Public</span> getRecord</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play circle">
+                                            <span class="fa fa-circle"></span>
+                                        </span>
+                                    <code>getRecord(id: number, recordList: any)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Gets a recond of a given id, provided the list</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>id</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>recordList</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Public</span> getExpandedRow</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play circle">
+                                            <span class="fa fa-circle"></span>
+                                        </span>
+                                    <code>getExpandedRow()</code>
                                 </td>
                             </tr>
             
                             <tr>
                                 <td class="col-md-4">
                                         <div class="io-description">
-                                            <b>Returns: </b>    <code>void</code>
+                                            <b>Returns: </b>    <code>number</code>
             
                                         </div>
                                 </td>
@@ -604,17 +955,233 @@
             </section>
 
 
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Private</span> errorSummary</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-lock"></span><code>errorSummary:     <code>ErrorSummaryComponent</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> expander</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>expander:     <code>ExpanderComponent</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Public</span> newRecordIndicator</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-circle"></span><code>newRecordIndicator:     <code>boolean</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Public</span> prevRow</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-circle"></span><code>prevRow:     <code>number</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Protected</span> showErrorSummary</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-lock"></span><code>showErrorSummary:     <code>boolean</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </section>
     </div>
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre><code class="hljs javascript">import { browser, by, element } from &#x27;protractor&#x27;;
+        <pre><code class="hljs javascript">import {FormArray, FormGroup} from &#x27;@angular/forms&#x27;;
+import {ExpanderComponent} from &#x27;./common/expander/expander.component&#x27;;
+import {ErrorSummaryComponent} from &#x27;./error-msg/error-summary/error-summary.component&#x27;;
+import {ViewChild} from &#x27;@angular/core&#x27;;
+import {IMasterDetails} from &#x27;./master-details&#x27;;
 
-export class AppPage {
-  navigateTo() {
-    return browser.get(&#x27;/&#x27;);
+
+export abstract class ListOperations {
+
+  public prevRow: number;
+  protected showErrorSummary: boolean;
+  public newRecordIndicator: boolean;
+
+  @ViewChild(ExpanderComponent) expander: ExpanderComponent;
+  private errorSummary: ErrorSummaryComponent;
+
+  /**
+   * Used to create address ids
+   * @type {number}
+   * @private
+   */
+
+  constructor() {
+    this.prevRow &#x3D; -1;
+    this.showErrorSummary &#x3D; false;
+    this.newRecordIndicator &#x3D; false;
   }
 
-  getParagraphText() {
-    return element(by.css(&#x27;app-root h1&#x27;)).getText();
+
+  /**
+   * Sets an ErrorSummary object (optional)
+   * @param {ErrorSummaryComponent} errorSummaryInstance
+   */
+  public setErrorSummary(errorSummaryInstance: ErrorSummaryComponent) {
+    this.errorSummary &#x3D; errorSummaryInstance;
+  }
+
+  /**
+   * Sets a reference to an expander instance
+   * @param {ExpanderComponent} expanderInstance
+   */
+ /* public setExpander(expanderInstance: ExpanderComponent) {
+    this.expander &#x3D; expanderInstance;
+  }
+*/
+  /**
+   * Synchs the currently expanded row with the appropriate reactive form recortd
+   * @param {FormArray} reactiveFormList -list of UI records
+   * @returns {FormGroup} the record that matchs the currently open row
+   */
+  public syncCurrentExpandedRow(reactiveFormList: FormArray): FormGroup {
+
+    if (!this.expander) {
+      console.warn(&#x27;ListOperations-syncCurrentExpandedRow: There is no expander&#x27;);
+      return;
+    }
+    const rowNum &#x3D; this.expander.getExpandedRow();
+    //used to sync the expander with the details
+    if (rowNum &gt; -1 &amp;&amp; this.prevRow !&#x3D;&#x3D; rowNum) {
+      this.prevRow &#x3D; rowNum;
+      console.log(&#x27;Prev control does not equal current row&#x27;);
+      return &lt;FormGroup&gt; reactiveFormList.controls[rowNum];
+    } else {
+      //do nothing?
+      return null;
+    }
+  }
+
+  /**
+   * Colllapses all the expander rows. Just a wrapper to the expander
+   */
+  private collapseExpanderRows() {
+    if (this.expander) {
+      this.expander.collapseTableRows();
+    }
+
+  }
+
+  /**
+   * Saves a record to the form model using the passed in service
+   * @param {FormGroup} record
+   * @param service
+   * @returns {number}
+   */
+  public saveRecord(record: FormGroup, service:IMasterDetails): number {
+    //Case 1 no record, just show error summary, shoud never happen
+    if (!record) {
+      this.showErrorSummary &#x3D; true;
+      return -1;
+    }
+    let recordId &#x3D; service.saveRecord(record);
+    this.showErrorSummary &#x3D; false;
+    this.newRecordIndicator &#x3D; false; //in case this was a new record
+    this.collapseExpanderRows();
+    return recordId;
+  }
+
+  /**
+   * Adds a  new reoord. Exposes the new record ui
+   * @param {FormGroup} formRecord
+   * @param {FormArray} formList
+   */
+  public addRecord(formRecord: FormGroup, formList: FormArray) {
+    this.collapseExpanderRows(); //if you don&#x27;t do this view will not look right
+    formList.push(formRecord);
+    this.newRecordIndicator &#x3D; true;// TODO why does superclass variable not update
+  }
+
+  /**
+   * Deletes a form record of a given id
+   * @param {number} id
+   * @param {FormArray} recordList
+   * @param service
+   */
+  public deleteRecord(id: number, recordList: FormArray, service:IMasterDetails) {
+    let serviceResult &#x3D; service.deleteModelRecord(id);
+    for (let i &#x3D; 0; i &lt; recordList.controls.length; i++) {
+      let temp &#x3D; &lt;FormGroup&gt; recordList.controls[i];
+      if (temp.controls.id.value &#x3D;&#x3D;&#x3D; id) {
+        recordList.removeAt(i);
+        break;
+      }
+    }
+    this.collapseExpanderRows();
+    this.newRecordIndicator &#x3D; false;
+    this.prevRow &#x3D; -1;
+  }
+
+  /**
+   * Gets a recond of a given id, provided the list
+   * @param {number} id
+   * @param recordList
+   * @returns {any}
+   */
+  public getRecord(id: number, recordList) {
+    for (let i &#x3D; 0; i &lt; recordList.controls.length; i++) {
+      let temp &#x3D; &lt;FormGroup&gt; recordList.controls[i];
+      if (temp.controls.id.value &#x3D;&#x3D;&#x3D; id) {
+        return temp;
+      }
+    }
+    return null;
+  }
+
+  public getExpandedRow():number{
+     return this.expander.getExpandedRow();
+
   }
 }
 </code></pre>

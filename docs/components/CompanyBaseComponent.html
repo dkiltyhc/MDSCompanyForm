@@ -103,7 +103,7 @@
                                 id="xs-components-links"
                             >
                                 <li class="link">
-                                    <a href="../components/AddressDetailsComponent.html"  class="active" >AddressDetailsComponent</a>
+                                    <a href="../components/AddressDetailsComponent.html" >AddressDetailsComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/AddressListComponent.html" >AddressListComponent</a>
@@ -115,7 +115,7 @@
                                     <a href="../components/CompanyAddressRecordComponent.html" >CompanyAddressRecordComponent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/CompanyBaseComponent.html" >CompanyBaseComponent</a>
+                                    <a href="../components/CompanyBaseComponent.html"  class="active" >CompanyBaseComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/ControlMessagesComponent.html" >ControlMessagesComponent</a>
@@ -355,7 +355,7 @@
                                        id="components-links"
                    >
                                        <li class="link">
-                                           <a href="../components/AddressDetailsComponent.html"  class="active" >AddressDetailsComponent</a>
+                                           <a href="../components/AddressDetailsComponent.html" >AddressDetailsComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/AddressListComponent.html" >AddressListComponent</a>
@@ -367,7 +367,7 @@
                                            <a href="../components/CompanyAddressRecordComponent.html" >CompanyAddressRecordComponent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/CompanyBaseComponent.html" >CompanyBaseComponent</a>
+                                           <a href="../components/CompanyBaseComponent.html"  class="active" >CompanyBaseComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/ControlMessagesComponent.html" >ControlMessagesComponent</a>
@@ -524,7 +524,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>AddressDetailsComponent</li>
+  <li>CompanyBaseComponent</li>
 </ol>
 
 
@@ -542,7 +542,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/app/address/address.details/address.details.component.ts</code>
+    <code>src/app/company-base/company-base.component.ts</code>
 </p>
 
 
@@ -565,15 +565,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>address-details</code></td>
+                <td class="col-md-9"><code>company-base</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>company-base.component.css</code></td>
+            </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>address.details.component.html</code></td>
+                <td class="col-md-9"><code>company-base.component.html</code></td>
             </tr>
 
 
@@ -581,71 +585,7 @@
     </table>
 </section>
 
-    <section>
-        <h3 id="inputs">Inputs</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>detailsChanged</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code>number</code>
 
-                              </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>group</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-
-                              </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>showErrors</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code>boolean</code>
-
-                              </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    </section>
-
-    <section>
-        <h3 id="outputs">Outputs</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>errorList</code>
-                        </td>
-                        <td class="col-md-10">
-                            <em><code>$event</code> type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/core/index/EventEmitter-class.html" target="_blank" >EventEmitter</a></code>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    </section>
 
     <section>
         <h3 id="constructor">Constructor</h3>
@@ -653,7 +593,7 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(_fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>)</code>
+                            <code>constructor(_fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>, cdr: <a href="https://angular.io/docs/ts/latest/api/core/index/ChangeDetectorRef-class.html" target="_blank" >ChangeDetectorRef</a>)</code>
                         </td>
                     </tr>
     
@@ -667,39 +607,13 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> setToLocalModel</b>
+                            <b> initAddress</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>setToLocalModel()</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Uses the updated reactive forms model locally</p>
-    </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> selected</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>selected(rec: any)</code>
+    <code>initAddress()</code>
                         </td>
                     </tr>
     
@@ -717,37 +631,13 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> removed</b>
+                            <b> processErrors</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>removed(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> typed</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>typed(rec: any)</code>
+    <code>processErrors()</code>
                         </td>
                     </tr>
     
@@ -765,13 +655,145 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> existsInList</b>
+                            <b> processAddressErrors</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>existsInList(rec: any)</code>
+    <code>processAddressErrors(errorList: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> processTheraErrors</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>processTheraErrors(errorList: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> hideErrorSummary</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon method fa fa-play circle">
+                                    <span class="fa fa-circle"></span>
+                                </span>
+                            <code>hideErrorSummary()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> saveFile</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon method fa fa-play circle">
+                                    <span class="fa fa-circle"></span>
+                                </span>
+                            <code>saveFile()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> processFile</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon method fa fa-play circle">
+                                    <span class="fa fa-circle"></span>
+                                </span>
+                            <code>processFile(data: <a href="../classes/ConvertResults.html" >ConvertResults</a>)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> preload</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon method fa fa-play circle">
+                                    <span class="fa fa-circle"></span>
+                                </span>
+                            <code>preload()</code>
                         </td>
                     </tr>
     
@@ -793,12 +815,12 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> adressFormLocalModel</b>
+                            <b><span class="modifier">Private</span> _addressErrors</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>adressFormLocalModel:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
+                            <span class="modifier-icon fa fa-lock"></span><code>_addressErrors:     <code>any[]</code>
     </bcode>
                         </td>
                     </tr>
@@ -808,12 +830,12 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> countries</b>
+                            <b><span class="modifier">Public</span> _theraErrors</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>countries:     <code>any[]</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>_theraErrors:     <code>any[]</code>
     </bcode>
                         </td>
                     </tr>
@@ -823,12 +845,12 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Private</span> detailsService</b>
+                            <b><span class="modifier">Public</span> errorList</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-lock"></span><code>detailsService:     <code><a href="../injectables/AddressDetailsService.html" target="_self" >AddressDetailsService</a></code>
+                            <span class="modifier-icon fa fa-circle"></span><code>errorList:     <code>any[]</code>
     </bcode>
                         </td>
                     </tr>
@@ -838,12 +860,12 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> msgList</b>
+                            <b><span class="modifier">Public</span> errors</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <code>msgList:     <code>QueryList&lt;ControlMessagesComponent&gt;</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>errors:     <code>any</code>
     </bcode>
                         </td>
                     </tr>
@@ -853,18 +875,98 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> showFieldErrors</b>
+                            <b><span class="modifier">Public</span> myForm</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>showFieldErrors:     <code>boolean</code>
+                            <span class="modifier-icon fa fa-circle"></span><code>myForm:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> rootTagText</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>rootTagText:     <code>string</code>
     </bcode>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                <i>Default value: </i><code>false</code>
+                                <i>Default value: </i><code>DOSSIER_ENROL</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> tabs</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-lock"></span><code>tabs:     <code>NgbTabset</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> testData</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>testData:     <code><a href="../classes/ConvertResults.html" target="_self" >ConvertResults</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> theraModelList</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>theraModelList:     <code>any[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> title</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>title:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>ggg</code>
                             </td>
                         </tr>
                 </tbody>
@@ -872,131 +974,120 @@
     </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import {
-  Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList,
-  AfterViewInit, ChangeDetectionStrategy
-} from &#x27;@angular/core&#x27;;
-import {FormGroup, FormBuilder} from &#x27;@angular/forms&#x27;;
-import {ControlMessagesComponent} from &#x27;../../error-msg/control-messages.component/control-messages.component&#x27;;
-import {AddressDetailsService} from &#x27;./address.details.service&#x27;;
+            <pre><code class="hljs javascript">import {ChangeDetectorRef, Component, OnInit, ViewChild} from &#x27;@angular/core&#x27;;
+import {FormBuilder, FormGroup, Validators} from &#x27;@angular/forms&#x27;;
 
+//import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {FileConversionService} from &#x27;../filereader/file-io/file-conversion.service&#x27;;
+import {ConvertResults} from &#x27;../filereader/file-io/convert-results&#x27;;
+//import {NgbModule} from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
 
+import {NgbTabset} from &quot;@ng-bootstrap/ng-bootstrap&quot;;
 @Component({
-  selector: &#x27;address-details&#x27;,
-  templateUrl: &#x27;address.details.component.html&#x27;
+  selector: &#x27;company-base&#x27;,
+  templateUrl: &#x27;./company-base.component.html&#x27;,
+  styleUrls: [&#x27;./company-base.component.css&#x27;]
 })
 
-/**
- * Sample component is used for nothing
- */
-export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit {
+export class CompanyBaseComponent implements OnInit {
+  public errors;
 
-  public adressFormLocalModel: FormGroup;
-  @Input(&#x27;group&#x27;) public adressFormRecord: FormGroup;
-  @Input() detailsChanged: number;
-  @Input() showErrors:boolean;
-  @Output() errorList &#x3D; new EventEmitter();
-  @ViewChildren(ControlMessagesComponent) msgList: QueryList&lt;ControlMessagesComponent&gt;;
-  public countries: Array&lt;any&gt; &#x3D; [
-    {&#x27;id&#x27;: &#x27;ABW&#x27;, &#x27;text&#x27;: &#x27;Aruba&#x27; , langs:{en:&#x27;dd&#x27;,fr:&#x27;fdf&#x27;}},
-    {&#x27;id&#x27;: &#x27;AFG&#x27;, &#x27;text&#x27;: &#x27;Afghanistan&#x27;,langs:{en:&#x27;AFff&#x27;,fr:&#x27;fdf&#x27;}}
-  ];
-  public showFieldErrors:boolean&#x3D;false;
-
-  private detailsService: AddressDetailsService;
-
-  constructor(private _fb: FormBuilder) {
-    this.showFieldErrors&#x3D;false;
-    this.showErrors&#x3D;false;
+  // @ViewChildren(AddressListComponent) addressLists: QueryList&lt;AddressListComponent&gt;;
+  //@ViewChild(ErrorSummaryComponent) errorSummary: ErrorSummaryComponent;
+  @ViewChild(&#x27;tabs&#x27;) private tabs:NgbTabset;
+  public myForm: FormGroup; // our form model
+  public errorList &#x3D; [];
+  public  rootTagText&#x3D;&quot;DOSSIER_ENROL&quot;;
+  public testData:ConvertResults&#x3D;null;
+  private _addressErrors&#x3D;[];
+  public _theraErrors&#x3D;[];
+  public title&#x3D;&quot;ggg&quot;;
+ // public theraModelList&#x3D;[ {&quot;id&quot;:0,&quot;theraDetails&quot;:&quot;Test&quot;}];
+  public theraModelList&#x3D;[];
+  constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    if (!this.adressFormLocalModel) {
-      this.adressFormLocalModel &#x3D; AddressDetailsService.getReactiveModel(this._fb);
-    }
-    this.detailsChanged &#x3D; 0;
 
+    //TO DO get rid of this. Only get the model values
+    this.myForm &#x3D; this._fb.group({
+      addresses: this._fb.array([]),
+      theraList: this._fb.array([])
+    });
   }
 
   ngAfterViewInit() {
-    this.msgList.changes.subscribe(errorObjs &#x3D;&gt; {
-      let temp &#x3D; [];
-      errorObjs.forEach(
-        error &#x3D;&gt; {
-          temp.push(error);
-        }
-      );
-      this.errorList.emit(temp);
+
+    /* this.addressLists.changes.subscribe(list &#x3D;&gt; {
+       list.forEach(writer &#x3D;&gt; console.log(writer));
+     });*/
+    //testTabset
+    console.log(this.tabs);
+    console.log(this.tabs.tabs)
+
+  }
+
+  initAddress() {
+    // initialize our address
+    // this.indexId++;
+    return this._fb.group({
+      id: [14],
+      address: [&#x27;test1&#x27;, Validators.required],
+      city: [&#x27;test1&#x27;]
     });
-    this.msgList.notifyOnChanges();
   }
 
+  processErrors() {
+    console.log(&#x27;@@@@@@@@@@@@ Processing errors in Company base component @@@@@@@@@@@@&#x27;);
 
-  ngOnChanges(changes: SimpleChanges) {
+    this.errorList &#x3D; [];
+    //concat the two array
+    this.errorList&#x3D;this._addressErrors.concat(this._theraErrors);
+    this.cdr.detectChanges(); //doing our own change detection
+  }
 
-    //since we can&#x27;t detect changes on objects, using a separate flag
-    if (changes[&#x27;detailsChanged&#x27;]) { //used as a change indicator for the model
-      if (this.adressFormRecord) {
-        this.setToLocalModel();
-      } else {
-        this.adressFormLocalModel &#x3D; AddressDetailsService.getReactiveModel(this._fb);
-        this.adressFormLocalModel.markAsPristine();
-      }
+  processAddressErrors(errorList){
+    this._addressErrors&#x3D;errorList;
+    this.processErrors();
+  }
+  processTheraErrors(errorList){
+    this._theraErrors&#x3D;errorList;
+
+    //TODO how to update the tab titles. Doesn&#x27;t seem to work in Html
+    if(this._theraErrors.length&gt;0) {
+      this.title &#x3D; &quot;Errors&quot;;
+    }else{
+      this.title &#x3D; &quot;&quot;;
     }
-    if(changes[&#x27;showErrors&#x27;]){
-
-      this.showFieldErrors&#x3D;changes[&#x27;showErrors&#x27;].currentValue;
-      let temp&#x3D;[];
-      if(this.msgList) {
-        this.msgList.forEach(item&#x3D;&gt;{
-          temp.push(item);
-        });
-      }
-      this.errorList.emit(temp);
-    }
+    console.log(&quot;error lenght&quot;+this._theraErrors.length);
+    this.processErrors();
   }
 
-
-  /**
-   * Uses the updated reactive forms model locally
-   */
-
-  setToLocalModel() {
-    this.adressFormLocalModel &#x3D; this.adressFormRecord;
-    if (!this.adressFormLocalModel.pristine) {
-      this.adressFormLocalModel.markAsPristine();
-    }
+  public hideErrorSummary() {
+    if (!this.errorList) return false;
+    return this.errorList.length &#x3D;&#x3D; 0;
   }
 
-  //note ng-select expects an array of values even with a single select
-  selected(rec){
-    console.log(rec)
-    //this.adressFormLocalModel.controls.country.setValue([rec.id]);
-    //this.adressFormLocalModel.controls.country.setValue([rec]);
+  public saveFile() {
+    /*let blob &#x3D; new Blob([document.getElementById(&#x27;exportDiv&#x27;).innerHTML], {
+      type: &quot;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset&#x3D;utf-16le&quot;
+    });*/
+    var makeStrSave &#x3D; &#x27;test&#x27;;
+
+    let  fileServices:FileConversionService &#x3D;new FileConversionService();
+    fileServices.saveXmlToFile( this.testData.data,&#x27;testFile&#x27;,true,null);
   }
-  removed(rec){
-    console.log(rec)
-    //this.adressFormLocalModel.controls.country.setValue(null)
-  }
-  typed(rec){
-    var content &#x3D; rec.replace(/[\x00-\x7F]/g,&#x27;&#x27;, &#x27;&#x27;);
-    if(content &amp;&amp; this.existsInList(content)) {
-      this.adressFormLocalModel.controls.country.setValue([content]);
-    }
+  public processFile(data:ConvertResults){
+    console.log(&quot;processing file.....&quot;)
+    console.log(data)
+    this.testData&#x3D;data;
   }
 
-  existsInList(rec){
-    for(let country of this.countries){
-        if(country.id&#x3D;&#x3D;rec){
-          return true;
-        }
-    }
-    return false;
+  public preload(){
+  console.log(&quot;Calling preload&quot;)
+  this.theraModelList&#x3D;[ {&quot;id&quot;:0,&quot;theraDetails&quot;:&quot;Test&quot;}];
   }
-
-
 }
-
 </code></pre>
         </div>
     </div>

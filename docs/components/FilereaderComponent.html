@@ -103,7 +103,7 @@
                                 id="xs-components-links"
                             >
                                 <li class="link">
-                                    <a href="../components/AddressDetailsComponent.html"  class="active" >AddressDetailsComponent</a>
+                                    <a href="../components/AddressDetailsComponent.html" >AddressDetailsComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/AddressListComponent.html" >AddressListComponent</a>
@@ -127,7 +127,7 @@
                                     <a href="../components/ExpanderComponent.html" >ExpanderComponent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/FilereaderComponent.html" >FilereaderComponent</a>
+                                    <a href="../components/FilereaderComponent.html"  class="active" >FilereaderComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/TheraListComponent.html" >TheraListComponent</a>
@@ -355,7 +355,7 @@
                                        id="components-links"
                    >
                                        <li class="link">
-                                           <a href="../components/AddressDetailsComponent.html"  class="active" >AddressDetailsComponent</a>
+                                           <a href="../components/AddressDetailsComponent.html" >AddressDetailsComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/AddressListComponent.html" >AddressListComponent</a>
@@ -379,7 +379,7 @@
                                            <a href="../components/ExpanderComponent.html" >ExpanderComponent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/FilereaderComponent.html" >FilereaderComponent</a>
+                                           <a href="../components/FilereaderComponent.html"  class="active" >FilereaderComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/TheraListComponent.html" >TheraListComponent</a>
@@ -524,7 +524,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>AddressDetailsComponent</li>
+  <li>FilereaderComponent</li>
 </ol>
 
 
@@ -542,7 +542,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/app/address/address.details/address.details.component.ts</code>
+    <code>src/app/filereader/file-io/filereader/filereader.component.ts</code>
 </p>
 
 
@@ -565,15 +565,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>address-details</code></td>
+                <td class="col-md-9"><code>filereader</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>filereader.component.css</code></td>
+            </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>address.details.component.html</code></td>
+                <td class="col-md-9"><code>filereader.component.html</code></td>
             </tr>
 
 
@@ -587,41 +591,11 @@
                 <tbody>
                     <tr>
                         <td class="col-md-2">
-                            <code>detailsChanged</code>
+                            <code>rootTag</code>
                         </td>
                         <td class="col-md-10">
                               <p>
-                                <em>Type:</em>    <code>number</code>
-
-                              </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>group</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-
-                              </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>showErrors</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code>boolean</code>
+                                <em>Type:</em>    <code>string</code>
 
                               </p>
                         </td>
@@ -636,7 +610,7 @@
                 <tbody>
                     <tr>
                         <td class="col-md-2">
-                            <code>errorList</code>
+                            <code>complete</code>
                         </td>
                         <td class="col-md-10">
                             <em><code>$event</code> type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/core/index/EventEmitter-class.html" target="_blank" >EventEmitter</a></code>
@@ -653,7 +627,7 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(_fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>)</code>
+                            <code>constructor()</code>
                         </td>
                     </tr>
     
@@ -667,24 +641,40 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> setToLocalModel</b>
+                            <b> changeListener</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>setToLocalModel()</code>
+    <code>changeListener($event: any)</code>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-description"><p>Uses the updated reactive forms model locally</p>
+                                <div class="io-description"><p>Attaches to the file browser, detecting the file selection change</p>
     </div>
                                 <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>$event</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
                                     <b>Returns: </b>    <code>void</code>
     
                                 </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
                         </td>
                     </tr>
                 </tbody>
@@ -693,13 +683,58 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> selected</b>
+                            <b> readSelectedFile</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>selected(rec: any)</code>
+    <code>readSelectedFile(inputValue: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Determines if a file was selected. Sets a callback to process the file after load (asych)</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>inputValue</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> _readFile</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon method fa fa-play lock">
+                                    <span class="fa fa-lock"></span>
+                                </span>
+                            <code>_readFile(name: string, result: any, rootId: string, convertResult: <a href="../classes/ConvertResults.html" >ConvertResults</a>)</code>
                         </td>
                     </tr>
     
@@ -717,61 +752,16 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> removed</b>
+                            <b><span class="modifier">Private</span> checkRootTagMatch</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>removed(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> typed</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>typed(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> existsInList</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>existsInList(rec: any)</code>
+                                <span class="modifier-icon method fa fa-play lock">
+                                    <span class="fa fa-lock"></span>
+                                </span>
+                            <code>checkRootTagMatch(convertResult: <a href="../classes/ConvertResults.html" >ConvertResults</a>, rootName: string)</code>
                         </td>
                     </tr>
     
@@ -793,210 +783,117 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> adressFormLocalModel</b>
+                            <b><span class="modifier">Private</span> rootId</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>adressFormLocalModel:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
+                            <span class="modifier-icon fa fa-lock"></span><code>rootId:     <code>string</code>
     </bcode>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> countries</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>countries:     <code>any[]</code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Private</span> detailsService</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-lock"></span><code>detailsService:     <code><a href="../injectables/AddressDetailsService.html" target="_self" >AddressDetailsService</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> msgList</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>msgList:     <code>QueryList&lt;ControlMessagesComponent&gt;</code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> showFieldErrors</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>showFieldErrors:     <code>boolean</code>
-    </bcode>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Default value: </i><code>false</code>
-                            </td>
-                        </tr>
                 </tbody>
             </table>
     </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import {
-  Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList,
-  AfterViewInit, ChangeDetectionStrategy
-} from &#x27;@angular/core&#x27;;
-import {FormGroup, FormBuilder} from &#x27;@angular/forms&#x27;;
-import {ControlMessagesComponent} from &#x27;../../error-msg/control-messages.component/control-messages.component&#x27;;
-import {AddressDetailsService} from &#x27;./address.details.service&#x27;;
+            <pre><code class="hljs javascript">import {Component, OnInit, EventEmitter, Output, Input, SimpleChanges} from &#x27;@angular/core&#x27;;
+
+import {ConvertResults} from &#x27;../convert-results&#x27;;
+import {FileConversionService} from &#x27;../file-conversion.service&#x27;;
+import {FileIoGlobalsService} from &#x27;../file-io-globals.service&#x27;;
 
 
 @Component({
-  selector: &#x27;address-details&#x27;,
-  templateUrl: &#x27;address.details.component.html&#x27;
+  selector: &#x27;filereader&#x27;,
+  templateUrl: &#x27;./filereader.component.html&#x27;,
+  styleUrls: [&#x27;./filereader.component.css&#x27;]
 })
 
-/**
- * Sample component is used for nothing
- */
-export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit {
+export class FilereaderComponent implements OnInit {
+  @Output() complete &#x3D; new EventEmitter();
+  @ Input() rootTag:string &#x3D; &#x27;&#x27;;
+  //@Input() saveType: string &#x3D; FileIoGlobalsService.draftFileType;
+  private rootId:string&#x3D;&#x27;&#x27;;
 
-  public adressFormLocalModel: FormGroup;
-  @Input(&#x27;group&#x27;) public adressFormRecord: FormGroup;
-  @Input() detailsChanged: number;
-  @Input() showErrors:boolean;
-  @Output() errorList &#x3D; new EventEmitter();
-  @ViewChildren(ControlMessagesComponent) msgList: QueryList&lt;ControlMessagesComponent&gt;;
-  public countries: Array&lt;any&gt; &#x3D; [
-    {&#x27;id&#x27;: &#x27;ABW&#x27;, &#x27;text&#x27;: &#x27;Aruba&#x27; , langs:{en:&#x27;dd&#x27;,fr:&#x27;fdf&#x27;}},
-    {&#x27;id&#x27;: &#x27;AFG&#x27;, &#x27;text&#x27;: &#x27;Afghanistan&#x27;,langs:{en:&#x27;AFff&#x27;,fr:&#x27;fdf&#x27;}}
-  ];
-  public showFieldErrors:boolean&#x3D;false;
-
-  private detailsService: AddressDetailsService;
-
-  constructor(private _fb: FormBuilder) {
-    this.showFieldErrors&#x3D;false;
-    this.showErrors&#x3D;false;
+  constructor() {
   }
 
   ngOnInit() {
-    if (!this.adressFormLocalModel) {
-      this.adressFormLocalModel &#x3D; AddressDetailsService.getReactiveModel(this._fb);
-    }
-    this.detailsChanged &#x3D; 0;
-
-  }
-
-  ngAfterViewInit() {
-    this.msgList.changes.subscribe(errorObjs &#x3D;&gt; {
-      let temp &#x3D; [];
-      errorObjs.forEach(
-        error &#x3D;&gt; {
-          temp.push(error);
-        }
-      );
-      this.errorList.emit(temp);
-    });
-    this.msgList.notifyOnChanges();
   }
 
 
   ngOnChanges(changes: SimpleChanges) {
-
-    //since we can&#x27;t detect changes on objects, using a separate flag
-    if (changes[&#x27;detailsChanged&#x27;]) { //used as a change indicator for the model
-      if (this.adressFormRecord) {
-        this.setToLocalModel();
-      } else {
-        this.adressFormLocalModel &#x3D; AddressDetailsService.getReactiveModel(this._fb);
-        this.adressFormLocalModel.markAsPristine();
-      }
-    }
-    if(changes[&#x27;showErrors&#x27;]){
-
-      this.showFieldErrors&#x3D;changes[&#x27;showErrors&#x27;].currentValue;
-      let temp&#x3D;[];
-      if(this.msgList) {
-        this.msgList.forEach(item&#x3D;&gt;{
-          temp.push(item);
-        });
-      }
-      this.errorList.emit(temp);
+    if(changes[&#x27;rootTag&#x27;]){
+      this.rootId&#x3D;changes[&#x27;rootTag&#x27;].currentValue;
     }
   }
-
 
   /**
-   * Uses the updated reactive forms model locally
+   * Attaches to the file browser, detecting the file selection change
+   * @param $event
    */
+  changeListener($event: any) {
 
-  setToLocalModel() {
-    this.adressFormLocalModel &#x3D; this.adressFormRecord;
-    if (!this.adressFormLocalModel.pristine) {
-      this.adressFormLocalModel.markAsPristine();
+    this.readSelectedFile($event.target);
+
+  }
+
+  /**
+   * Determines if a file was selected. Sets a callback to process the file after load (asych)
+   * @param inputValue
+   */
+  readSelectedFile(inputValue: any): void {
+    let file: File &#x3D; inputValue.files[0];
+    let myReader: FileReader &#x3D; new FileReader();
+    let self &#x3D; this;
+    myReader.onloadend &#x3D; function (e) {
+      // you can perform an action with data here callback for asynch load
+      let convertResult &#x3D; new ConvertResults();
+      FilereaderComponent._readFile(file.name, myReader.result, self.rootId, convertResult);
+      self.complete.emit(convertResult);
+    };
+    if (file &amp;&amp; file.name) {
+      myReader.readAsText(file);
     }
   }
 
-  //note ng-select expects an array of values even with a single select
-  selected(rec){
-    console.log(rec)
-    //this.adressFormLocalModel.controls.country.setValue([rec.id]);
-    //this.adressFormLocalModel.controls.country.setValue([rec]);
-  }
-  removed(rec){
-    console.log(rec)
-    //this.adressFormLocalModel.controls.country.setValue(null)
-  }
-  typed(rec){
-    var content &#x3D; rec.replace(/[\x00-\x7F]/g,&#x27;&#x27;, &#x27;&#x27;);
-    if(content &amp;&amp; this.existsInList(content)) {
-      this.adressFormLocalModel.controls.country.setValue([content]);
+  /***
+   * Processes the file data. Determines the type of file based on the filename suffix
+   * @param name - the name of the file. Can include the path
+   * @param result - the result of the file read i.e. file contents as text
+   * @param rootId - the name of the rootTag. If null is ignored
+   * @param {ConvertResults} convertResult -The results of the file read
+   * @private
+   */
+  private static _readFile(name:string, result, rootId:string, convertResult:ConvertResults) {
+    let splitFile &#x3D; name.split(&#x27;.&#x27;);
+    let fileType &#x3D; splitFile[splitFile.length - 1];
+    let conversion:FileConversionService &#x3D;new FileConversionService();
+
+    if ((fileType.toLowerCase()) &#x3D;&#x3D; FileIoGlobalsService.draftFileType) {
+      conversion.convertToJSONObjects(result, convertResult);
+     FilereaderComponent.checkRootTagMatch(convertResult, rootId);
+    } else if ((fileType.toLowerCase() &#x3D;&#x3D;&#x3D; FileIoGlobalsService.finalFileType)) {
+      conversion.convertXMLToJSONObjects(result, convertResult);
+      FilereaderComponent.checkRootTagMatch(convertResult, rootId);
+    } else {
+      convertResult.data &#x3D; null;
+      convertResult.messages&#x3D;[]; //clear msessages
+      convertResult.messages.push(FileIoGlobalsService.fileTypeError);
     }
   }
+  private static checkRootTagMatch(convertResult:ConvertResults, rootName:string) {
+    if (!rootName|| !convertResult ||!convertResult.data) return;
 
-  existsInList(rec){
-    for(let country of this.countries){
-        if(country.id&#x3D;&#x3D;rec){
-          return true;
-        }
+    if (!convertResult.data[rootName]) {
+      convertResult.data &#x3D; null;
+      convertResult.messages &#x3D; [];
+      convertResult.messages.push(FileIoGlobalsService.dataTypeError);
     }
-    return false;
   }
-
 
 }
-
 </code></pre>
         </div>
     </div>

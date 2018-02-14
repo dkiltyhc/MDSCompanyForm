@@ -103,7 +103,7 @@
                                 id="xs-components-links"
                             >
                                 <li class="link">
-                                    <a href="../components/AddressDetailsComponent.html"  class="active" >AddressDetailsComponent</a>
+                                    <a href="../components/AddressDetailsComponent.html" >AddressDetailsComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/AddressListComponent.html" >AddressListComponent</a>
@@ -133,7 +133,7 @@
                                     <a href="../components/TheraListComponent.html" >TheraListComponent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/TherapeuticClassificationComponent.html" >TherapeuticClassificationComponent</a>
+                                    <a href="../components/TherapeuticClassificationComponent.html"  class="active" >TherapeuticClassificationComponent</a>
                                 </li>
                         </ul>
                     </li>
@@ -355,7 +355,7 @@
                                        id="components-links"
                    >
                                        <li class="link">
-                                           <a href="../components/AddressDetailsComponent.html"  class="active" >AddressDetailsComponent</a>
+                                           <a href="../components/AddressDetailsComponent.html" >AddressDetailsComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/AddressListComponent.html" >AddressListComponent</a>
@@ -385,7 +385,7 @@
                                            <a href="../components/TheraListComponent.html" >TheraListComponent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/TherapeuticClassificationComponent.html" >TherapeuticClassificationComponent</a>
+                                           <a href="../components/TherapeuticClassificationComponent.html"  class="active" >TherapeuticClassificationComponent</a>
                                        </li>
                                </ul>
                            </li>
@@ -524,7 +524,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>AddressDetailsComponent</li>
+  <li>TherapeuticClassificationComponent</li>
 </ol>
 
 
@@ -542,7 +542,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/app/address/address.details/address.details.component.ts</code>
+    <code>src/app/therapeutic/therapeutic-classification/therapeutic-classification.component.ts</code>
 </p>
 
 
@@ -565,15 +565,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>address-details</code></td>
+                <td class="col-md-9"><code>therapeutic-classification</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>therapeutic-classification.component.css</code></td>
+            </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>address.details.component.html</code></td>
+                <td class="col-md-9"><code>therapeutic-classification.component.html</code></td>
             </tr>
 
 
@@ -636,7 +640,20 @@
                 <tbody>
                     <tr>
                         <td class="col-md-2">
-                            <code>errorList</code>
+                            <code>deleteRecord</code>
+                        </td>
+                        <td class="col-md-10">
+                            <em><code>$event</code> type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/core/index/EventEmitter-class.html" target="_blank" >EventEmitter</a></code>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">
+                            <code>errors</code>
                         </td>
                         <td class="col-md-10">
                             <em><code>$event</code> type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/core/index/EventEmitter-class.html" target="_blank" >EventEmitter</a></code>
@@ -667,39 +684,16 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> setToLocalModel</b>
+                            <b><span class="modifier">Public</span> deleteThera</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>setToLocalModel()</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Uses the updated reactive forms model locally</p>
-    </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> selected</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>selected(rec: any)</code>
+                                <span class="modifier-icon method fa fa-play circle">
+                                    <span class="fa fa-circle"></span>
+                                </span>
+                            <code>deleteThera()</code>
                         </td>
                     </tr>
     
@@ -717,61 +711,16 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> removed</b>
+                            <b><span class="modifier">Private</span> _emitErrors</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>removed(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> typed</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>typed(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> existsInList</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>existsInList(rec: any)</code>
+                                <span class="modifier-icon method fa fa-play lock">
+                                    <span class="fa fa-lock"></span>
+                                </span>
+                            <code>_emitErrors()</code>
                         </td>
                     </tr>
     
@@ -793,57 +742,27 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b><span class="modifier">Public</span> adressFormLocalModel</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>adressFormLocalModel:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> countries</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>countries:     <code>any[]</code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Private</span> detailsService</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-lock"></span><code>detailsService:     <code><a href="../injectables/AddressDetailsService.html" target="_self" >AddressDetailsService</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
                             <b> msgList</b>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
                             <code>msgList:     <code>QueryList&lt;ControlMessagesComponent&gt;</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> service</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-lock"></span><code>service:     <code><a href="../injectables/TheraClassService.html" target="_self" >TheraClassService</a></code>
     </bcode>
                         </td>
                     </tr>
@@ -869,56 +788,59 @@
                         </tr>
                 </tbody>
             </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> theraDetailsModel</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>theraDetailsModel:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
     </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
             <pre><code class="hljs javascript">import {
-  Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList,
-  AfterViewInit, ChangeDetectionStrategy
+  AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges,
+  ViewChildren
 } from &#x27;@angular/core&#x27;;
-import {FormGroup, FormBuilder} from &#x27;@angular/forms&#x27;;
+import {FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
 import {ControlMessagesComponent} from &#x27;../../error-msg/control-messages.component/control-messages.component&#x27;;
-import {AddressDetailsService} from &#x27;./address.details.service&#x27;;
-
+import {TheraClassService} from &#x27;./thera-class.service&#x27;;
 
 @Component({
-  selector: &#x27;address-details&#x27;,
-  templateUrl: &#x27;address.details.component.html&#x27;
+  selector: &#x27;therapeutic-classification&#x27;,
+  templateUrl: &#x27;./therapeutic-classification.component.html&#x27;,
+  styleUrls: [&#x27;./therapeutic-classification.component.css&#x27;]
 })
-
-/**
- * Sample component is used for nothing
- */
-export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit {
-
-  public adressFormLocalModel: FormGroup;
-  @Input(&#x27;group&#x27;) public adressFormRecord: FormGroup;
+export class TherapeuticClassificationComponent implements OnInit, OnChanges, AfterViewInit {
+  @Input(&#x27;group&#x27;) public theraFormRecord: FormGroup;
   @Input() detailsChanged: number;
   @Input() showErrors:boolean;
-  @Output() errorList &#x3D; new EventEmitter();
+  @Output() errors &#x3D; new EventEmitter();
+  @Output() deleteRecord&#x3D;new EventEmitter();
   @ViewChildren(ControlMessagesComponent) msgList: QueryList&lt;ControlMessagesComponent&gt;;
-  public countries: Array&lt;any&gt; &#x3D; [
-    {&#x27;id&#x27;: &#x27;ABW&#x27;, &#x27;text&#x27;: &#x27;Aruba&#x27; , langs:{en:&#x27;dd&#x27;,fr:&#x27;fdf&#x27;}},
-    {&#x27;id&#x27;: &#x27;AFG&#x27;, &#x27;text&#x27;: &#x27;Afghanistan&#x27;,langs:{en:&#x27;AFff&#x27;,fr:&#x27;fdf&#x27;}}
-  ];
+  public theraDetailsModel: FormGroup;
+
   public showFieldErrors:boolean&#x3D;false;
+  private service:TheraClassService;
 
-  private detailsService: AddressDetailsService;
-
-  constructor(private _fb: FormBuilder) {
-    this.showFieldErrors&#x3D;false;
-    this.showErrors&#x3D;false;
+  constructor(private _fb:FormBuilder) {
+    this.service&#x3D;new TheraClassService();
+    this.theraDetailsModel&#x3D;TheraClassService.getReactiveModel(_fb);
   }
 
   ngOnInit() {
-    if (!this.adressFormLocalModel) {
-      this.adressFormLocalModel &#x3D; AddressDetailsService.getReactiveModel(this._fb);
-    }
-    this.detailsChanged &#x3D; 0;
 
   }
-
-  ngAfterViewInit() {
+  ngAfterViewInit(){
+    console.log(&quot;after view init&quot;)
     this.msgList.changes.subscribe(errorObjs &#x3D;&gt; {
       let temp &#x3D; [];
       errorObjs.forEach(
@@ -926,77 +848,49 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
           temp.push(error);
         }
       );
-      this.errorList.emit(temp);
+      console.log(temp);
+      this.errors.emit(temp);
     });
     this.msgList.notifyOnChanges();
-  }
 
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-
-    //since we can&#x27;t detect changes on objects, using a separate flag
+    if (changes[&#x27;showErrors&#x27;]) {
+      this.showFieldErrors &#x3D; changes[&#x27;showErrors&#x27;].currentValue;
+      this._emitErrors();
+    }
+    if (changes[&#x27;group&#x27;]) {
+      this.theraDetailsModel &#x3D; this.theraFormRecord;
+      this._emitErrors();
+    }
     if (changes[&#x27;detailsChanged&#x27;]) { //used as a change indicator for the model
-      if (this.adressFormRecord) {
-        this.setToLocalModel();
+      if (this.theraFormRecord) {
+        this.theraDetailsModel &#x3D; this.theraFormRecord;
       } else {
-        this.adressFormLocalModel &#x3D; AddressDetailsService.getReactiveModel(this._fb);
-        this.adressFormLocalModel.markAsPristine();
+        this.theraFormRecord &#x3D; TheraClassService.getReactiveModel(this._fb);
       }
-    }
-    if(changes[&#x27;showErrors&#x27;]){
-
-      this.showFieldErrors&#x3D;changes[&#x27;showErrors&#x27;].currentValue;
-      let temp&#x3D;[];
-      if(this.msgList) {
-        this.msgList.forEach(item&#x3D;&gt;{
-          temp.push(item);
-        });
-      }
-      this.errorList.emit(temp);
+      this.theraFormRecord.markAsPristine();
+      this._emitErrors();
     }
   }
 
+  public deleteThera(){
+      this.deleteRecord.emit(this.theraDetailsModel.controls.id.value);
+      this._emitErrors();
+  }
 
-  /**
-   * Uses the updated reactive forms model locally
-   */
-
-  setToLocalModel() {
-    this.adressFormLocalModel &#x3D; this.adressFormRecord;
-    if (!this.adressFormLocalModel.pristine) {
-      this.adressFormLocalModel.markAsPristine();
+  private _emitErrors(){
+    let temp &#x3D; [];
+    if (this.msgList) {
+      this.msgList.forEach(item &#x3D;&gt; {
+        temp.push(item);
+      });
     }
+    this.errors.emit(temp);
   }
-
-  //note ng-select expects an array of values even with a single select
-  selected(rec){
-    console.log(rec)
-    //this.adressFormLocalModel.controls.country.setValue([rec.id]);
-    //this.adressFormLocalModel.controls.country.setValue([rec]);
-  }
-  removed(rec){
-    console.log(rec)
-    //this.adressFormLocalModel.controls.country.setValue(null)
-  }
-  typed(rec){
-    var content &#x3D; rec.replace(/[\x00-\x7F]/g,&#x27;&#x27;, &#x27;&#x27;);
-    if(content &amp;&amp; this.existsInList(content)) {
-      this.adressFormLocalModel.controls.country.setValue([content]);
-    }
-  }
-
-  existsInList(rec){
-    for(let country of this.countries){
-        if(country.id&#x3D;&#x3D;rec){
-          return true;
-        }
-    }
-    return false;
-  }
-
 
 }
-
 </code></pre>
         </div>
     </div>

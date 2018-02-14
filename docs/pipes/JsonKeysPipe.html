@@ -103,7 +103,7 @@
                                 id="xs-components-links"
                             >
                                 <li class="link">
-                                    <a href="../components/AddressDetailsComponent.html"  class="active" >AddressDetailsComponent</a>
+                                    <a href="../components/AddressDetailsComponent.html" >AddressDetailsComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/AddressListComponent.html" >AddressListComponent</a>
@@ -248,7 +248,7 @@
                                 id="xs-pipes-links"
                             >
                                 <li class="link">
-                                    <a href="../pipes/JsonKeysPipe.html" >JsonKeysPipe</a>
+                                    <a href="../pipes/JsonKeysPipe.html"  class="active" >JsonKeysPipe</a>
                                 </li>
                         </ul>
                     </li>
@@ -355,7 +355,7 @@
                                        id="components-links"
                    >
                                        <li class="link">
-                                           <a href="../components/AddressDetailsComponent.html"  class="active" >AddressDetailsComponent</a>
+                                           <a href="../components/AddressDetailsComponent.html" >AddressDetailsComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/AddressListComponent.html" >AddressListComponent</a>
@@ -500,7 +500,7 @@
                                        id="pipes-links"
                    >
                                        <li class="link">
-                                           <a href="../pipes/JsonKeysPipe.html" >JsonKeysPipe</a>
+                                           <a href="../pipes/JsonKeysPipe.html"  class="active" >JsonKeysPipe</a>
                                        </li>
                                </ul>
                            </li>
@@ -518,492 +518,66 @@
                    
                    </nav>
                </div>
-               <div class="content component">
+               <div class="content pipe">
                    <div class="content-data">
 
 
+
+
+
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li>AddressDetailsComponent</li>
+  <li>Pipes</li>
+  <li>JsonKeysPipe</li>
 </ol>
 
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+        <a href="#infos" id="infos-tab" role="tab" data-toggle="tab">Infos</a>
+    </li>
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab">Source</a>
+    </li>
+</ul>
 
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#infos" id="infos-tab" role="tab" data-toggle="tab">Infos</a>
-        </li>
-        <li>
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab">Source</a>
-        </li>
-    </ul>
-
-    <div class="tab-content">
-        <div class="tab-pane fade active in" id="infos"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/address/address.details/address.details.component.ts</code>
-</p>
-
-
-
-<section>
-    <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
-        <tbody>
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="infos">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/main-pipe/json-keys.pipe.ts</code>
+        </p>
 
 
 
-
-
-
-
-
-
-
-
-
-            <tr>
-                <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>address-details</code></td>
-            </tr>
-
-
-
-
-            <tr>
-                <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>address.details.component.html</code></td>
-            </tr>
-
-
-        </tbody>
-    </table>
-</section>
-
-    <section>
-        <h3 id="inputs">Inputs</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>detailsChanged</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code>number</code>
-
-                              </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>group</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-
-                              </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>showErrors</code>
-                        </td>
-                        <td class="col-md-10">
-                              <p>
-                                <em>Type:</em>    <code>boolean</code>
-
-                              </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    </section>
-
-    <section>
-        <h3 id="outputs">Outputs</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-2">
-                            <code>errorList</code>
-                        </td>
-                        <td class="col-md-10">
-                            <em><code>$event</code> type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/core/index/EventEmitter-class.html" target="_blank" >EventEmitter</a></code>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    </section>
-
-    <section>
-        <h3 id="constructor">Constructor</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>constructor(_fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>)</code>
-                        </td>
-                    </tr>
-    
-                </tbody>
-            </table>
-    </section>
-
-    <section>
-        <h3 id="methods">Methods</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> setToLocalModel</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>setToLocalModel()</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Uses the updated reactive forms model locally</p>
     </div>
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> selected</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>selected(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> removed</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>removed(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> typed</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>typed(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> existsInList</b>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-    <code>existsInList(rec: any)</code>
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description">
-                                    <b>Returns: </b>    <code>void</code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-    </section>
+    <div class="tab-pane fade tab-source-code" id="source">
+        <pre><code class="hljs javascript">import { Pipe, PipeTransform } from &#x27;@angular/core&#x27;;
 
-    <section>
-        <h3 id="inputs">Properties</h3>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> adressFormLocalModel</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>adressFormLocalModel:     <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormGroup-class.html" target="_blank" >FormGroup</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> countries</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>countries:     <code>any[]</code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Private</span> detailsService</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-lock"></span><code>detailsService:     <code><a href="../injectables/AddressDetailsService.html" target="_self" >AddressDetailsService</a></code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b> msgList</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <code>msgList:     <code>QueryList&lt;ControlMessagesComponent&gt;</code>
-    </bcode>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <b><span class="modifier">Public</span> showFieldErrors</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <span class="modifier-icon fa fa-circle"></span><code>showFieldErrors:     <code>boolean</code>
-    </bcode>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Default value: </i><code>false</code>
-                            </td>
-                        </tr>
-                </tbody>
-            </table>
-    </section>
-</div>
-        <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import {
-  Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList,
-  AfterViewInit, ChangeDetectionStrategy
-} from &#x27;@angular/core&#x27;;
-import {FormGroup, FormBuilder} from &#x27;@angular/forms&#x27;;
-import {ControlMessagesComponent} from &#x27;../../error-msg/control-messages.component/control-messages.component&#x27;;
-import {AddressDetailsService} from &#x27;./address.details.service&#x27;;
-
-
-@Component({
-  selector: &#x27;address-details&#x27;,
-  templateUrl: &#x27;address.details.component.html&#x27;
+@Pipe({
+  name: &#x27;keys&#x27;
 })
-
-/**
- * Sample component is used for nothing
- */
-export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit {
-
-  public adressFormLocalModel: FormGroup;
-  @Input(&#x27;group&#x27;) public adressFormRecord: FormGroup;
-  @Input() detailsChanged: number;
-  @Input() showErrors:boolean;
-  @Output() errorList &#x3D; new EventEmitter();
-  @ViewChildren(ControlMessagesComponent) msgList: QueryList&lt;ControlMessagesComponent&gt;;
-  public countries: Array&lt;any&gt; &#x3D; [
-    {&#x27;id&#x27;: &#x27;ABW&#x27;, &#x27;text&#x27;: &#x27;Aruba&#x27; , langs:{en:&#x27;dd&#x27;,fr:&#x27;fdf&#x27;}},
-    {&#x27;id&#x27;: &#x27;AFG&#x27;, &#x27;text&#x27;: &#x27;Afghanistan&#x27;,langs:{en:&#x27;AFff&#x27;,fr:&#x27;fdf&#x27;}}
-  ];
-  public showFieldErrors:boolean&#x3D;false;
-
-  private detailsService: AddressDetailsService;
-
-  constructor(private _fb: FormBuilder) {
-    this.showFieldErrors&#x3D;false;
-    this.showErrors&#x3D;false;
-  }
-
-  ngOnInit() {
-    if (!this.adressFormLocalModel) {
-      this.adressFormLocalModel &#x3D; AddressDetailsService.getReactiveModel(this._fb);
-    }
-    this.detailsChanged &#x3D; 0;
-
-  }
-
-  ngAfterViewInit() {
-    this.msgList.changes.subscribe(errorObjs &#x3D;&gt; {
-      let temp &#x3D; [];
-      errorObjs.forEach(
-        error &#x3D;&gt; {
-          temp.push(error);
-        }
-      );
-      this.errorList.emit(temp);
-    });
-    this.msgList.notifyOnChanges();
-  }
-
-
-  ngOnChanges(changes: SimpleChanges) {
-
-    //since we can&#x27;t detect changes on objects, using a separate flag
-    if (changes[&#x27;detailsChanged&#x27;]) { //used as a change indicator for the model
-      if (this.adressFormRecord) {
-        this.setToLocalModel();
-      } else {
-        this.adressFormLocalModel &#x3D; AddressDetailsService.getReactiveModel(this._fb);
-        this.adressFormLocalModel.markAsPristine();
-      }
-    }
-    if(changes[&#x27;showErrors&#x27;]){
-
-      this.showFieldErrors&#x3D;changes[&#x27;showErrors&#x27;].currentValue;
-      let temp&#x3D;[];
-      if(this.msgList) {
-        this.msgList.forEach(item&#x3D;&gt;{
-          temp.push(item);
-        });
-      }
-      this.errorList.emit(temp);
-    }
-  }
-
+export class JsonKeysPipe implements PipeTransform {
 
   /**
-   * Uses the updated reactive forms model locally
+   * Transforms a list of json objects into an array
+   * Creates key value pairs
+   * @param value
+   * @param {string[]} args
+   * @returns {any}
    */
-
-  setToLocalModel() {
-    this.adressFormLocalModel &#x3D; this.adressFormRecord;
-    if (!this.adressFormLocalModel.pristine) {
-      this.adressFormLocalModel.markAsPristine();
+  transform(value, args:string[]) : any {
+    let keys &#x3D; [];
+    for (let key in value) {
+      keys.push({key: key, value: value[key]});
     }
+    return keys;
   }
-
-  //note ng-select expects an array of values even with a single select
-  selected(rec){
-    console.log(rec)
-    //this.adressFormLocalModel.controls.country.setValue([rec.id]);
-    //this.adressFormLocalModel.controls.country.setValue([rec]);
-  }
-  removed(rec){
-    console.log(rec)
-    //this.adressFormLocalModel.controls.country.setValue(null)
-  }
-  typed(rec){
-    var content &#x3D; rec.replace(/[\x00-\x7F]/g,&#x27;&#x27;, &#x27;&#x27;);
-    if(content &amp;&amp; this.existsInList(content)) {
-      this.adressFormLocalModel.controls.country.setValue([content]);
-    }
-  }
-
-  existsInList(rec){
-    for(let country of this.countries){
-        if(country.id&#x3D;&#x3D;rec){
-          return true;
-        }
-    }
-    return false;
-  }
-
 
 }
-
 </code></pre>
-        </div>
     </div>
-
-
-
-
+</div>
 
 
 
