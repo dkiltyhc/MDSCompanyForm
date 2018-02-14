@@ -36,6 +36,7 @@ export class ExpanderComponent implements OnChanges {
    */
   @Input() expandOnAdd:boolean=false;
   @Input() deleteRecord: number;
+  @Input() collapseAll:number;
 
 
   @Output() expandedRow = new EventEmitter();
@@ -105,6 +106,9 @@ export class ExpanderComponent implements OnChanges {
     }
     if (changes['deleteRecord']) {
       this.updateDataRows(this.itemsList);
+    }
+    if (changes['collapseAll']) {
+      this.collapseTableRows()
     }
   }
 

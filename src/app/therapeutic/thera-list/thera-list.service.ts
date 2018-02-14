@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IMasterDetails} from '../../master-details';
 import {TheraClassService} from '../therapeutic-classification/thera-class.service';
-import {ListOperations} from '../../list-operations';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {ListService} from '../../list-service';
 

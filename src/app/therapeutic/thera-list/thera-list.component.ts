@@ -28,6 +28,7 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   public updateDetails:number=0;
   public showFieldErrors:boolean=false;
   public expandOnAdd:boolean;
+  public collapseExpander:number;
   public columnDefinitions = [
     {
       label: 'THERACLASS',
@@ -36,13 +37,13 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
     },
   ];
 
-
   constructor(private _fb:FormBuilder) {
     super();
     this.validRec=true;
     this.service=new TheraListService();
     this.deleteRecordMsg=0;
     this.expandOnAdd=false;
+    this.collapseExpander=0;
   }
 
   ngOnInit() {
@@ -77,6 +78,13 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
       }*/
     if(changes['modelData']){
       this.service.setModelRecordList(changes['modelData'].currentValue);
+      /** this section collapse the expander and resets the validity
+       * If a user was editing a record, it may be invalid
+       * This assumes that all the incoming data is valid (by SOP)
+       * **/
+      this.collapseExpander++;
+      this.validRec=true;
+      ///
       this.dataModel=this.service.getModelRecordList();
       this.theraListForm=this.service.createFormRecordsFromModel(this._fb);
       this. _subscribeToFormChanges();

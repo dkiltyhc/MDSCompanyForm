@@ -5,6 +5,7 @@
                         [expandOnAdd]="expandOnAdd"
                         [isValid]="validRec" [addRecord]="addRecordMsg"
                         [columnDefinitions]="columnDefinitions"
+                        [collapseAll]="collapseExpander"
                         [deleteRecord]="deleteRecordMsg">
       <therapeutic-classification [showErrors]="showFieldErrors" [detailsChanged]="updateDetails" (deleteRecord)="delete($event)" (errors)="processTheraErrors($event)"></therapeutic-classification>
     </expander-component>
