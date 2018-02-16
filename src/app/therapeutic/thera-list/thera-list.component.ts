@@ -18,13 +18,38 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   @Input ('group') formDataList:FormArray; //TO DO not needed
   @Input () modelData;
   public theraListForm: FormGroup;
+  /**
+   * List of error messages to pass to parent components
+   * @type {any[]}
+   */
   public errorList = [];
+  /**
+   * The list of details records
+   * @type {any[]}
+   */
   public dataModel = [];
+  /**
+   * Counter used to send a message to the expander that a record was added
+   * @type {number}
+   */
   public addRecordMsg:number=0;
-  //public theraRecs:FormArray;
+
+  /**
+   *  Counter used to sena a message to the expander that a record was deleted
+   */
   public deleteRecordMsg:number;
+  /**
+   * Tracks weather the current details record is valid or not
+   */
   public validRec:boolean;
+  /**
+   *  Service containing much of the generic logic for the list
+   */
   public service:TheraListService;
+  /**
+   *
+   * @type {number}
+   */
   public updateDetails:number=0;
   public showFieldErrors:boolean=false;
   public expandOnAdd:boolean;
@@ -65,9 +90,7 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
       this.validRec=this.theraListForm.valid;
       this._updateModelRecord();
     });
-
   }
-
 
   ngOnChanges(changes: SimpleChanges) {
       if(changes['showErrors']){
@@ -84,9 +107,10 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
        * **/
       this.collapseExpander++;
       this.validRec=true;
-      ///
+
       this.dataModel=this.service.getModelRecordList();
       this.theraListForm=this.service.createFormRecordsFromModel(this._fb);
+      this.processTheraErrors([]);
       this. _subscribeToFormChanges();
     }
   }
@@ -127,8 +151,6 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
     this.theraDetailsRecord.theraFormRecord=rec;
     //update the expander message
     this.addRecordMsg++;
-    //update the details message - Alternate just attach directly to the model?
-    this.updateDetails++;
     this.validRec=false;
   }
   public getFormList(): FormArray {
@@ -153,11 +175,12 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
     this.deleteRecordMsg++;
   }
 
-  processTheraErrors(errs){
+  processTheraErrors(errs:Array<any>){
     if(this.getFormList().length==0){
       errs=[];
     }
     this.errors.emit(errs);
-  }
+  };
+
 
 }

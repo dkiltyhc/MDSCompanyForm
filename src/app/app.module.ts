@@ -47,6 +47,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ValidationService,
     GlobalsService
   ],
+  exports:[
+    TranslateModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

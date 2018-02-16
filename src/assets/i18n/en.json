@@ -12,5 +12,6 @@
 	"fileio.msg.fileTypeError": "File Type Error",
 	"fileio.msg.dataTypeError": "Error: the wrong form data was selected for this form.",
 	"addressRecord.save": "Save Address",
-	"addressRecord.delete": "Delete Address"
+	"addressRecord.delete": "Delete Address",
+  "error.msg.required":"This is required"
 }

@@ -1,6 +1,7 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ValidationService } from '../../validation.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'control-messages',
@@ -18,10 +19,14 @@ export class ControlMessagesComponent {
   @Input() index:Number;
   public currentError:string="";
   private _errorVisible=false;
-
-  constructor() { }
+  private _validationService:ValidationService;
+  constructor() {
+    // translate: TranslateService;
+    //this._validationService=new ValidationService(translate);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
+
 
     if (changes['showError']) {
       this._errorVisible=changes['showError'].currentValue;
@@ -29,7 +34,11 @@ export class ControlMessagesComponent {
     }
   }
 
-
+  /**
+   * Gets the Error message text for a given type.
+   *
+   * @returns {any}
+   */
   get errorMessage() {
     for (let propertyName in this.control.errors) {
         this.currentError=propertyName;

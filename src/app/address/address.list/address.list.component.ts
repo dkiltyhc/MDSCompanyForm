@@ -8,6 +8,7 @@ import {CompanyAddressRecordComponent} from '../company-address-record/company-a
 import {CompanyAddressRecordService} from '../company-address-record/company-address-record.service';
 import {AddressListService} from './address-list.service';
 import {ListOperations} from '../../list-operations';
+import {TranslateService} from '@ngx-translate/core';
 //import {ExpanderComponent} from '../../common/expander/expander.component';
 @Component({
   selector: 'address-list',
@@ -48,10 +49,11 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
   ];
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private translate: TranslateService) {
     super();
     this.service = new AddressListService();
     this.dataModel = this.service.getModelRecordList();
+    this.translate.get('error.msg.required').subscribe(res => { console.log(res); });
   }
 
   ngOnInit() {

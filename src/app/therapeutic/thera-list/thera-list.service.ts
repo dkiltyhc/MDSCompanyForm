@@ -3,6 +3,7 @@ import {IMasterDetails} from '../../master-details';
 import {TheraClassService} from '../therapeutic-classification/thera-class.service';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {ListService} from '../../list-service';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Injectable()
 export class TheraListService extends ListService implements IMasterDetails {
@@ -11,6 +12,7 @@ export class TheraListService extends ListService implements IMasterDetails {
 
   constructor() {
     super();
+
   }
 
   deleteModelRecord(id): boolean {

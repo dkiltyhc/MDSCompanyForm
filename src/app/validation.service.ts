@@ -1,5 +1,16 @@
+import {TranslateService} from '@ngx-translate/core';
+
 export class ValidationService {
+
+  constructor() {
+    //private translate: TranslateService
+    // this.translate.get('error.msg.required').subscribe(res => { console.log(res); });
+
+  }
+
+
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
+    //TODO need to replace with the Keys
     let config = {
       'required': 'This field is required.',
       'invalidCreditCard': 'Is invalid credit card number',

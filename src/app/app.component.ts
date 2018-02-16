@@ -10,11 +10,19 @@ import {TranslateService} from '@ngx-translate/core';
 
 export class AppComponent{
 
+  public translateInstance:TranslateService;
+
 // we will use form builder to simplify our syntax
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('fr');
+    this.translateInstance=translate;
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     translate.use('en');
+    translate.get('hello parameter', {value: 'world'}).subscribe((res: string) => {
+      console.log(res);
+
+    });
+    this.translate.get('error.msg.required').subscribe(res => { console.log(res); });
   }
 
 }

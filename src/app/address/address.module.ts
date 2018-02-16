@@ -10,6 +10,7 @@ import {ErrorModule} from '../error-msg/error-ui.module';
 import {AddressListComponent} from './address.list/address.list.component';
 import {AddressListService} from './address.list/address-list.service';
 import {CommonFeatureModule} from '../common/common-feature.module';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {CommonFeatureModule} from '../common/common-feature.module';
     SelectModule,
     FileIoModule,
     ErrorModule,
-    CommonFeatureModule
+    CommonFeatureModule,
+    TranslateModule
 
   ],
   declarations: [
