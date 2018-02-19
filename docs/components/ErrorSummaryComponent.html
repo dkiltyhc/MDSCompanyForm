@@ -627,6 +627,21 @@
                     </tr>
                 </tbody>
             </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">
+                            <code>label</code>
+                        </td>
+                        <td class="col-md-10">
+                              <p>
+                                <em>Type:</em>    <code>string</code>
+
+                              </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
     </section>
 
 
@@ -650,13 +665,61 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <b> processErrors</b>
+                            <b><span class="modifier">Public</span> processErrors</b>
                         </td>
                     </tr>
     
                     <tr>
                         <td class="col-md-4">
-    <code>processErrors(errorList: any)</code>
+                                <span class="modifier-icon method fa fa-play circle">
+                                    <span class="fa fa-circle"></span>
+                                </span>
+                            <code>processErrors(errorList: any)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Creates an array of error elements based on the incoming error objects<br>Currently groups the errors by parent. Not doing anything with parent right now</p>
+    </div>
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <ul class="jsdoc-params">
+                                                <li>
+                                                    <div>
+                                                        <b>errorList</b>
+                                                    </div>
+                                                    <div>
+                                                        
+                                                    </div>
+                                                </li>
+                                        </ul>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> selectTab</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon method fa fa-play circle">
+                                    <span class="fa fa-circle"></span>
+                                </span>
+                            <code>selectTab(error: any)</code>
                         </td>
                     </tr>
     
@@ -664,6 +727,33 @@
                         <td class="col-md-4">
                                 <div class="io-description">
                                     <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> getEmptyError</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon method fa fa-play circle">
+                                    <span class="fa fa-circle"></span>
+                                </span>
+                            <code>getEmptyError()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>any</code>
     
                                 </div>
                         </td>
@@ -731,15 +821,16 @@ import {GlobalsService} from &#x27;../../globals/globals.service&#x27;;
   templateUrl: &#x27;./error-summary.component.html&#x27;,
   styleUrls: [&#x27;./error-summary.component.css&#x27;]
 })
-export class ErrorSummaryComponent implements AfterViewInit{
+export class ErrorSummaryComponent implements AfterViewInit {
   @Input() headingPreamble: string;
   @Input() errorList;
   @Input() compId &#x3D; &#x27;error-summary-&#x27;;
+  @Input() label:string;
   public type: string;
   public errors &#x3D; {};
   public componentId &#x3D; &#x27;&#x27;;
 
-  constructor(private cdr: ChangeDetectorRef,private globals: GlobalsService) {
+  constructor(private cdr: ChangeDetectorRef, private globals: GlobalsService) {
     this.type &#x3D; globals.errorSummClassName;
   }
 
@@ -756,41 +847,44 @@ export class ErrorSummaryComponent implements AfterViewInit{
     }
   }
 
-  processErrors(errorList) {
+  /**
+   * Creates an array of error elements based on the incoming error objects
+   * Currently groups the errors by parent. Not doing anything with parent right now
+   * @param errorList
+   */
+  public processErrors(errorList): void {
     this.errors &#x3D; {};
     if (!errorList) {
       return;
     }
+    console.log(errorList)
+
     for (let err of errorList) {
-      if(!err) continue;
+      if (!err) continue;
+      let controlError &#x3D; this.getEmptyError();
+      controlError[&#x27;index&#x27;] &#x3D; err.index;
+      controlError[&#x27;label&#x27;] &#x3D; err.label;
+      controlError[&#x27;controlId&#x27;] &#x3D; err.controlId;
+      controlError[&#x27;error&#x27;] &#x3D; err.currentError;
+      controlError[&#x27;type&#x27;] &#x3D; err.type;
+      controlError[&#x27;tabSet&#x27;] &#x3D; err.tabSet;
+      controlError[&#x27;tabId&#x27;] &#x3D; err.tabId;
+
+      //Case 1: an error summary Component
       if (err.hasOwnProperty(&#x27;type&#x27;) &amp;&amp; err.type &#x3D;&#x3D;&#x3D; &#x27;ErrorSummaryComponent&#x27;) {
         let parentError &#x3D; {parentLabel: &#x27;&#x27;, controls: []};
         parentError.parentLabel &#x3D; err.componentId;
-        let controlError &#x3D; {};
-        controlError[&#x27;label&#x27;] &#x3D; err.headingPreamble;
-        controlError[&#x27;componentId&#x27;] &#x3D; err.componentId;
-        controlError[&#x27;type&#x27;] &#x3D; err.type;
         parentError.controls.push(controlError);
         this.errors[err.componentId] &#x3D; parentError;
       } else {
+        //Case 2 Not an error summary. If has a parentId gourp the errors
         if (this.errors.hasOwnProperty(err.parentId)) {
           let id &#x3D; err.parentId;
-          let controlError &#x3D; {};
-          controlError[&#x27;index&#x27;] &#x3D; err.index;
-          controlError[&#x27;label&#x27;] &#x3D; err.label;
-          controlError[&#x27;controlId&#x27;] &#x3D; err.controlId;
-          controlError[&#x27;error&#x27;] &#x3D; err.currentError;
-          controlError[&#x27;type&#x27;] &#x3D; err.type;
           this.errors[id].controls.push(controlError);
         } else {
+          //create a parent tag and put errors under the controls list
           let parentError &#x3D; {parentLabel: &#x27;&#x27;, controls: []};
           parentError.parentLabel &#x3D; err.parentLabel;
-          let controlError &#x3D; {};
-          controlError[&#x27;index&#x27;] &#x3D; err.index;
-          controlError[&#x27;label&#x27;] &#x3D; err.label;
-          controlError[&#x27;controlId&#x27;] &#x3D; err.controlId;
-          controlError[&#x27;error&#x27;] &#x3D; err.currentError;
-          controlError[&#x27;type&#x27;] &#x3D; err.type;
           parentError.controls.push(controlError);
           this.errors[err.parentId] &#x3D; parentError;
         }
@@ -798,6 +892,27 @@ export class ErrorSummaryComponent implements AfterViewInit{
     }
     console.log(this.errors);
   }
+
+  public selectTab(error) {
+    console.log(&#x27;Selecting the tab&#x27;);
+    if (error &amp;&amp; error.tabSet &amp;&amp; error.tabId) {
+      error.tabSet.select(error.tabId);
+    }
+  }
+
+  public getEmptyError(): object {
+    let controlError &#x3D; {};
+    controlError[&#x27;index&#x27;] &#x3D; &#x27;&#x27;;
+    controlError[&#x27;label&#x27;] &#x3D; &#x27;&#x27;;
+    controlError[&#x27;controlId&#x27;] &#x3D; &#x27;&#x27;;
+    controlError[&#x27;error&#x27;] &#x3D; &#x27;&#x27;;
+    controlError[&#x27;type&#x27;] &#x3D; &#x27;&#x27;;
+    controlError[&#x27;tabSet&#x27;] &#x3D; &#x27;&#x27;;
+    controlError[&#x27;tabId&#x27;] &#x3D; &#x27;&#x27;;
+
+    return controlError;
+  }
+
 }
 </code></pre>
         </div>

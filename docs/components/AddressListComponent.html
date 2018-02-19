@@ -656,7 +656,7 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(_fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>)</code>
+                            <code>constructor(_fb: <a href="https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html" target="_blank" >FormBuilder</a>, translate: TranslateService)</code>
                         </td>
                     </tr>
     
@@ -1370,6 +1370,7 @@ import {CompanyAddressRecordComponent} from &#x27;../company-address-record/comp
 import {CompanyAddressRecordService} from &#x27;../company-address-record/company-address-record.service&#x27;;
 import {AddressListService} from &#x27;./address-list.service&#x27;;
 import {ListOperations} from &#x27;../../list-operations&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 //import {ExpanderComponent} from &#x27;../../common/expander/expander.component&#x27;;
 @Component({
   selector: &#x27;address-list&#x27;,
@@ -1410,10 +1411,11 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
   ];
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder, private translate: TranslateService) {
     super();
     this.service &#x3D; new AddressListService();
     this.dataModel &#x3D; this.service.getModelRecordList();
+    this.translate.get(&#x27;error.msg.required&#x27;).subscribe(res &#x3D;&gt; { console.log(res); });
   }
 
   ngOnInit() {

@@ -594,6 +594,8 @@
                             <code>control</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>The reactive form control that this message relates</p>
+</div>
                               <p>
                                 <em>Type:</em>    <code><a href="https://angular.io/docs/ts/latest/api/forms/index/FormControl-class.html" target="_blank" >FormControl</a></code>
 
@@ -609,6 +611,8 @@
                             <code>controlId</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>The id of the control. Used for the error summary to create the anchor link</p>
+</div>
                               <p>
                                 <em>Type:</em>    <code>string</code>
 
@@ -639,6 +643,8 @@
                             <code>label</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>Label that is associated to the control. Used for the error summary</p>
+</div>
                               <p>
                                 <em>Type:</em>    <code>string</code>
 
@@ -654,6 +660,8 @@
                             <code>parentId</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>The id of the parent of the control. For the error summary componnet, currently not used?</p>
+</div>
                               <p>
                                 <em>Type:</em>    <code>string</code>
 
@@ -669,6 +677,8 @@
                             <code>parentLabel</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>The label of the parent of hte control . Used for the error summary component. Currently not used?</p>
+</div>
                               <p>
                                 <em>Type:</em>    <code>string</code>
 
@@ -684,6 +694,8 @@
                             <code>showError</code>
                         </td>
                         <td class="col-md-10">
+                            <div><p>When true, indicates to show the error, even if control was not touched</p>
+</div>
                               <p>
                                 <em>Type:</em>    <code>boolean</code>
 
@@ -755,11 +767,33 @@
     </bcode>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Default value: </i><code>false</code>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>controls visiblity</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> _validationService</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-lock"></span><code>_validationService:     <code><a href="../classes/ValidationService.html" target="_self" >ValidationService</a></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Validation service to translate the errors</p>
+    </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <table class="table table-sm table-bordered">
@@ -773,6 +807,12 @@
                         <td class="col-md-4">
                             <span class="modifier-icon fa fa-circle"></span><code>currentError:     <code>string</code>
     </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Current error type for the control</p>
+    </div>
                         </td>
                     </tr>
                 </tbody>
@@ -790,6 +830,54 @@
     </bcode>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Gets the Error message text for a given type.</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> tabId</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>tabId:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Th id of the target tab, the tab containing the error</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> tabSet</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>tabSet:     <code>NgbTabset</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>A reference the tabset control NgbTabset from Angular bootstrap</p>
+    </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
     </section>
@@ -798,6 +886,8 @@
             <pre><code class="hljs javascript">import {Component, Input, SimpleChanges} from &#x27;@angular/core&#x27;;
 import { FormGroup, FormControl } from &#x27;@angular/forms&#x27;;
 import { ValidationService } from &#x27;../../validation.service&#x27;;
+import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
+import {NgbTabset} from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
 
 @Component({
   selector: &#x27;control-messages&#x27;,
@@ -806,19 +896,70 @@ import { ValidationService } from &#x27;../../validation.service&#x27;;
 })
 
 export class ControlMessagesComponent {
-  @Input() control: FormControl;
-  @Input() showError:boolean&#x3D;false;
-  @Input() label:string;
-  @Input() controlId:string;
-  @Input() parentId:string;
-  @Input() parentLabel:string;
-  @Input() index:Number;
-  public currentError:string&#x3D;&quot;&quot;;
-  private _errorVisible&#x3D;false;
 
-  constructor() { }
+  /**
+   *  The reactive form control that this message relates
+   */
+  @Input() control: FormControl;
+  /**
+   * When true, indicates to show the error, even if control was not touched
+   * @type {boolean}
+   */
+  @Input() showError:boolean&#x3D;false;
+  /**
+   * Label that is associated to the control. Used for the error summary
+   */
+  @Input() label:string;
+  /**
+   * The id of the control. Used for the error summary to create the anchor link
+   */
+  @Input() controlId:string;
+  /**
+   * The id of the parent of the control. For the error summary componnet, currently not used?
+   */
+  @Input() parentId:string;
+  /**
+   * The label of the parent of hte control . Used for the error summary component. Currently not used?
+   */
+  @Input() parentLabel:string;
+  /***
+   * Index of the error. Used to expand the expander for the error summaryt
+   */
+  @Input() index:Number;
+  /**
+   * Current error type for the control
+   * @type {string}
+   */
+  public currentError:string&#x3D;&quot;&quot;;
+  /**
+   *  A reference the tabset control NgbTabset from Angular bootstrap
+   * @type {null}
+   */
+  public tabSet:NgbTabset;
+  /**
+   * Th id of the target tab, the tab containing the error
+   * @type (string)
+   */
+  public tabId:string;
+
+  /**
+   * controls visiblity
+   * @type boolean
+   */
+  private _errorVisible:boolean;
+
+  /**
+   * Validation service to translate the errors
+   */
+  private _validationService:ValidationService;
+  constructor() {
+    this.tabSet&#x3D;null;
+    this.tabId&#x3D;null;
+    this._errorVisible&#x3D;false;
+  }
 
   ngOnChanges(changes: SimpleChanges) {
+
 
     if (changes[&#x27;showError&#x27;]) {
       this._errorVisible&#x3D;changes[&#x27;showError&#x27;].currentValue;
@@ -826,7 +967,11 @@ export class ControlMessagesComponent {
     }
   }
 
-
+  /**
+   * Gets the Error message text for a given type.
+   *
+   * @returns {any}
+   */
   get errorMessage() {
     for (let propertyName in this.control.errors) {
         this.currentError&#x3D;propertyName;

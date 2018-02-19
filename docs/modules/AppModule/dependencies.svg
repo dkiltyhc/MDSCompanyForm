@@ -32,9 +32,13 @@
 <title>cluster_AppModule_imports</title>
 <polygon fill="none" stroke="#000000" points="360,-78 360,-130 2053,-130 2053,-78 360,-78"/>
 </g>
+<g id="clust6" class="cluster">
+<title>cluster_AppModule_exports</title>
+<polygon fill="none" stroke="#000000" points="1159,-208 1159,-260 1291,-260 1291,-208 1159,-208"/>
+</g>
 <g id="clust7" class="cluster">
 <title>cluster_AppModule_bootstrap</title>
-<polygon fill="none" stroke="#000000" points="1231,-208 1231,-260 1355,-260 1355,-208 1231,-208"/>
+<polygon fill="none" stroke="#000000" points="1299,-208 1299,-260 1423,-260 1423,-208 1299,-208"/>
 </g>
 <g id="clust8" class="cluster">
 <title>cluster_AppModule_providers</title>
@@ -70,17 +74,29 @@
 <path fill="none" stroke="#000000" d="M2150,-122.2921C2150,-144.2057 2150,-178 2150,-178 2150,-178 1344.915,-178 1344.915,-178"/>
 <polygon fill="#000000" stroke="#000000" points="1344.9151,-174.5001 1334.915,-178 1344.915,-181.5001 1344.9151,-174.5001"/>
 </g>
-<!-- AppComponent  -->
+<!-- TranslateModule  -->
 <g id="node16" class="node">
+<title>TranslateModule </title>
+<polygon fill="#fb8072" stroke="#000000" points="1282.6327,-252 1167.3673,-252 1167.3673,-216 1282.6327,-216 1282.6327,-252"/>
+<text text-anchor="middle" x="1225" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">TranslateModule </text>
+</g>
+<!-- AppModule&#45;&gt;TranslateModule  -->
+<g id="edge15" class="edge">
+<title>AppModule&#45;&gt;TranslateModule </title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1266.8691,-187.1061C1266.8691,-187.1061 1266.8691,-205.991 1266.8691,-205.991"/>
+<polygon fill="#000000" stroke="#000000" points="1263.3691,-205.9909 1266.8691,-215.991 1270.3691,-205.991 1263.3691,-205.9909"/>
+</g>
+<!-- AppComponent  -->
+<g id="node17" class="node">
 <title>AppComponent </title>
-<polygon fill="#80b1d3" stroke="#000000" points="1347.439,-252 1238.561,-252 1238.561,-216 1347.439,-216 1347.439,-252"/>
-<text text-anchor="middle" x="1293" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">AppComponent </text>
+<polygon fill="#80b1d3" stroke="#000000" points="1415.439,-252 1306.561,-252 1306.561,-216 1415.439,-216 1415.439,-252"/>
+<text text-anchor="middle" x="1361" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">AppComponent </text>
 </g>
 <!-- AppModule&#45;&gt;AppComponent  -->
-<g id="edge15" class="edge">
+<g id="edge16" class="edge">
 <title>AppModule&#45;&gt;AppComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M1293,-187.1061C1293,-187.1061 1293,-205.991 1293,-205.991"/>
-<polygon fill="#000000" stroke="#000000" points="1289.5001,-205.9909 1293,-215.991 1296.5001,-205.991 1289.5001,-205.9909"/>
+<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M1320.6793,-187.1061C1320.6793,-187.1061 1320.6793,-205.991 1320.6793,-205.991"/>
+<polygon fill="#000000" stroke="#000000" points="1317.1794,-205.9909 1320.6793,-215.991 1324.1794,-205.991 1317.1794,-205.9909"/>
 </g>
 <!-- BrowserModule -->
 <g id="node4" class="node">
@@ -175,8 +191,8 @@
 <!-- HttpClientModule&#45;&gt;AppModule -->
 <g id="edge10" class="edge">
 <title>HttpClientModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M1111,-122.1871C1111,-137.1824 1111,-156 1111,-156 1111,-156 1241.2455,-156 1241.2455,-156"/>
-<polygon fill="#000000" stroke="#000000" points="1241.2456,-159.5001 1251.2455,-156 1241.2455,-152.5001 1241.2456,-159.5001"/>
+<path fill="none" stroke="#000000" d="M1109.5517,-122.1871C1109.5517,-137.1824 1109.5517,-156 1109.5517,-156 1109.5517,-156 1240.9133,-156 1240.9133,-156"/>
+<polygon fill="#000000" stroke="#000000" points="1240.9133,-159.5001 1250.9133,-156 1240.9132,-152.5001 1240.9133,-159.5001"/>
 </g>
 <!-- CommonFeatureModule -->
 <g id="node12" class="node">
@@ -227,25 +243,25 @@
 <polygon fill="#000000" stroke="#000000" points="1241.1828,-177.5001 1251.1828,-174 1241.1828,-170.5001 1241.1828,-177.5001"/>
 </g>
 <!-- ValidationService -->
-<g id="node17" class="node">
+<g id="node18" class="node">
 <title>ValidationService</title>
 <ellipse fill="#fdb462" stroke="#000000" cx="263" cy="-104" rx="80.5142" ry="18"/>
 <text text-anchor="middle" x="263" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">ValidationService</text>
 </g>
 <!-- ValidationService&#45;&gt;AppModule -->
-<g id="edge16" class="edge">
+<g id="edge17" class="edge">
 <title>ValidationService&#45;&gt;AppModule</title>
 <path fill="none" stroke="#000000" d="M263,-122.2921C263,-144.2057 263,-178 263,-178 263,-178 1241.0254,-178 1241.0254,-178"/>
 <polygon fill="#000000" stroke="#000000" points="1241.0254,-181.5001 1251.0254,-178 1241.0253,-174.5001 1241.0254,-181.5001"/>
 </g>
 <!-- GlobalsService -->
-<g id="node18" class="node">
+<g id="node19" class="node">
 <title>GlobalsService</title>
 <ellipse fill="#fdb462" stroke="#000000" cx="94" cy="-104" rx="70.0596" ry="18"/>
 <text text-anchor="middle" x="94" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">GlobalsService</text>
 </g>
 <!-- GlobalsService&#45;&gt;AppModule -->
-<g id="edge17" class="edge">
+<g id="edge18" class="edge">
 <title>GlobalsService&#45;&gt;AppModule</title>
 <path fill="none" stroke="#000000" d="M94,-122.3228C94,-145.6602 94,-183 94,-183 94,-183 1241.03,-183 1241.03,-183"/>
 <polygon fill="#000000" stroke="#000000" points="1241.03,-186.5001 1251.03,-183 1241.03,-179.5001 1241.03,-186.5001"/>

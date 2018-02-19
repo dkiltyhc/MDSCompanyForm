@@ -602,6 +602,24 @@
     </section>
 
 
+    <section>
+        <h3 id="inputs">Properties</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Public</span> translateInstance</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-circle"></span><code>translateInstance:     <code>TranslateService</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
             <pre><code class="hljs javascript">import {Component} from &#x27;@angular/core&#x27;;
@@ -616,11 +634,19 @@ import {TranslateService} from &#x27;@ngx-translate/core&#x27;;
 
 export class AppComponent{
 
+  public translateInstance:TranslateService;
+
 // we will use form builder to simplify our syntax
   constructor(private translate: TranslateService) {
     translate.setDefaultLang(&#x27;fr&#x27;);
+    this.translateInstance&#x3D;translate;
     // the lang to use, if the lang isn&#x27;t available, it will use the current loader to get them
     translate.use(&#x27;en&#x27;);
+    translate.get(&#x27;hello parameter&#x27;, {value: &#x27;world&#x27;}).subscribe((res: string) &#x3D;&gt; {
+      console.log(res);
+
+    });
+    this.translate.get(&#x27;error.msg.required&#x27;).subscribe(res &#x3D;&gt; { console.log(res); });
   }
 
 }

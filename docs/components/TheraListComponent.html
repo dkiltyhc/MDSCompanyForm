@@ -839,7 +839,7 @@
     
                     <tr>
                         <td class="col-md-4">
-    <code>processTheraErrors(errs: any)</code>
+    <code>processTheraErrors(errs: any[])</code>
                         </td>
                     </tr>
     
@@ -875,6 +875,12 @@
                                 <i>Default value: </i><code>0</code>
                             </td>
                         </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Counter used to send a message to the expander that a record was added</p>
+    </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <table class="table table-sm table-bordered">
@@ -920,6 +926,12 @@
     </bcode>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>The list of details records</p>
+    </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <table class="table table-sm table-bordered">
@@ -935,6 +947,12 @@
     </bcode>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Counter used to sena a message to the expander that a record was deleted</p>
+    </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <table class="table table-sm table-bordered">
@@ -948,6 +966,12 @@
                         <td class="col-md-4">
                             <span class="modifier-icon fa fa-circle"></span><code>errorList:     <code>any[]</code>
     </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>List of error messages to pass to parent components</p>
+    </div>
                         </td>
                     </tr>
                 </tbody>
@@ -978,6 +1002,12 @@
                         <td class="col-md-4">
                             <span class="modifier-icon fa fa-circle"></span><code>service:     <code><a href="../injectables/TheraListService.html" target="_self" >TheraListService</a></code>
     </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Service containing much of the generic logic for the list</p>
+    </div>
                         </td>
                     </tr>
                 </tbody>
@@ -1065,6 +1095,12 @@
     </bcode>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Tracks weather the current details record is valid or not</p>
+    </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
     </section>
@@ -1090,13 +1126,38 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
   @Input (&#x27;group&#x27;) formDataList:FormArray; //TO DO not needed
   @Input () modelData;
   public theraListForm: FormGroup;
+  /**
+   * List of error messages to pass to parent components
+   * @type {any[]}
+   */
   public errorList &#x3D; [];
+  /**
+   * The list of details records
+   * @type {any[]}
+   */
   public dataModel &#x3D; [];
+  /**
+   * Counter used to send a message to the expander that a record was added
+   * @type {number}
+   */
   public addRecordMsg:number&#x3D;0;
-  //public theraRecs:FormArray;
+
+  /**
+   *  Counter used to sena a message to the expander that a record was deleted
+   */
   public deleteRecordMsg:number;
+  /**
+   * Tracks weather the current details record is valid or not
+   */
   public validRec:boolean;
+  /**
+   *  Service containing much of the generic logic for the list
+   */
   public service:TheraListService;
+  /**
+   *
+   * @type {number}
+   */
   public updateDetails:number&#x3D;0;
   public showFieldErrors:boolean&#x3D;false;
   public expandOnAdd:boolean;
@@ -1137,9 +1198,7 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
       this.validRec&#x3D;this.theraListForm.valid;
       this._updateModelRecord();
     });
-
   }
-
 
   ngOnChanges(changes: SimpleChanges) {
       if(changes[&#x27;showErrors&#x27;]){
@@ -1156,9 +1215,10 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
        * **/
       this.collapseExpander++;
       this.validRec&#x3D;true;
-      ///
+
       this.dataModel&#x3D;this.service.getModelRecordList();
       this.theraListForm&#x3D;this.service.createFormRecordsFromModel(this._fb);
+      this.processTheraErrors([]);
       this. _subscribeToFormChanges();
     }
   }
@@ -1199,8 +1259,6 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
     this.theraDetailsRecord.theraFormRecord&#x3D;rec;
     //update the expander message
     this.addRecordMsg++;
-    //update the details message - Alternate just attach directly to the model?
-    this.updateDetails++;
     this.validRec&#x3D;false;
   }
   public getFormList(): FormArray {
@@ -1225,12 +1283,13 @@ export class TheraListComponent extends ListOperations implements OnInit, OnChan
     this.deleteRecordMsg++;
   }
 
-  processTheraErrors(errs){
+  processTheraErrors(errs:Array&lt;any&gt;){
     if(this.getFormList().length&#x3D;&#x3D;0){
       errs&#x3D;[];
     }
     this.errors.emit(errs);
-  }
+  };
+
 
 }
 </code></pre>

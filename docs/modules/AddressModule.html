@@ -626,6 +626,7 @@ import {ErrorModule} from &#x27;../error-msg/error-ui.module&#x27;;
 import {AddressListComponent} from &#x27;./address.list/address.list.component&#x27;;
 import {AddressListService} from &#x27;./address.list/address-list.service&#x27;;
 import {CommonFeatureModule} from &#x27;../common/common-feature.module&#x27;;
+import {TranslateModule} from &#x27;@ngx-translate/core&#x27;;
 
 @NgModule({
   imports: [
@@ -636,7 +637,8 @@ import {CommonFeatureModule} from &#x27;../common/common-feature.module&#x27;;
     SelectModule,
     FileIoModule,
     ErrorModule,
-    CommonFeatureModule
+    CommonFeatureModule,
+    TranslateModule
 
   ],
   declarations: [

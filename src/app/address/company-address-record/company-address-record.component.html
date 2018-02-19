@@ -1,7 +1,7 @@
 <div  [formGroup]="adressRecordModel">
 <h3> Company Address Record</h3>
   <error-summary *ngIf="showErrorSummary && errorList.length>0" [errorList]="errorList" headingPreamble="Address Record"
-                 compId="adressRec"></error-summary>
+                 label="Company Address Record"compId="adressRec"></error-summary>
   <address-details [showErrors]="showErrors"
   [detailsChanged]="updateChild" [group]="adressRecordModel.controls.addressDetails"
   (errorList)="updateErrorList($event)"></address-details>

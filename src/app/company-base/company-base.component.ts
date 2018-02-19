@@ -76,6 +76,12 @@ export class CompanyBaseComponent implements OnInit {
   }
   processTheraErrors(errorList){
     this._theraErrors=errorList;
+    //update values for tab
+    for(let err of this._theraErrors){
+      err.tabSet=this.tabs;
+      err.tabId="tab-thera";
+    }
+
 
     //TODO how to update the tab titles. Doesn't seem to work in Html
     if(this._theraErrors.length>0) {

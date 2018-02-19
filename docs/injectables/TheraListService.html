@@ -849,6 +849,7 @@ import {IMasterDetails} from &#x27;../../master-details&#x27;;
 import {TheraClassService} from &#x27;../therapeutic-classification/thera-class.service&#x27;;
 import {FormArray, FormBuilder, FormGroup} from &#x27;@angular/forms&#x27;;
 import {ListService} from &#x27;../../list-service&#x27;;
+import {TranslateModule} from &#x27;@ngx-translate/core&#x27;;
 
 @Injectable()
 export class TheraListService extends ListService implements IMasterDetails {
@@ -857,6 +858,7 @@ export class TheraListService extends ListService implements IMasterDetails {
 
   constructor() {
     super();
+
   }
 
   deleteModelRecord(id): boolean {
