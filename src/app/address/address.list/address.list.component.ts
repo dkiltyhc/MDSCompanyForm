@@ -9,6 +9,7 @@ import {CompanyAddressRecordService} from '../company-address-record/company-add
 import {AddressListService} from './address-list.service';
 import {ListOperations} from '../../list-operations';
 import {TranslateService} from '@ngx-translate/core';
+import {GlobalsService} from '../../globals/globals.service';
 //import {ExpanderComponent} from '../../common/expander/expander.component';
 @Component({
   selector: 'address-list',
@@ -92,7 +93,6 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
   }
 
-
   /**
    * Updates the error list to include the error summaries. Messages upwards
    * @param {QueryList<ErrorSummaryComponent>} list
@@ -103,7 +103,11 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
     console.log('AddressList process Summaries');
     this.errorSummaryChild = list.first;
+    //TODO what is this for need to untangle
     this.setErrorSummary(this.errorSummaryChild);
+    if(this.errorSummaryChild) {
+      this.errorSummaryChild.index = this.getExpandedRow();
+    }
     console.log(this.errorSummaryChild);
     this._emitErrors();
   }
@@ -225,6 +229,12 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
    */
   updateErrorList(errs) {
     this.errorList = errs;
+    for (let err of this.errorList){
+      err.index=this.getExpandedRow();
+      if(err.type==GlobalsService.errorSummClassName){
+        err.expander=this.expander; //associate the expander
+      }
+    }
     this._emitErrors(); //needed or will generate a valuechanged error
   }
 

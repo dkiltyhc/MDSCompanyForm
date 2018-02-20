@@ -1,5 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, SimpleChanges} from '@angular/core';
 import {GlobalsService} from '../../globals/globals.service';
+import {ExpanderComponent} from '../../common/expander/expander.component';
+import {ErrorSummaryObject} from './error-summary-object';
 
 
 @Component({
@@ -11,13 +13,17 @@ export class ErrorSummaryComponent implements AfterViewInit {
   @Input() headingPreamble: string;
   @Input() errorList;
   @Input() compId = 'error-summary-';
-  @Input() label:string;
+  @Input() label: string;
   public type: string;
   public errors = {};
   public componentId = '';
+  public index:number;
+  public expander:ExpanderComponent;
 
-  constructor(private cdr: ChangeDetectorRef, private globals: GlobalsService) {
-    this.type = globals.errorSummClassName;
+  constructor(private cdr: ChangeDetectorRef) {
+    this.type = GlobalsService.errorSummClassName;
+    this.index=-1;
+    this.expander=null;
   }
 
   ngAfterViewInit() {
@@ -35,7 +41,8 @@ export class ErrorSummaryComponent implements AfterViewInit {
 
   /**
    * Creates an array of error elements based on the incoming error objects
-   * Currently groups the errors by parent. Not doing anything with parent right now
+   * Currently groups the errors by parent. Not doing anything with parent right now.
+   * But could display errors groupded by the parent and parent label
    * @param errorList
    */
   public processErrors(errorList): void {
@@ -43,24 +50,25 @@ export class ErrorSummaryComponent implements AfterViewInit {
     if (!errorList) {
       return;
     }
-    console.log(errorList)
-
+    console.log(errorList);
     for (let err of errorList) {
       if (!err) continue;
       let controlError = this.getEmptyError();
-      controlError['index'] = err.index;
-      controlError['label'] = err.label;
-      controlError['controlId'] = err.controlId;
-      controlError['error'] = err.currentError;
-      controlError['type'] = err.type;
-      controlError['tabSet'] = err.tabSet;
-      controlError['tabId'] = err.tabId;
-
+      controlError.index=1;
+      controlError.label = err.label;
+      controlError.controlId= err.controlId;
+      controlError.error = err.currentError;
+      controlError.type = err.type;
+      controlError.tabSet = err.tabSet;
+      controlError.tabId = err.tabId;
+      controlError.componentId = err.componentId; //error summary only uses this
+      controlError.expander=err.expander; //error summary only uses
       //Case 1: an error summary Component
-      if (err.hasOwnProperty('type') && err.type === 'ErrorSummaryComponent') {
-        let parentError = {parentLabel: '', controls: []};
+      if (err.hasOwnProperty('type') && err.type === GlobalsService.errorSummClassName) {
+        let parentError = {parentLabel: '', index:-1, controls: []};
         parentError.parentLabel = err.componentId;
-        parentError.controls.push(controlError);
+        parentError.index=err.index;
+        parentError.controls.push(controlError); //TODO needed for eerror summary
         this.errors[err.componentId] = parentError;
       } else {
         //Case 2 Not an error summary. If has a parentId gourp the errors
@@ -79,24 +87,41 @@ export class ErrorSummaryComponent implements AfterViewInit {
     console.log(this.errors);
   }
 
-  public selectTab(error) {
-    console.log('Selecting the tab');
+  /**
+   * Selects thje tab from an ngbTabset
+   * @param error- the error object created by the summary component
+   */
+  public processEvents(error) {
+    //process tab Events first. Assunming rhere are no tabs inside an expander
     if (error && error.tabSet && error.tabId) {
       error.tabSet.select(error.tabId);
     }
+    //expander if needed
+    if(error && error.expander && error.index>-1){
+      if(!error.expander.getExpandedState(error.index)){
+        error.expander.selectTableRow(error.index);
+      }
+    }
   }
 
-  public getEmptyError(): object {
-    let controlError = {};
-    controlError['index'] = '';
-    controlError['label'] = '';
-    controlError['controlId'] = '';
-    controlError['error'] = '';
-    controlError['type'] = '';
-    controlError['tabSet'] = '';
-    controlError['tabId'] = '';
+  /**
+   * Creates a flat json object for the error summary component UI
+   * @returns {object}
+   */
+  public getEmptyError():ErrorSummaryObject {
+    let controlError = {
 
-    return controlError;
+      index:-1,
+      label:'',
+      controlId:'',
+      error:'',
+      type:'',
+      tabSet:null,
+      tabId:-1,
+      componentId:'',
+      expander:null
+    };
+    return (controlError);
   }
 
 }

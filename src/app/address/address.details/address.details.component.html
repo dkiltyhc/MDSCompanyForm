@@ -68,49 +68,6 @@
       </div>-->
 
     </div>
-    <pre>{{adressFormLocalModel.value |json}}</pre>
+   <!-- <pre>{{adressFormLocalModel.value |json}}</pre>-->
   </div>
 </div>
-
-<!--
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-group" ng-show="adr.hideProvinceText"
-         ng-class="{'has-error':adr.addressForm[adr.stateListId].$invalid}">
-      <label for="{{::adr.stateListId}}" class="required">
-        <span class="field-name">{{adr.provListLabel |translate}}</span>
-        <strong class="required"> {{::"REQUIRED" |translate}} </strong>
-        <select class="form-control full-width" data-ng-model="adr.addressModel.stateList"
-                id="{{::adr.stateListId}}" name="{{::adr.stateListId}}"
-                data-ng-options="province |translate for province in adr.provinces"
-                ng-disabled="!adr.isEditable" ng-required="adr.hideProvinceText"></select>
-
-        <cmp-error-message field-name="adr.stateListId" form-ref="adr.addressForm"
-                           show-error="adr.showError(adr.addressForm[adr.stateListId])" error-types="adr.requiredOnly">
-        </cmp-error-message>
-      </label>
-    </div>
-    <div class="form-group " ng-show="adr.hideProvinceDdl"
-         ng-class="{'has-error':adr.addressForm[adr.stateTextId].$invalid}">
-      <label for="{{::adr.stateTextId}}">{{::"PROVSTATE" |translate}}</label>
-      <input type="text" id="{{::adr.stateTextId}}" name="{{::adr.stateTextId}}"
-             data-ng-model="adr.addressModel.stateText" class="form-control full-width" maxlength="40"
-             size="40" ng-readonly="!adr.isEditable"/>
-    </div>
-  </div>
-  <div class="form-group col-md-6" ng-class="{'has-error':adr.addressForm[adr.postalId].$invalid}">
-    <label for="{{::adr.postalId}}" ng-class="{required:adr.isPostalRequired}">
-      <span class="field-name">{{adr.postalLabel |translate}}</span>
-      <strong ng-show="adr.isPostalRequired" class="required">{{::"REQUIRED" |translate}} </strong>
-      <input type="text" id="{{::adr.postalId}}" name="{{::adr.postalId}}"
-             data-ng-model="adr.addressModel.postalCode"
-             class="form-control" ng-maxlength="7" ng-required="adr.isPostalRequired"
-             ng-change="adr.postalCodeChanged()"
-             maxlength="7" ng-pattern="adr.postalPattern" ng-readonly="!adr.isEditable"/>
-      <cmp-error-message field-name="adr.postalId" form-ref="adr.addressForm"
-                         show-error="adr.showError(adr.addressForm[adr.postalId])" error-types="adr.postalErrorList">
-      </cmp-error-message>
-    </label>
-  </div>
-</div>-->

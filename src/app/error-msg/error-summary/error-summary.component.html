@@ -7,16 +7,12 @@
     </h1>
     <ul *ngFor="let parentError of errors | keys">
       <div *ngFor="let controlError of parentError.value.controls">
-        <li *ngIf="controlError.type=='ErrorSummaryComponent'"><a href="#{{controlError.componentId}}" target="_self">{{controlError.label}}
+        <li *ngIf="controlError.type=='ErrorSummaryComponent'"><a
+          href="#{{controlError.componentId}}" target="_self" (click)="processEvents(controlError)">{{controlError.label}}
           has errors</a></li>
-        <li *ngIf="controlError.type=='ErrorSummaryComponent' && controlError.tabSet"><a
-          href="#{{controlError.componentId}}" target="_self" (click)="selectTab(controlError)">{{controlError.label}}
-          has errors</a></li>
-        <li *ngIf="controlError.type!='ErrorSummaryComponent' && controlError.tabSet">
-          <a href="#{{controlError.controlId}}" target="_self" (click)="selectTab(controlError)">{{controlError.label}}&nbsp;&#8208;&nbsp;{{controlError.error}}</a>
+        <li *ngIf="controlError.type!='ErrorSummaryComponent'">
+          <a href="#{{controlError.controlId}}" target="_self" (click)="processEvents(controlError)">{{controlError.label}}&nbsp;&#8208;&nbsp;{{controlError.error}}</a>
         </li>
-       <li *ngIf="controlError.type!='ErrorSummaryComponent'&& !controlError.tabSet"><a href="#{{controlError.controlId}}" target="_self">{{controlError.label}}
-          &nbsp;&#8208;&nbsp;{{controlError.error}}</a></li>
       </div>
     </ul>
   </section>

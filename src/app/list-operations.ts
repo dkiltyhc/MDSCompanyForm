@@ -32,7 +32,7 @@ export abstract class ListOperations {
    * @param {ErrorSummaryComponent} errorSummaryInstance
    */
   public setErrorSummary(errorSummaryInstance: ErrorSummaryComponent) {
-    this.errorSummary = errorSummaryInstance;
+    this.errorSummary = errorSummaryInstance; //TODO dont think this does anything
   }
 
   /**
