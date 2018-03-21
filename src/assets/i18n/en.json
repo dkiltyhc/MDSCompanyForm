@@ -13,5 +13,7 @@
 	"fileio.msg.dataTypeError": "Error: the wrong form data was selected for this form.",
 	"addressRecord.save": "Save Address",
 	"addressRecord.delete": "Delete Address",
-  "error.msg.required":"This is required"
+  "error.msg.required":"This is required",
+  "postal.canada":"Postal Code",
+  "postal.usa": "Zip Code"
 }

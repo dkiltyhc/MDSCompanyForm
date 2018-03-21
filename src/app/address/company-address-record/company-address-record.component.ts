@@ -49,14 +49,12 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
     this.detailsChanged = 0;
 
   }
-
   ngAfterViewInit() {
     this.errorSummaryChildList.changes.subscribe(list => {
       this.processSummaries(list);
     });
 
   }
-
   private processSummaries(list: QueryList<ErrorSummaryComponent>): void {
     if (list.length > 1) {
       console.warn('Address List found >1 Error Summary ' + list.length);
@@ -77,7 +75,6 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
   }
 
 
-
   private _initAddress() {
     return CompanyAddressRecordService.getReactiveModel(this._fb);
   }
@@ -95,10 +92,14 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /***
+   *Sets the address record to the internal model
+   */
   setToLocalModel() {
     this.adressRecordModel = this.adressFormRecord;
     this.adressRecordModel.markAsPristine();
   }
+
 
   updateErrorList(errs) {
     this.errorList = errs;

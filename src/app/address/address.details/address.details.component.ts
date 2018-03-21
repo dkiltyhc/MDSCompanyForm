@@ -1,10 +1,11 @@
 import {
   Component, Input, Output, OnInit, SimpleChanges, OnChanges, EventEmitter, ViewChildren, QueryList,
-  AfterViewInit, ChangeDetectionStrategy
+  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 import {FormGroup, FormBuilder} from '@angular/forms';
 import {ControlMessagesComponent} from '../../error-msg/control-messages.component/control-messages.component';
 import {AddressDetailsService} from './address.details.service';
+import {isArray} from 'util';
 
 
 @Component({
@@ -23,23 +24,39 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   @Input() showErrors:boolean;
   @Output() errorList = new EventEmitter();
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
+
+  //For the searchable select box, only accepts/saves id and text.
+  //Will need to convert
   public countries: Array<any> = [
-    {'id': 'ABW', 'text': 'Aruba' , langs:{en:'dd',fr:'fdf'}},
-    {'id': 'AFG', 'text': 'Afghanistan',langs:{en:'AFff',fr:'fdf'}}
+    {'id': 'ABW', 'text': 'Aruba' , en:'Aruba',fr:'fr_Aruba'},
+    {'id': 'AFG', 'text': 'Afghanistan',en:'Afghanistan',fr:'fr_Afghanistan'},
+    {'id': 'CAN', 'text': 'Canada',en:'Canada',fr:'fr_Canada'},
+    {'id': 'USA', 'text': 'United States of America',en:'United States of America',fr:'fr_USA'}
   ];
+  public provinces: Array<any>=[
+    {"id":"ON","label_en":"Ontario","label_fr":"Ontario"},
+    {"id":"MN","label_en":"Manitoba","label_fr":"Manitoba"}
+  ];
+  public showProvText:boolean=true;
+  public postalPattern:RegExp=null;
+  public postalLabel:string="postal.canada";
+
   public showFieldErrors:boolean=false;
 
   private detailsService: AddressDetailsService;
+  public stateList: Array<any>;
 
-  constructor(private _fb: FormBuilder) {
+  constructor(private _fb: FormBuilder ) {
     this.showFieldErrors=false;
     this.showErrors=false;
+    this.detailsService=new AddressDetailsService();
   }
 
   ngOnInit() {
     if (!this.adressFormLocalModel) {
       this.adressFormLocalModel = AddressDetailsService.getReactiveModel(this._fb);
     }
+    //this._setCountryState(this.adressFormLocalModel.controls.country.value,this.adressFormLocalModel);
     this.detailsChanged = 0;
 
   }
@@ -55,6 +72,14 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
       this.errorList.emit(temp);
     });
     this.msgList.notifyOnChanges();
+
+  }
+
+  ngDoCheck() {
+  /*  this.isValid();
+    this._syncCurrentExpandedRow();*/
+    //this.processCountry()
+    //this._setCountryState(event,this.adressFormLocalModel);
   }
 
 
@@ -62,12 +87,17 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
 
     //since we can't detect changes on objects, using a separate flag
     if (changes['detailsChanged']) { //used as a change indicator for the model
+      console.log("the details cbange");
       if (this.adressFormRecord) {
+        this._setCountryState(this.adressFormRecord.controls.country.value,this.adressFormRecord);
         this.setToLocalModel();
+
       } else {
         this.adressFormLocalModel = AddressDetailsService.getReactiveModel(this._fb);
+        this._setCountryState(this.adressFormLocalModel.controls.country.value,this.adressFormLocalModel);
         this.adressFormLocalModel.markAsPristine();
       }
+
     }
     if(changes['showErrors']){
 
@@ -80,6 +110,35 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
       }
       this.errorList.emit(temp);
     }
+  }
+
+
+  _setCountryState(countryValue,formModel){
+    console.log("calling set country");
+    console.log(countryValue);
+    let countryJson=null;
+    if(isArray(countryValue)){
+      countryJson=countryValue[0];
+    }else{
+      countryJson=countryValue;
+    }
+      let provList=this.detailsService.setProvinceState(formModel,countryJson);
+    console.log(provList);
+    // this._showProvText(event);
+    if(provList.length){
+      this.stateList=provList;
+      this.showProvText=false;
+
+    }else{
+      this.showProvText=true;
+    }
+    this._setPostalPattern(countryValue);
+  }
+
+
+  processCountry(event){
+    console.log("calling process country");
+    this._setCountryState(event,this.adressFormLocalModel);
   }
 
 
@@ -119,7 +178,31 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
     }
     return false;
   }
+ /* _showProvText(value):boolean{
+    console.log(value)
+    this.detailsService.setProvinceState(this.adressFormLocalModel, value);
+    if(AddressDetailsService.isCanadaOrUSA(value)){
+      console.log("hide province text")
+      this.showProvText=false;
+      return false
+    }
+    console.log("show province text")
+    this.showProvText=true;
+    return true;
+  }*/
 
+   private _setPostalPattern(countryValue) {
+     // this.postalPattern=
+     if (AddressDetailsService.isCanada(countryValue)) {
 
+       this.postalLabel="postal.canada";
+       this.postalPattern = /^(?!.*[DFIOQU])[A-VXYa-vxy][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]$/;
+     } else if (AddressDetailsService.isUsa(countryValue)) {
+       this.postalPattern =  /^[0-9]{5}(?:-[0-9]{4})?$/;
+       this.postalLabel="postal.usa";
+     } else {
+       this.postalPattern = null;
+     }
+   }
 }
 

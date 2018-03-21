@@ -1,6 +1,7 @@
 import {
   Component, OnInit, Input, ViewChild, SimpleChanges, OnChanges, ViewChildren, QueryList, EventEmitter, Output,
-  AfterViewInit} from '@angular/core';
+  AfterViewInit, ChangeDetectorRef
+} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
@@ -50,7 +51,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
   ];
 
-  constructor(private _fb: FormBuilder, private translate: TranslateService) {
+  constructor(private _fb: FormBuilder, private translate: TranslateService, private cd: ChangeDetectorRef) {
     super();
     this.service = new AddressListService();
     this.dataModel = this.service.getModelRecordList();
@@ -73,7 +74,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
       this.processSummaries(list);
     });
 
-
+    this.cd.detectChanges();
   }
 
 

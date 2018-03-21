@@ -5,7 +5,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FileConversionService} from '../filereader/file-io/file-conversion.service';
 import {ConvertResults} from '../filereader/file-io/convert-results';
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { tinymceDefaultSettings } from 'angular-tinymce';
+import { TinyMceModule } from 'angular-tinymce';
+import * as TinyMce from 'tinymce';
 import {NgbTabset} from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: 'company-base',
@@ -28,7 +30,15 @@ export class CompanyBaseComponent implements OnInit {
   public title="ggg";
  // public theraModelList=[ {"id":0,"theraDetails":"Test"}];
   public theraModelList=[];
+  public foo='';
+  public customSettings: TinyMce.Settings | any;
   constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
+
+    this.customSettings = tinymceDefaultSettings();
+
+    this.customSettings.menubar='table';
+    this.customSettings.plugins = 'lists link table';
+
   }
 
   ngOnInit() {
@@ -36,9 +46,11 @@ export class CompanyBaseComponent implements OnInit {
     //TO DO get rid of this. Only get the model values
     this.myForm = this._fb.group({
       addresses: this._fb.array([]),
-      theraList: this._fb.array([])
+      theraList: this._fb.array([]),
+      foo:this._fb.group({ myText: ''})
     });
   }
+
 
   ngAfterViewInit() {
 

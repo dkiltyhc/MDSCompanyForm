@@ -17,7 +17,7 @@ export class AddressListService extends ListService implements IMasterDetails  {
   constructor() {
     super();
   this.addressList = [
-      {
+     /* {
         id: 1,
         address: 'address1',
         city: 'city1',
@@ -36,7 +36,8 @@ export class AddressListService extends ListService implements IMasterDetails  {
             "id": "ABW",
             "text": "Aruba"
           }
-      }];
+      }*/
+     ];
 
     this.initIndex(this.addressList);
   };

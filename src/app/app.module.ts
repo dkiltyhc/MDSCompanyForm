@@ -17,6 +17,8 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {CommonFeatureModule} from './common/common-feature.module';
 import {TherapeuticModule} from './therapeutic/therapeutic.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { TinyMceModule } from 'angular-tinymce';
+import { tinymceDefaultSettings } from 'angular-tinymce';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         deps: [HttpClient]
       }
     }),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    TinyMceModule.forRoot(tinymceDefaultSettings())
   ],
   providers: [
     ValidationService,

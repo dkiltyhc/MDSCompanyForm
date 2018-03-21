@@ -16,7 +16,9 @@ export class ValidationService {
       'invalidCreditCard': 'Is invalid credit card number',
       'invalidEmailAddress': 'Invalid email address',
       'invalidPassword': 'Invalid password. Password must be at least 6 characters long, and contain a number.',
-      'minlength': `Minimum length ${validatorValue.requiredLength}`
+      'minlength': `Minimum length ${validatorValue.requiredLength}`,
+      'postal': 'Invalid Postal Code',
+      'zip':'Invalid Zip Code'
     };
 
     return config[validatorName];
@@ -49,4 +51,26 @@ export class ValidationService {
       return {'invalidPassword': true};
     }
   }*/
+  static canadaPostalValidator(control){
+    if(!control.value){
+      return null;
+    }
+    if (control.value.match(/^(?!.*[DFIOQU])[A-VXYa-vxy][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]$/)) {
+      return null;
+    } else {
+      return {'postal': true};
+    }
+
+  }
+  static usaPostalValidator(control){
+    if(!control.value){
+      return null;
+    }
+    if (control.value.match(/^[0-9]{5}(?:-[0-9]{4})?$/)) {
+      return null;
+    } else {
+      return {'zip': true};
+    }
+  }
+
 }
