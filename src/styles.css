@@ -7,6 +7,23 @@ label > input {
   font-weight: normal;
   margin-bottom: 5px !important;
 }
+label > select {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: normal;
+
+}
+.ui-select-container{
+  margin-bottom: 5px;
+  font-weight: normal;
+}
+.ng-invalid,.has-error{
+border-color: #a94442;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+
 span.ui-select-toggle{
   width:100%;
 
@@ -32,4 +49,16 @@ span.ui-select-toggle{
 
 .margin-top-small {
   margin-top: 5px !important;
+}
+/*Added rep styles all needed?*/
+
+/* Specifically nesting inputs so need to add this*/
+label > input {
+  margin-top: 5px;
+  font-weight: normal;
+}
+
+label > select {
+  margin-top: 5px;
+  font-weight: normal;
 }

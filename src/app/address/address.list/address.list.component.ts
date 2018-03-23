@@ -51,7 +51,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
   ];
 
-  constructor(private _fb: FormBuilder, private translate: TranslateService, private cd: ChangeDetectorRef) {
+  constructor(private _fb: FormBuilder, private translate: TranslateService) {
     super();
     this.service = new AddressListService();
     this.dataModel = this.service.getModelRecordList();
@@ -74,7 +74,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
       this.processSummaries(list);
     });
 
-    this.cd.detectChanges();
+ //   this.cd.detectChanges();
   }
 
 
@@ -102,7 +102,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     if (list.length > 1) {
       console.warn('Address List found >1 Error Summary ' + list.length);
     }
-    console.log('AddressList process Summaries');
+   // console.log('AddressList process Summaries');
     this.errorSummaryChild = list.first;
     //TODO what is this for need to untangle
     this.setErrorSummary(this.errorSummaryChild);
@@ -187,7 +187,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   public addAddress(): void {
 
     // add address to the list
-    console.log('adding an address');
+   // console.log('adding an address');
     // 1. Get the list of reactive form Records
     let addressFormList = this.getFormAddressList();
     //2. Get a blank Form Model for the new record

@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {AddressDetailsComponent} from '../address.details/address.details.component';
 import {CompanyAddressRecordService} from './company-address-record.service';
 import {ErrorSummaryComponent} from '../../error-msg/error-summary/error-summary.component';
+import {ControlMessagesComponent} from '../../error-msg/control-messages.component/control-messages.component';
 
 
 @Component({
@@ -30,9 +31,13 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
 
   @ViewChild(AddressDetailsComponent) addressDetailsChild;
   @ViewChildren(ErrorSummaryComponent) errorSummaryChildList: QueryList<ErrorSummaryComponent>;
+  @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
+
 
   public updateChild: number = 0;
   public errorList = [];
+  private childErrorList:Array<any>=[];
+  private parentErrorList:Array<any>=[];
   public showErrorSummary:boolean;
   public showErrors:boolean;
   public errorSummaryChild:ErrorSummaryComponent=null;
@@ -50,6 +55,12 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
 
   }
   ngAfterViewInit() {
+
+    this.msgList.changes.subscribe(errorObjs => {
+      //update is handled directly in the function
+      this.updateErrorList(null,true);
+    });
+    /** this is processsing the errorSummary that is a child in  Address record **/
     this.errorSummaryChildList.changes.subscribe(list => {
       this.processSummaries(list);
     });
@@ -100,9 +111,30 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
     this.adressRecordModel.markAsPristine();
   }
 
+  /**
+   * Updates the master error list. Combines the record level field errors with the child record field error
+   * @param errs
+   * @param {boolean} isParent
+   */
+  updateErrorList(errs,isParent:boolean=false) {
+    //console.log("Starting update error list")
+    if(!isParent){
+      this.childErrorList = errs;
+    }
+    this.parentErrorList = [];
+    //do this so don't miss it on a race condition
+    if(this.msgList) {
+      this.msgList.forEach(
+        error => {
+          this.parentErrorList.push(error);
+        }
+      );
+      this.cdr.detectChanges(); //doing our own change detection
+    }
 
-  updateErrorList(errs) {
-    this.errorList = errs;
+    this.errorList=new Array();
+    this.errorList=this.parentErrorList.concat(this.childErrorList);
+    console.log(this.errorList)
   }
 
   /**

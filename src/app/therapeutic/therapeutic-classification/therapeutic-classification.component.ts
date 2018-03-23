@@ -32,7 +32,7 @@ export class TherapeuticClassificationComponent implements OnInit, OnChanges, Af
 
   }
   ngAfterViewInit(){
-    console.log("after view init")
+    //console.log("after view init")
     this.msgList.changes.subscribe(errorObjs => {
       let temp = [];
       errorObjs.forEach(

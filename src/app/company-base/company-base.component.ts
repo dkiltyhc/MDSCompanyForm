@@ -5,9 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FileConversionService} from '../filereader/file-io/file-conversion.service';
 import {ConvertResults} from '../filereader/file-io/convert-results';
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { tinymceDefaultSettings } from 'angular-tinymce';
-import { TinyMceModule } from 'angular-tinymce';
-import * as TinyMce from 'tinymce';
+
 import {NgbTabset} from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: 'company-base',
@@ -27,17 +25,17 @@ export class CompanyBaseComponent implements OnInit {
   public testData:ConvertResults=null;
   private _addressErrors=[];
   public _theraErrors=[];
-  public title="ggg";
+  public title="";
  // public theraModelList=[ {"id":0,"theraDetails":"Test"}];
   public theraModelList=[];
   public foo='';
-  public customSettings: TinyMce.Settings | any;
+ /* public customSettings: TinyMce.Settings | any;*/
   constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
-    this.customSettings = tinymceDefaultSettings();
+   // this.customSettings = tinymceDefaultSettings();
 
-    this.customSettings.menubar='table';
-    this.customSettings.plugins = 'lists link table';
+   // this.customSettings.menubar='table';
+    //this.customSettings.plugins = 'lists link table';
 
   }
 
@@ -58,8 +56,8 @@ export class CompanyBaseComponent implements OnInit {
        list.forEach(writer => console.log(writer));
      });*/
     //testTabset
-    console.log(this.tabs);
-    console.log(this.tabs.tabs)
+  //  console.log(this.tabs);
+    //console.log(this.tabs.tabs)
 
   }
 
@@ -74,7 +72,7 @@ export class CompanyBaseComponent implements OnInit {
   }
 
   processErrors() {
-    console.log('@@@@@@@@@@@@ Processing errors in Company base component @@@@@@@@@@@@');
+    //console.log('@@@@@@@@@@@@ Processing errors in Company base component @@@@@@@@@@@@');
 
     this.errorList = [];
     //concat the two array
@@ -101,7 +99,7 @@ export class CompanyBaseComponent implements OnInit {
     }else{
       this.title = "";
     }
-    console.log("error lenght"+this._theraErrors.length);
+    //console.log("error lenght"+this._theraErrors.length);
     this.processErrors();
   }
 
@@ -120,13 +118,13 @@ export class CompanyBaseComponent implements OnInit {
     fileServices.saveXmlToFile( this.testData.data,'testFile',true,null);
   }
   public processFile(data:ConvertResults){
-    console.log("processing file.....")
-    console.log(data)
+   // console.log("processing file.....")
+   // console.log(data)
     this.testData=data;
   }
 
   public preload(){
-  console.log("Calling preload")
+  //console.log("Calling preload")
   this.theraModelList=[ {"id":0,"theraDetails":"Test"}];
   }
 }

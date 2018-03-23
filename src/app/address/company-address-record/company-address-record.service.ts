@@ -13,6 +13,7 @@ export class CompanyAddressRecordService {
     return fb.group({
         id: -1,
         detailsDirty: [false, Validators.required],
+        companyName:["",Validators.required],
         addressDetails: AddressDetailsService.getReactiveModel(fb)
       }
     );

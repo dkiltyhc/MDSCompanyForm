@@ -2,7 +2,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, Input, SimpleChanges} from 
 import {GlobalsService} from '../../globals/globals.service';
 import {ExpanderComponent} from '../../common/expander/expander.component';
 import {ErrorSummaryObject} from './error-summary-object';
-
+import {ValidationService} from '../../validation.service';
 
 @Component({
   selector: 'error-summary',
@@ -14,6 +14,7 @@ export class ErrorSummaryComponent implements AfterViewInit {
   @Input() errorList;
   @Input() compId = 'error-summary-';
   @Input() label: string;
+  public validService:ValidationService;
   public type: string;
   public errors = {};
   public componentId = '';
@@ -33,6 +34,8 @@ export class ErrorSummaryComponent implements AfterViewInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['errorList']) {
       this.processErrors(changes['errorList'].currentValue);
+     // console.log("........process errors in error summary ");
+     // console.log(changes['errorList'].currentValue)
     }
     if (changes['compId']) {
       this.componentId = changes['compId'].currentValue;
@@ -50,7 +53,7 @@ export class ErrorSummaryComponent implements AfterViewInit {
     if (!errorList) {
       return;
     }
-    console.log(errorList);
+    //console.log(errorList);
     for (let err of errorList) {
       if (!err) continue;
       let controlError = this.getEmptyError();
@@ -63,6 +66,7 @@ export class ErrorSummaryComponent implements AfterViewInit {
       controlError.tabId = err.tabId;
       controlError.componentId = err.componentId; //error summary only uses this
       controlError.expander=err.expander; //error summary only uses
+      controlError.compRef=err;
       //Case 1: an error summary Component
       if (err.hasOwnProperty('type') && err.type === GlobalsService.errorSummClassName) {
         let parentError = {parentLabel: '', index:-1, controls: []};
@@ -84,7 +88,7 @@ export class ErrorSummaryComponent implements AfterViewInit {
         }
       }
     }
-    console.log(this.errors);
+    //console.log(this.errors);
   }
 
   /**
@@ -119,7 +123,8 @@ export class ErrorSummaryComponent implements AfterViewInit {
       tabSet:null,
       tabId:-1,
       componentId:'',
-      expander:null
+      expander:null,
+      compRef:null
     };
     return (controlError);
   }

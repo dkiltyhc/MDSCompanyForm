@@ -48,7 +48,7 @@ export class FileConversionService {
       convertResult.messages.push(FileIoGlobalsService.parseFail);
     } else {
       convertResult.messages.push(FileIoGlobalsService.importSuccess);
-      console.log(convertResult);
+     // console.log(convertResult);
     }
   }
 

@@ -1,5 +1,4 @@
 <div [formGroup]="addressListForm">
-  <h3>This is the address List Component</h3>
   <div formArrayName="addresses">
     <expander-component [group]="dataModel"
                         [isValid]="validRec" [addRecord]="addRecordMsg"
@@ -21,15 +20,15 @@
         (revertRecord)="revertAddress($event)" (deleteRecord)="deleteAddress($event)"></company-address-record>
     </div>
   </div>
-  <div>
-    <div class="margin-20">
-      <button (click)="addAddress()"
+  <div class="row mrgn-tp-md mrgn-bttm-lg">
+    <div class="btn-group-sm col-md-12 text-right">
+      <button class="btn btn-primary" (click)="addAddress()"
               [disabled]="!addressListForm.valid || addressDetailsChild?.adressFormRecord?.dirty">
-        Add another address
+       {{'add.address'|translate}}
       </button>
     </div>
   </div>
-<pre>Form Data {{addressListForm.value |json}}</pre>
-  <pre>Data Model for Address List {{dataModel|json}}</pre>
+<!--  <pre>Form Data {{addressListForm.value |json}}</pre>
+  <pre>Data Model for Address List {{dataModel|json}}</pre>-->
 </div>
 

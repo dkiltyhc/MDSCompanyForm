@@ -71,20 +71,22 @@ export class AddressDetailsService  {
     if (AddressDetailsService.isCanadaOrUSA(eventValue)) {
 
       record.controls.provText.setValue("");
-      record.controls.provText.setValidators([]);
+      record.controls.provList.setValidators([Validators.required]);
+
       if(AddressDetailsService.isCanada(eventValue.id))
       {
         record.controls.postal.setValidators([Validators.required, ValidationService.canadaPostalValidator]);
       }else{
         record.controls.postal.setValidators([Validators.required, ValidationService.usaPostalValidator]);
       }
-      record.controls.provText.updateValueAndValidity();
+      record.controls.provList.updateValueAndValidity();
       record.controls.postal.updateValueAndValidity();
       return this.provinces;
     } else {
-      record.controls.provText.setValidators([Validators.required]);
+      record.controls.provList.setValidators([]);
+      record.controls.provList.setValue("");
       record.controls.postal.setValidators([]);
-      record.controls.provText.updateValueAndValidity();
+      record.controls.provList.updateValueAndValidity();
       record.controls.postal.updateValueAndValidity();
       return [];
     }
@@ -107,16 +109,37 @@ export class AddressDetailsService  {
     }else{
       return false;
     }
+    console.log(value);
    return (AddressDetailsService.isCanada(countryValue)|| AddressDetailsService.isUsa(countryValue ));
   }
 
+  /**
+   * Checks of the value is canada or not. Checks for Json object vs single value
+   * @param value the value to check can be the json object with an id index.
+   * @returns {boolean}
+   */
   public static isCanada(value){
-
-    return (value===GlobalsService.CANADA);
+    let updatedValue="";
+    if(value && value.id){
+      updatedValue=value.id;
+    }else{
+      updatedValue=value;
+    }
+    return (updatedValue===GlobalsService.CANADA);
   }
+
+  /**
+   * Checks if the value usa or not. Checks for Json object vs single value
+   * @param value - the value to check can be the json object with an id index.
+   * @returns {boolean}
+   */
   public static isUsa(value){
-
-    return (value===GlobalsService.USA);
+    let updatedValue="";
+    if(value && value.id){
+      updatedValue=value.id;
+    }else{
+      updatedValue=value;
+    }
+    return (updatedValue===GlobalsService.USA);
   }
-
 }

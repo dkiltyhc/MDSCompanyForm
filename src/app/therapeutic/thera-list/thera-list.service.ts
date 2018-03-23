@@ -75,7 +75,7 @@ export class TheraListService extends ListService implements IMasterDetails {
     for (let record of  this.modelList) {
       let formRecord: FormGroup = TheraClassService.getReactiveModel(fb);
       TheraClassService.modelToFormData(record, formRecord);
-      console.log(formRecord);
+      //console.log(formRecord);
       (<FormArray> formList.controls.theraList).push(formRecord);
     }
     return formList;

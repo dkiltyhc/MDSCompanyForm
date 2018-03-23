@@ -12,4 +12,5 @@ export interface ErrorSummaryObject {
   tabId:number,
   componentId: string;
   expander: ExpanderComponent;
+  compRef;
 }

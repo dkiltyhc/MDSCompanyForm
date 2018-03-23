@@ -10,15 +10,13 @@ export class ValidationService {
 
 
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
-    //TODO need to replace with the Keys
+    //TODO sucky need to make the keys the same as the translation for the error summary
     let config = {
-      'required': 'This field is required.',
-      'invalidCreditCard': 'Is invalid credit card number',
-      'invalidEmailAddress': 'Invalid email address',
-      'invalidPassword': 'Invalid password. Password must be at least 6 characters long, and contain a number.',
+      'required': 'required',
+      'error.msg.email': 'error.msg.email',
       'minlength': `Minimum length ${validatorValue.requiredLength}`,
-      'postal': 'Invalid Postal Code',
-      'zip':'Invalid Zip Code'
+      'error.msg.postal': 'error.msg.postal',
+      'error.mgs.zip':'error.mgs.zip'
     };
 
     return config[validatorName];
@@ -38,7 +36,7 @@ export class ValidationService {
     if (control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
       return null;
     } else {
-      return {'invalidEmailAddress': true};
+      return {'error.msg.email': true};
     }
   }
 
@@ -58,7 +56,7 @@ export class ValidationService {
     if (control.value.match(/^(?!.*[DFIOQU])[A-VXYa-vxy][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]$/)) {
       return null;
     } else {
-      return {'postal': true};
+      return {'error.msg.postal': true};
     }
 
   }
@@ -69,7 +67,7 @@ export class ValidationService {
     if (control.value.match(/^[0-9]{5}(?:-[0-9]{4})?$/)) {
       return null;
     } else {
-      return {'zip': true};
+      return {'error.mgs.zip': true};
     }
   }
 

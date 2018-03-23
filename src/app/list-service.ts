@@ -29,7 +29,7 @@ export abstract class ListService {
         this._indexValue = record.id;
       }
     }
-    console.log("The index value "+  this._indexValue)
+   // console.log("The index value "+  this._indexValue)
   }
 
   /**
@@ -38,7 +38,7 @@ export abstract class ListService {
    */
   getNextIndex() {
     this._indexValue++;
-    console.log("In list service get id "+ this._indexValue);
+    //console.log("In list service get id "+ this._indexValue);
     return this._indexValue;
   }
 

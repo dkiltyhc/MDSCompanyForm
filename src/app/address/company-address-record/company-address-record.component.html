@@ -1,27 +1,43 @@
-<div  [formGroup]="adressRecordModel">
-<h3> Company Address Record</h3>
-  <error-summary *ngIf="showErrorSummary && errorList.length>0" [errorList]="errorList" headingPreamble="Address Record"
-                 label="Company Address Record"compId="adressRec"></error-summary>
-  <address-details [showErrors]="showErrors"
-  [detailsChanged]="updateChild" [group]="adressRecordModel.controls.addressDetails"
-  (errorList)="updateErrorList($event)"></address-details>
+<div class="container-fluid" [formGroup]="adressRecordModel">
+  <h3>{{'heading.addressDetails'| translate}}</h3>
+  <error-summary *ngIf="showErrorSummary && errorList.length>0" [errorList]="errorList" headingPreamble="heading.addressRecord"
+                 label="Company Address Record" compId="adressRec"></error-summary>
 
   <div class="row">
-    <div class="btn-group-sm col-xs-12">
-      <button (click)="saveAddressRecord()" i18n>Save Address</button>
-      <button (click)="revertAddressRecord()" i18n>Revert Address</button>
-      <button (click)="deleteAddressRecord()" i18n>Delete Address</button>
+    <div class="form-group col-xs-12" [ngClass]="{'has-error':adressRecordModel.controls.companyName.invalid}">
+      <label for="company" class="required full-width" aria-required="true">
+        <span class="field-name" i18n>{{'company.name.full'|translate}}</span>
+        <strong class="required" i18n>{{'commmon.required.bracket'|translate}}</strong>
+        <input id="company" class="form-control full-width" formControlName="companyName" maxlength="80"/>
+        <control-messages *ngIf="adressRecordModel.controls.companyName.invalid"
+                          [showError]="showErrors"
+                          [control]="adressRecordModel.controls.companyName"
+                          controlId="company" label="company.name.full" parentId="companyAddressRecood"
+                          parentLabel="REP Address"></control-messages>
+      </label>
     </div>
+  </div>
+  <address-details [showErrors]="showErrors"
+                   [detailsChanged]="updateChild" [group]="adressRecordModel.controls.addressDetails"
+                   (errorList)="updateErrorList($event)"></address-details>
+
+  <div class="row">
+    <div class="btn-group-sm col-xs-12 text-right">
+      <button class="btn btn-primary" (click)="saveAddressRecord()" i18n>{{'save.address'|translate}}</button>
+      <button class="btn btn-danger" (click)="deleteAddressRecord()" i18n>{{'delete.address'|translate}}</button>
+      <button class="btn btn-default" (click)="revertAddressRecord()" i18n>{{'revert.address'|translate}}</button>
+    </div>
+  </div>
   <div class="row" *ngIf="adressRecordModel.dirty">
-    <div class="col-xs-7">
+    <div class="col-xs-7 form-group">
       <div class="alert alert-info" role="alert"
            aria-live="polite">
-        <span>Please Save or revert the record</span>
+        <span>{{'common.saveRevert'|translate}}</span>
       </div>
     </div>
   </div>
-</div>
- <!-- <pre>{{adressRecordModel.value |json}}</pre>-->
+
+  <!-- <pre>{{adressRecordModel.value |json}}</pre>-->
 </div>
 
 

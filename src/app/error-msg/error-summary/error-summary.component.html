@@ -1,7 +1,7 @@
 <div id="{{componentId}}">
   <section class="alert alert-danger" tabindex="-1">
     <h1>
-      <span i18n>For the </span><span>{{headingPreamble}}</span>
+      <span i18n>For the </span><span>{{headingPreamble |translate}}</span>
       <span i18n>Errors Found</span>
       <span i18n>Error Found</span>
     </h1>
@@ -11,11 +11,11 @@
           href="#{{controlError.componentId}}" target="_self" (click)="processEvents(controlError)">{{controlError.label}}
           has errors</a></li>
         <li *ngIf="controlError.type!='ErrorSummaryComponent'">
-          <a href="#{{controlError.controlId}}" target="_self" (click)="processEvents(controlError)">{{controlError.label}}&nbsp;&#8208;&nbsp;{{controlError.error}}</a>
+          <a href="#{{controlError.controlId}}" target="_self" (click)="processEvents(controlError)">{{controlError.compRef.label|translate}}&nbsp;&#8208;&nbsp;{{controlError.compRef.currentError|translate}}</a>
         </li>
       </div>
     </ul>
   </section>
   <!-- <pre>{{errors|json}}</pre>-->
-  <pre *ngFor="let parentError of errors | keys"></pre>
+ <!-- <pre *ngFor="let parentError of errors | keys"></pre>-->
 </div>

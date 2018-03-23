@@ -21,8 +21,8 @@
           <!--  <span ng-if="def.isHtml" ng-bind-html="record[def.binding]"></span>-->
         </td>
       </tr>
-      <tr class="table-override" >
-        <td [attr.colspan]="numberColSpan" *ngIf="isExpanded(i)">
+      <tr class="table-override " >
+        <td [attr.colspan]="numberColSpan" *ngIf="isExpanded(i)"  >
           <ng-content></ng-content>
         </td>
       </tr>
