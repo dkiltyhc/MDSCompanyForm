@@ -22,6 +22,7 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
   public adressRecordModel: FormGroup;
   @Input('group') public adressFormRecord: FormGroup;
   @Input() detailsChanged: number;
+  @Input() countries: Array<any>;
   @Output() saveRecord = new EventEmitter();
   @Output() revertRecord = new EventEmitter();
   @Output() deleteRecord = new EventEmitter();
@@ -36,6 +37,7 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
 
   public updateChild: number = 0;
   public errorList = [];
+  public  countryList=[];
   private childErrorList:Array<any>=[];
   private parentErrorList:Array<any>=[];
   public showErrorSummary:boolean;
@@ -100,6 +102,9 @@ export class CompanyAddressRecordComponent implements OnInit, AfterViewInit {
         this.adressRecordModel.markAsPristine();
       }
       this.updateChild++;
+    }
+    if (changes['countries']) {
+      this.countryList=changes['countries'].currentValue;
     }
   }
 

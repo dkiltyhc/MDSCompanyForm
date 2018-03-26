@@ -22,6 +22,7 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
   @Input('group') public adressFormRecord: FormGroup;
   @Input() detailsChanged: number;
   @Input() showErrors: boolean;
+  @Input() countryList:Array<any>;
   @Output() errorList = new EventEmitter();
   @ViewChildren(ControlMessagesComponent) msgList: QueryList<ControlMessagesComponent>;
 
@@ -128,6 +129,10 @@ export class AddressDetailsComponent implements OnInit, OnChanges, AfterViewInit
       }
       this.errorList.emit(temp);
     }
+    if (changes['countryList']) {
+      this.countries=changes['countryList'].currentValue;
+    }
+
   }
 
 

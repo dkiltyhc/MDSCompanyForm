@@ -19,6 +19,8 @@ import {TherapeuticModule} from './therapeutic/therapeutic.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { TinyMceModule } from 'angular-tinymce';
 import { tinymceDefaultSettings } from 'angular-tinymce';
+import {DataLoaderModule} from './data-loader/data-loader.module';
+import {CompanyDataLoaderService} from './data-loader/company-data-loader.service';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { tinymceDefaultSettings } from 'angular-tinymce';
     HttpClientModule,
     CommonFeatureModule,
     TherapeuticModule,
+    DataLoaderModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -48,7 +51,8 @@ import { tinymceDefaultSettings } from 'angular-tinymce';
   ],
   providers: [
     ValidationService,
-    GlobalsService
+    GlobalsService,
+    CompanyDataLoaderService
   ],
   exports:[
     TranslateModule

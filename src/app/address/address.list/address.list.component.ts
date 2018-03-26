@@ -22,6 +22,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   @Input('group') public addresses: FormArray;
   @Input() public saveAddress;
   @Input() public showErrors: boolean = false;
+  @Input() public countries=[];
   @Output() public errors = new EventEmitter();
 
   @ViewChild(CompanyAddressRecordComponent) companyAddressChild: CompanyAddressRecordComponent;
@@ -37,6 +38,7 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
   public deleteRecordMsg = 0;
   public errorList = [];
   public dataModel = [];
+  public countryList=[];
   public validRec=true;
   public columnDefinitions = [
     {
@@ -146,6 +148,9 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     if (changes['saveAddress']) {
       this.saveAddressRecord(changes['saveAddress'].currentValue);
 
+    }
+    if(changes['countries']) {
+      this.countryList=changes['countries'].currentValue;
     }
   }
 

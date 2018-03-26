@@ -7,6 +7,9 @@ import {ConvertResults} from '../filereader/file-io/convert-results';
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {NgbTabset} from "@ng-bootstrap/ng-bootstrap";
+import {CompanyDataLoaderService} from '../data-loader/company-data-loader.service';
+import { HttpClient } from '@angular/common/http';
+import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'company-base',
   templateUrl: './company-base.component.html',
@@ -25,30 +28,33 @@ export class CompanyBaseComponent implements OnInit {
   public testData:ConvertResults=null;
   private _addressErrors=[];
   public _theraErrors=[];
+  public countryList=[];
   public title="";
  // public theraModelList=[ {"id":0,"theraDetails":"Test"}];
   public theraModelList=[];
   public foo='';
  /* public customSettings: TinyMce.Settings | any;*/
-  constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private _fb: FormBuilder, private cdr: ChangeDetectorRef, private dataLoader:CompanyDataLoaderService,private http: HttpClient, private translate: TranslateService) {
 
    // this.customSettings = tinymceDefaultSettings();
 
    // this.customSettings.menubar='table';
     //this.customSettings.plugins = 'lists link table';
-
+    dataLoader=new CompanyDataLoaderService(this.http);
+    this.countryList=[];
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     //TO DO get rid of this. Only get the model values
     this.myForm = this._fb.group({
       addresses: this._fb.array([]),
       theraList: this._fb.array([]),
       foo:this._fb.group({ myText: ''})
-    });
-  }
 
+    });
+   this.countryList=await (this.dataLoader.getCountries(this.translate.currentLang));
+  }
 
   ngAfterViewInit() {
 
