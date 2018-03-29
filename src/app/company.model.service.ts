@@ -82,7 +82,7 @@ export class CompanyModelService {
 
   addressFormToData(record,addressModel){
 
-    CompanyAddressRecordService.mapFormModelToDataModel(record,addressModel);
+    //CompanyAddressRecordService.mapFormModelToDataModel(record,addressModel);
     return(addressModel);
 
   }
@@ -95,7 +95,7 @@ export class CompanyModelService {
 
 
   saveRecord(record:FormGroup) {
-    if (record.controls.id.value === -1) {
+   /* if (record.controls.id.value === -1) {
       record.controls.id.setValue(this.getNextIndex());
       let addressModel=this.getAddressModel();
       this.addressList.push(this.addressFormToData(record,addressModel));
@@ -103,7 +103,7 @@ export class CompanyModelService {
     }else{
        let modelRecord= this.getModelAddress(record.controls.id.value);
         this.addressFormToData(record,modelRecord);
-    }
+    }*/
   }
 
   getModelAddress(id) {

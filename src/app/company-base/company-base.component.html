@@ -3,8 +3,8 @@
     <!-- we will place our fields here -->
     <div>
       <h1>{{'company.title'|translate}}</h1>
-      <error-summary [hidden]="hideErrorSummary()" [errorList]="errorList"
-                     headingPreamble="Address Form"></error-summary>
+      <error-summary [hidden]="hideErrorSummary()" [errorList]="errorList" [headingLevel]="'h1'"
+                     headingPreamble="errorSummary.address"></error-summary>
 
       <div>
         <section class="panel panel-primary mrgn-tp-lg">

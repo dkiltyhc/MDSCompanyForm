@@ -14,6 +14,7 @@ export class AddressListService extends ListService implements IMasterDetails  {
    * @type {{id: number; address: string; city: string; country: {id: string; text: string}}[]}
    */
   private addressList = [];
+  private countryList=[];
   constructor() {
     super();
   this.addressList = [
@@ -50,11 +51,13 @@ export class AddressListService extends ListService implements IMasterDetails  {
     return this.addressList;
   }
 
+  public setModelRecordList(value){
 
-
+    this.addressList=value;
+  }
 
   /**
-   * Ad
+   * Adds
    * @param record
    */
   addAddress(record) {
@@ -63,12 +66,15 @@ export class AddressListService extends ListService implements IMasterDetails  {
   }
 
   getAddressModel() {
-    return {
+
+    return CompanyAddressRecordService.getEmptyModel();
+   /* return {
       id: -1,
       address: null,
       city: null,
       country:null
-    };
+
+    };*/
   }
   getAddressFormRecord(fb:FormBuilder){
 
@@ -78,7 +84,7 @@ export class AddressListService extends ListService implements IMasterDetails  {
 
   public addressFormToData(record:FormGroup,addressModel){
 
-    CompanyAddressRecordService.mapFormModelToDataModel(record,addressModel);
+    CompanyAddressRecordService.mapFormModelToDataModel(record,addressModel, this.countryList);
     return(addressModel);
 
   }
@@ -88,6 +94,10 @@ export class AddressListService extends ListService implements IMasterDetails  {
     return(record);
   }
 
+
+  public setCountryList(countryList){
+      this.countryList=countryList;
+  }
 
 
   public saveRecord(record:FormGroup) {
@@ -100,7 +110,7 @@ export class AddressListService extends ListService implements IMasterDetails  {
       let modelRecord= this.getModelRecord(record.controls.id.value);
       console.log(record);
       console.log(record.controls.id.value);
-      this.addressFormToData(record,modelRecord);
+      let updatedModel=this.addressFormToData(record,modelRecord);
     }
   }
 

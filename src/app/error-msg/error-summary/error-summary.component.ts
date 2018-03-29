@@ -14,10 +14,13 @@ export class ErrorSummaryComponent implements AfterViewInit {
   @Input() errorList;
   @Input() compId = 'error-summary-';
   @Input() label: string;
+  @Input() headingLevel:string;
   public validService:ValidationService;
   public type: string;
+
   public errors = {};
   public componentId = '';
+  public hdingLevel='h1';
   public index:number;
   public expander:ExpanderComponent;
 
@@ -39,6 +42,9 @@ export class ErrorSummaryComponent implements AfterViewInit {
     }
     if (changes['compId']) {
       this.componentId = changes['compId'].currentValue;
+    }
+    if (changes['headingLevel']) {
+      this.hdingLevel = changes['headingLevel'].currentValue;
     }
   }
 

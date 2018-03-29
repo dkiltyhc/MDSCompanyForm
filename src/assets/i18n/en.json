@@ -31,5 +31,6 @@
   "save.address":"Save Address",
   "revert.address":"Revert Address",
   "delete.address":"Delete Address",
-  "common.saveRevert":"Please save or revert the record"
+  "common.saveRevert":"Please save or revert the record",
+  "errorSummary.address":"Address Form"
 }

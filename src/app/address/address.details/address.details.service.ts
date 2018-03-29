@@ -30,20 +30,48 @@ export class AddressDetailsService  {
       address: [null, Validators.required],
       provText: '',
       provList: '',
-      city: [null, [Validators.required, Validators.min(5)]],
+      city: ['', [Validators.required, Validators.min(5)]],
       country: [null, Validators.required],
-      postal:[null,[]]
+      postal:['',[]]
     });
   }
 
-  public static mapFormModelToDataModel(formRecord: FormGroup, addressModel) {
+  /**
+   * Gets an empty
+   *
+   */
+  public static getEmptyModel(){
+
+   return(
+     {
+       address:'',
+       provText: '',
+       provList: '',
+       city: '',
+       country: '',
+       postal: ''
+     }
+    )
+  };
+
+
+  public static mapFormModelToDataModel(formRecord: FormGroup, addressModel, countryList) {
     addressModel.address = formRecord.controls.address.value;
     addressModel.city = formRecord.controls.city.value;
     if (formRecord.controls.country.value && formRecord.controls.country.value.length > 0) {
-      addressModel.country = formRecord.controls.country.value[0];
+      let country_record= AddressDetailsService.findRecordByTerm(countryList,formRecord.controls.country.value[0],"id");
+      //this removes the 'text' property that the control needs
+      addressModel.country={
+        "__text":country_record.id,
+        "_label_en":country_record.en,
+        "_label_fr":country_record.fr
+      };
     } else {
       addressModel.country = null;
     }
+    addressModel.postal=formRecord.controls.postal.value;
+    addressModel.provList=formRecord.controls.provList.value;
+    addressModel.provText=formRecord.controls.provText.value;
   }
 
   public static mapDataModelToFormModel(addressModel, formRecord: FormGroup,) {
@@ -142,4 +170,21 @@ export class AddressDetailsService  {
     }
     return (updatedValue===GlobalsService.USA);
   }
+
+  /**
+   * Find a record by its unique id,. If a dup, returns first instance
+   * @param list
+   * @param criteria
+   * @returns {any}
+   */
+  public static findRecordByTerm(list,criteria,searchTerm){
+
+    let result= list.filter(
+      item => item[searchTerm] === criteria[searchTerm]);
+    if(result && result.length>0) {
+      return result[0];
+    }
+    return null;
+  }
+
 }

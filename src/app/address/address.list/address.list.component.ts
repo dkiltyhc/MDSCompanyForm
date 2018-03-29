@@ -151,7 +151,17 @@ export class AddressListComponent extends ListOperations implements OnInit, OnCh
     }
     if(changes['countries']) {
       this.countryList=changes['countries'].currentValue;
+      this.service.setCountryList(this.countryList); //mechanism to share country List
     }
+
+    //TODO  add a service to accept country list for a model
+    //will have to convert them to the form model on the fly
+    if(changes['countryListModel']) {
+      this.dataModel=changes['countryListModel'].currentValue;
+
+    }
+
+
   }
 
   public isValid(override: boolean = false): boolean {
